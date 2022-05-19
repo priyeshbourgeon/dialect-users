@@ -14,7 +14,7 @@
                 <div class="uk-width-1-1@m uk-margin-medium-top uk-text-right">
                     <div class=" form_group">
                     <a href="{{ route('registration.selectService') }}"><button type="button" class="btn_com">Back</button></a>
-                    <a href="{{ route('registration.saveService') }}"><button type="button" class="btn_com">Confirm & Proceed</button></a>
+                    <a href="{{ route('registration.makePayment') }}"><button type="button" class="btn_com">Confirm & Proceed</button></a>
                     </div>
                    </div>
 

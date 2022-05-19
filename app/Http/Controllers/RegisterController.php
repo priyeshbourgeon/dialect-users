@@ -16,6 +16,7 @@ use App\Models\CompanyDocument;
 use App\Models\CompanyActivity;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\Payment;
 use Session;
 
 class RegisterController extends Controller
@@ -262,7 +263,6 @@ class RegisterController extends Controller
         $company  = Company::find($id);
         $categories  = Category::all();
         $companyActivities = CompanyActivity::where('company_id',$id)->get();
-        session()->put('selected', []);
         return view('step-three',compact('company','companyActivities','categories'));
     }
 
@@ -270,34 +270,112 @@ class RegisterController extends Controller
 
         $company_id = $request->session()->get('comp_id');
         $subcat_id = $request->subcat_id;
-        if (session()->has('selected')){
-            session()->push('selected', $subcat_id);
+        $companyServicesExist = CompanyActivity::where('service_id',$subcat_id)->where('company_id',$company_id)->first();
+        if(!$companyServicesExist){
+            $service = new CompanyActivity();
+            $service->service_id = $subcat_id;
+            $service->company_id = $company_id;
+            $service->save();
         }
-        $selected = SubCategory::whereIn('id',session('selected'))->get();
-        return response()->json($selected);
+        $companyActivities = CompanyActivity::where('company_id',$company_id)->get();
+        return response()->json($companyActivities);
     }
 
     public function companyActivity(Request $request){
         $id = $request->session()->get('comp_id');
         $company  = Company::find($id);
-        $companyActivities = SubCategory::whereIn('id',session('selected'))->get();
+        $selected = CompanyActivity::where('company_id',$id)->pluck('service_id')->toArray();
+        $companyActivities = SubCategory::whereIn('id',$selected)->get();
         return view('company-activities',compact('company','companyActivities'));
     }
 
     public function saveService(Request $request){
         $id = $request->session()->get('comp_id');
-        $companyActivities = SubCategory::whereIn('id',session('selected'))->get();
-        foreach($companyActivities as $ca){
-            $companyServicesExist = CompanyActivity::where('service_id',$ca)->where('company_id',$id)->first();
-            if(!$companyServicesExist){
-                $service = new CompanyActivity();
-                $service->service_id = $subcategory;
-                $service->company_id = $id;
-                $service->save();
-            }
-        }
-        $companyServices = CompanyActivity::where('company_id',$id)->get();
+        $selected = CompanyActivity::where('company_id',$id)->pluck('service_id')->toArray();
+        $companyActivities = SubCategory::whereIn('id',$selected)->get();
         return redirect()->route('registration.paymentUpload');
+    }
+
+    public function makePayment(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $id = $request->session()->get('comp_id');
+        $company  = Company::find($id);
+       // $payments = Company::whereHas('payments')->where('companies.id',$id)->first();
+       //'payments'
+        return view('step-four',compact('company'));
+    } 
+
+    public function downloadApplication(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $id = $request->session()->get('comp_id');
+        $company  = Company::find($id);
+        $companyUsers = CompanyUser::where('company_id',$id)->orderBy('name','desc')->get();
+        $companyDocuments = CompanyDocument::with('document')->where('company_id',$id)->first();
+        $companyActivities = CompanyActivity::with('services','services.sector','services.parent')->where('company_id',$id)->get();
+        $data = array(
+             'company' => $company,
+             'document' =>  $companyDocuments,
+             'activities' => $companyActivities,
+             'users' => $companyUsers,
+        );
+        view()->share('data',$data);
+        //return view('application-form')->with('data',$data);
+        $pdf = PDF::loadView('application-form', $data);
+        return $pdf->download('DialectB2b_Application_Form.pdf');
+    }
+
+    public function paymentUploadSave(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $request->validate([  
+            'doc_file' => 'required|mimes:pdf,jpeg,png,jpg|max:5000',
+        ]);
+        $imageName  = '';
+        if($request->hasFile('doc_file')){
+            $imageName = time().'.'.$request->doc_file->extension();  
+            $request->doc_file->move(public_path('payment'), $imageName);
+        }
+        $path    =asset('payment/');
+        $id = $request->session()->get('comp_id');
+        $document                   = new Payment();
+        $document->company_id       = $id;
+        $document->type             = 2;
+        $document->doc_file         = $path.'/'.$imageName;
+        $document->remark           = 'document';
+        $document->status             = '1';
+        $document->save();
+        return redirect()->route('registration.registrationSuccess');
+    }
+
+    public function paymentTransferSave(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $request->validate([  
+            'reference_no' => 'required',
+        ]);
+        $id = $request->session()->get('comp_id');
+        $document                   = new Payment();
+        $document->company_id       = $id;
+        $document->type             = 1;
+        $document->ref_no           = $request->reference_no;
+        $document->remark           = 'document';
+        $document->status             = '1';
+        $document->save();
+        return redirect()->route('registration.registrationSuccess');
+    }
+
+    public function registrationSuccess(Request $request){
+        $id = $request->session()->get('comp_id');
+        // $token = RegistrationToken::where('company_id',$id)->first();
+        // $token->delete();
+        Session::flush();
+        return view('registration-complete');
     }
 
     public function getCountryById(Request $request){
