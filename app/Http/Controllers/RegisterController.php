@@ -17,6 +17,7 @@ use App\Models\CompanyActivity;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Payment;
+use Auth;
 use Session;
 
 class RegisterController extends Controller
@@ -376,6 +377,29 @@ class RegisterController extends Controller
         // $token->delete();
         Session::flush();
         return view('registration-complete');
+    }
+
+    public function onboarding($token){    
+        $user = CompanyUser::where('token', $token)->firstOrFail();
+        if(!$user){
+            return redirect('/');
+        }
+        return view('onboarding',compact('user'));
+    }
+
+    public function setPassword(Request $request){
+        $request->validate([  
+            'password' =>'required|string|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+        ]);
+        $user = CompanyUser::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->status = 1;
+        if($user->save()){
+            if (Auth::attempt(['email' => $user->email, 'password' => $request->password], '')) {
+                return redirect()->intended('/home');
+            }
+        } 
+        return redirect()->intended('/home');
     }
 
     public function getCountryById(Request $request){

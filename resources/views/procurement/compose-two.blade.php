@@ -112,6 +112,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="uk-width-expand@1-1">
+                                                            <div class=" form_group">
+                                                                <label class="uk-form-label" for="form-stacked-text">Attachment</label>
+                                                                <div class="uk-form-controls">
+                                                                    <div class="wrap_select_dropdown">
+                                                                    <input type="file" name="attachment" />
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
                                     </div>
 
                                     <div class="uk-text-right">

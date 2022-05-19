@@ -42,6 +42,8 @@ Route::get('registration-registration-completed', [RegisterController::class,'re
 Route::get('registration/delete-document/{id}',  [RegisterController::class,'deleteDocument'])->name('registration.deleteDocument');
 
 Route::get('registration/{token}',  [RegisterController::class,'registrationProcess'])->name('registration');
+Route::get('onboarding/{token}',  [RegisterController::class,'onboarding'])->name('onboarding');
+Route::post('registration',  [RegisterController::class,'setPassword'])->name('registration.setPassword');
 
 Auth::routes();
 
