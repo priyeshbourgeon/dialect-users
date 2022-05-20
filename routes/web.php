@@ -51,9 +51,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin.home');
 Route::get('/procurement/home', [App\Http\Controllers\HomeController::class, 'procurement'])->name('procurement.home');
+Route::get('/procurement/inbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
 Route::get('/procurement/compose-select-category', [App\Http\Controllers\HomeController::class, 'composeOne'])->name('procurement.compose-one');
 Route::get('/procurement/compose', [App\Http\Controllers\HomeController::class, 'composeTwo'])->name('procurement.compose-two');
+Route::post('/procurement/send-mail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('procurement.send');
+Route::get('/procurement/outbox', [App\Http\Controllers\HomeController::class, 'proOutBox'])->name('procurement.outbox');
+Route::get('/procurement/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proOutBoxShow'])->name('procurement.outbox.show');
+
 Route::get('/sales/home', [App\Http\Controllers\HomeController::class, 'sales'])->name('sales.home');
+Route::get('/sales/inbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesInboxBoxShow'])->name('sales.inbox.show');
+Route::post('/sales/send-mail', [App\Http\Controllers\HomeController::class, 'sendReply'])->name('sales.sendreply');
+Route::get('/sales/outbox', [App\Http\Controllers\HomeController::class, 'salesOutBox'])->name('sales.outbox');
+Route::get('/sales/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesOutBoxShow'])->name('sales.outbox.show');
 
 Route::post('/staff/store', [StaffController::class,'store'])->name('staff.store');
 Route::get('/staff/edit/{id}', [StaffController::class,'edit'])->name('staff.edit');
@@ -62,7 +71,7 @@ Route::put('/staff/update/{id}', [StaffController::class,'update'])->name('staff
 
 Route::post('/user/getParent', 'User\HomeController@getParent')->name('getParent');
 Route::post('/user/getSubCategory', 'User\HomeController@getSubCategory')->name('getSubCategory');
-Route::post('/user/getRegion', 'User\HomeController@getRegion')->name('getRegion');
+Route::post('/user/getRegion', [App\Http\Controllers\HomeController::class,'getRegion'])->name('getRegion');
 Route::post('/user/getArea', 'User\HomeController@getArea')->name('getArea');
 
 Route::post('/search-service', [App\Http\Controllers\HomeController::class, 'searchService'])->name('search.service');

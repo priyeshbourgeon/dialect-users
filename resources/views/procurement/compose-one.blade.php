@@ -16,12 +16,12 @@
                         </div>
                     </div>  
                     <div class="compose_mail">
-                        <a  href="{{ route('procurement.create') }}"> <i class="fa fa-plus"></i> <span> Compose </span></a>
+                        <a  href="{{ route('procurement.compose-one') }}"> <i class="fa fa-plus"></i> <span> Compose </span></a>
                     </div>
                     <hr>
                     <ul>
                         <li><a href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                        <li><a href="{{ route('procurement.mailSend') }}"><i class="fa fa-paper-plane-o"></i>  <span class="nav_text"> Sent </span> </a></li>
+                        <li><a href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o"></i>  <span class="nav_text"> Sent </span> </a></li>
                     </ul>
                 </div>
             </div>

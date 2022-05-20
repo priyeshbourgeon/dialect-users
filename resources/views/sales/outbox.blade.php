@@ -10,13 +10,11 @@
                             <i class="fa fa-angle-left"></i>
                         </div>
                     </div>  
-                    <div class="compose_mail">
-                        <a  href="{{ route('user.procurement.create') }}"> <i class="fa fa-plus"></i> <span> Generate Quote </span></a>
-                    </div>
+                    
                     <hr>
                     <ul>
-                        <li><a href="{{ route('user.procurement.index') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                        <li><a href="{{ route('user.procurement.mailSend') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                        <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
+                        <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
                    </ul>
                 </div>
             </div>
@@ -32,12 +30,12 @@
                                       @forelse( $mails as $key => $mail )
                                           <tr>
                                           <td class="uk-text-nowrap">
-                                                    <a class="uk-link-reset" href="{{ route('user.procurement.emailView',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('sales.outbox.show',$mail->id) }}">
                                                         {{ ucfirst($mail->sender_name) }}
                                                     </a>    
                                                 </td>                               
                                                 <td class="uk-table-link">
-                                                    <a class="uk-link-reset" href="{{ route('user.procurement.emailView',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('sales.outbox.show',$mail->id) }}">
                                                         {{ $mail->subject }}
                                                     
                                                     </a>

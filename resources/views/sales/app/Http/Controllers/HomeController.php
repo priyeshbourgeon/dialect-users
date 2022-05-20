@@ -73,14 +73,14 @@ class HomeController extends Controller
     public function proOutBox(){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','procurement')->latest()->paginate(10);
+        $mails = Mail::where('from_company_id',$company->id)->latest()->paginate(10);
         return view('procurement.outbox',compact('company','user','mails'));
     }
 
     public function salesOutBox(){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','sales')->latest()->paginate(10);
+        $mails = Mail::where('from_company_id',$company->id)->latest()->paginate(10);
         return view('sales.outbox',compact('company','user','mails'));
     }
 
@@ -89,13 +89,6 @@ class HomeController extends Controller
         $company = Company::findOrFail($user->company_id);
         $mail = Mail::withTrashed()->find($id);
         return view('procurement.outbox-show',compact('company','user','mail'));
-    }
-
-    public function salesOutBoxShow($id){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mail = Mail::withTrashed()->find($id);
-        return view('sales.outbox-show',compact('company','user','mail'));
     }
 
 
@@ -156,67 +149,19 @@ class HomeController extends Controller
         $company = Company::findOrFail($user->company_id);
         $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
         $company_id = Auth::user()->company_id;
-        $mails = Mail::where('from_company_id','!=',$company->id)
+        $mails = Mail::where('from_company_id','=',$company->id)
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
-                      ->whereIn('service',$companyActivities)
+                      //->whereIn('service',$companyActivities)
                       ->latest()->paginate(10);
         return view('sales-home',compact('company','user','mails'));
     }
 
-    public function salesInboxBoxShow($id){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mail = Mail::withTrashed()->find($id);
-        return view('sales.inbox-show',compact('company','user','mail'));
-    } 
-
-    public function proInboxBoxShow($id){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mail = Mail::withTrashed()->find($id);
-        return view('procurement.inbox-show',compact('company','user','mail'));
-    } 
-    
-    public function sendReply(Request $request){
-        $mail_id = $request->mail_id;
-        $maildetails = Mail::findOrFail($mail_id);
-
-        $imageUrl  = '';
-         if($request->hasFile('attachment')){
-             $imageName = time().'.'.$request->attachment->extension();  
-             $request->attachment->move(public_path('attachment'), $imageName);
-             $path = asset('attachment/');
-             $imageUrl = $path.'/'.$imageName;
-         }
-        
-        $company_id = Auth::user()->company_id;
-        $company = Company::find($company_id);
-        $mail                          = new Mail();
-        $mail->sector_id               = $maildetails->sector_id;
-        $mail->service_parent_id       = $maildetails->service_id;
-        $mail->type                    = 2;
-        $mail->service                 = $maildetails->service;
-        $mail->country_id              = $maildetails->country_id;
-        $mail->region_id               = $maildetails->region_id;
-        $mail->cc                      = $request->cc;
-        $mail->subject                 = 'RE:'.$maildetails->subject;
-        $mail->description             = $request->reply_body;
-        $mail->from_company_id         = $company_id;
-        $mail->sender_name             = $company->name;
-        $mail->sender_type             = 'sales';
-        $mail->ref_id                  = $maildetails->id;
-        $mail->verified_at             = date('Y-m-d h:i:s');
-        $mail->is_draft                = 0;
-        $mail->attachment              = $imageUrl;
-        $mail->save();
-        return redirect()->route('sales.home')->with('success','Mail Send!');
-    }
 
     public function getRegion(Request $request){
         $regions = Region::where("country_id",$request->country_id)
         ->pluck("name","id");
-        return response()->json($regions);
+return response()->json($regions);
     }
 
 

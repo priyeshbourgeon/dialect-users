@@ -18,7 +18,7 @@
 
                             <ul>
                                 <li><a href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                                <li><a href="{{ route('procurement.mailSend') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                                <li><a href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
                             </ul>
 
                         </div>
@@ -33,13 +33,13 @@
                                 
                                 
                                 <div class="panel_header"> Generate Quote</div>
-                                <form action="{{ route('procurement.mailSave') }}" method="post">
+                                <form action="{{ route('procurement.send') }}" method="post" enctype="multipart/form-data">
                                    @csrf
                                     <div class="uk-margin-bottom">
                                         <h3>Selected Services</h3>
                                         @forelse($services as $service)
                                             <span class="uk-badge uk-padding">{{ $service->name }}</span>
-                                            <input type="hidden" name="services[]" value="{{ $service->id }}">
+                                            <input type="hidden" name="services" value="{{ $service->id }}">
                                         @empty
                                         <div> Please select a category</div>
                                         @endforelse
@@ -118,7 +118,7 @@
                                                                 <div class="uk-form-controls">
                                                                     <div class="wrap_select_dropdown">
                                                                     <input type="file" name="attachment" />
-                                                                </div>
+                                                                   </div>
                                                                 </div>
                                                             </div>
                                                             </div>
@@ -139,6 +139,41 @@
             </div>
 </section>
 @push('scripts')
+<script>
+    $("body").on("change","#country",function(){
+		var fetch_region_url = $("#fetch_region_url").val();
+		var countryID = $('#country').val();  
+		var token = $('meta[name="csrf-token"]').attr('content');   
+		if(countryID){
+			$.ajax({
+				type:"POST",
+				url: "{{ route('getRegion') }}",
+				data:{
+					'_token':token,
+					'country_id':countryID
+				},
+				beforeSend: function() {
+					$("#region").empty();
+					$("#region").append('<option>Please Wait! Loading...</option>');
+				},
+				success:function(res){        
+					if(res){
+						$("#region").empty();
+						$("#region").append('<option>Select Region</option>');
+						$.each(res,function(key,value){
+							$("#region").append('<option value="'+key+'">'+value+'</option>');
+						});
+					}else{
+						$("#region").empty();
+					}
+				}
+			});
+		}
+		else{
+			$("#region").empty();
+		}
+	});
 
+</script>
 @endpush
 @endsection

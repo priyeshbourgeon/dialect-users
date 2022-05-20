@@ -15,8 +15,8 @@
                     </div>
                     <hr>
                     <ul>
-                       <li><a href="{{ route('procurement.index') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                       <li><a href="{{ route('procurement.mailSend') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                       <li><a href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
+                       <li><a href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
                     </ul>
                 </div>
             </div>
@@ -33,12 +33,12 @@
                                       @forelse( $mails as $key => $mail )
                                           <tr>
                                           <td class="uk-text-nowrap">
-                                                    <a class="uk-link-reset" href="{{ route('procurement.emailView',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('procurement.inbox.show',$mail->id) }}">
                                                         {{ ucfirst($mail->sender_name) }}
                                                     </a>    
                                                 </td>                               
                                                 <td class="uk-table-link">
-                                                    <a class="uk-link-reset" href="{{ route('procurement.emailView',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('procurement.inbox.show',$mail->id) }}">
                                                         {{ $mail->subject }}
                                                     
                                                     </a>
