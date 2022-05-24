@@ -93,7 +93,7 @@
                             </div>
                             <div class="uk-width-1-1@m uk-margin-small-top uk-text-right">
                             <div class=" form_group">
-                                <button type="submit" class="btn_com">Save</button>
+                                <button type="submit" class="btn_com">Save & Continue</button>
                             </div>
                         </div>
                           </div>

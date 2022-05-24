@@ -17,22 +17,24 @@
                             <hr>
 
                             <ul>
-                                <li><a href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                                <li><a href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                                <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
+                                <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                                <li><a uk-tooltip="title: Draft" href="#"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                                <li><a uk-tooltip="title: Upcoming Events" href="#"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                             </ul>
 
                         </div>
                     </div>
 
                     <div class="col_right_ca">
-                        <h1 class="comm_title">Inbox</h1>
+                        <h1 class="comm_title">Generate Quote</h1>
                         <div class="col_maii_middle">
 
                           <div class="col_maiil_left"  style="width:100%">
                             <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                                 
                                 
-                                <div class="panel_header"> Generate Quote</div>
+                                <div class="panel_header"> Compose Quote</div>
                                 <form action="{{ route('procurement.send') }}" method="post" enctype="multipart/form-data">
                                    @csrf
                                     <div class="uk-margin-bottom">

@@ -87,7 +87,7 @@ class HomeController extends Controller
     public function proOutBoxShow($id){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mail = Mail::withTrashed()->find($id);
+        $mail = Mail::with('category')->withTrashed()->find($id);
         return view('procurement.outbox-show',compact('company','user','mail'));
     }
 
@@ -142,6 +142,7 @@ class HomeController extends Controller
         $mail->from_company_id         = $company_id;
         $mail->sender_name             = $company->name; 
         $mail->sender_type             = 'procurement';
+        $mail->sender_user             = Auth::user()->id;
         $mail->verified_at             = date('Y-m-d h:i:s');
         $mail->request_time            = $request->timeframe;
         $mail->is_draft                = $mode;
@@ -160,6 +161,8 @@ class HomeController extends Controller
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
                       ->whereIn('service',$companyActivities)
+                      ->whereNull('ref_id')
+			          ->where('created_at','>',$company->created_at)
                       ->latest()->paginate(10);
         return view('sales-home',compact('company','user','mails'));
     }
@@ -205,6 +208,7 @@ class HomeController extends Controller
         $mail->from_company_id         = $company_id;
         $mail->sender_name             = $company->name;
         $mail->sender_type             = 'sales';
+        $mail->sender_user             = Auth::user()->id;
         $mail->ref_id                  = $maildetails->id;
         $mail->verified_at             = date('Y-m-d h:i:s');
         $mail->is_draft                = 0;

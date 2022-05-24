@@ -15,17 +15,19 @@
                     </div>
                     <hr>
                     <ul>
-                       <li><a href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                       <li><a href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                       <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
+                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                       <li><a uk-tooltip="title: Draft" href="#"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                       <li><a uk-tooltip="title: Upcoming Events" href="#"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
                 </div>
             </div>
             <div class="col_right_ca">
-                <h1 class="comm_title">Inbox</h1>
+                <h1 class="comm_title">Hi, {{ Auth::user()->name ?? '' }}</h1>
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">        
-                            <div class="panel_header"> Notification</div>   
+                            <div class="panel_header"> Inbox</div>   
                                 <div class="uk-overflow-auto table_ct">
                                   <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
                                        
@@ -61,8 +63,7 @@
 
                           <div class="col_maii_right">
                             <div class=" uk-card uk-card-default uk-card-small uk-card-body">
-                                <div class="panel_header"> General Statics</div>
-    
+                                <div class="panel_header"> Notification & Approvals</div>
                             </div>
     
     

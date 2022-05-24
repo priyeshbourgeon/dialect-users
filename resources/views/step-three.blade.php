@@ -66,6 +66,7 @@
                                 <h3>Sub Category</h3>
                                 <div class=" form_group">
                                     <label class="uk-form-label" for="form-stacked-text">Sub category</label>
+                                    <p id="loading-text"></p>
                                     <div class="uk-form-controls">
                                         <input class="uk-input"  type="text" id="search-subcategory" placeholder="Search Sub Category" data-search>
                                     </div>
@@ -79,7 +80,8 @@
                             <a id="cart-button" type="button" href="{{ route('registration.companyActivity') }}" 
                             class="btn_com uk-button-large uk-margin" style="margin-top:10px;float: right;">
                                 Selected Business Categories  
-                                <span class="uk-badge" id="cart-count">{{ count($companyActivities) ?? 0 }}</span></a>
+                                <span class="uk-badge" id="cart-count">{{ count($companyActivities) ?? 0 }}</span>
+                                <span id="countloader"></span></a>
                             </div>    
                         </div>
                     </div>
@@ -191,16 +193,20 @@
                         'subcat_id':subcat_id
                     },
                     beforeSend: function(){
-                        $('#selectedbox').append('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $('#countloader').append('<li class="uk-text-large uk-text-success uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $('#loading-text').text('Processing... please wait');
                     },
                     success:function(res){ 
-                        $('#selectedbox').empty();
+                        $('#countloader').empty();
+                        $('#loading-text').text('');
                         if(res){
-                           $.each(res,function(key,value){
-                               var name = res[key].name.charAt(0);
-                               let letter = name.toUpperCase();
-                               $("#selectedbox").append(' <a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" type="button" class="uk-button uk-button-default uk-margin-bottom subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>'+res[key].name+'</a>');
-                           });
+                            var countItem = res.length;
+							$('#cart-count').text(countItem);
+                        //    $.each(res,function(key,value){
+                        //        var name = res[key].name.charAt(0);
+                        //        let letter = name.toUpperCase();
+                        //        $("#selectedbox").append(' <a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" type="button" class="uk-button uk-button-default uk-margin-bottom subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>'+res[key].name+'</a>');
+                        //    });
                         }
                         else{
                             $('#selectedbox').append('<p class="uk-text-large uk-text-danger uk-text-center">No Data Found</p>');

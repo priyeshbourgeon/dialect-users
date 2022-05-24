@@ -13,14 +13,25 @@
             <h3 class="uk-card-title">Welcome to the world of oportunities</h3>
             <p>Lorem ipsum sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             <ul uk-accordion>
-                <li>
-                    <a class="uk-accordion-title acc_head" href="#">#1 Your Profile</a>
+                <li class="{{ !$user->role ? 'uk-open' : '' }}">
+                    <a class="uk-accordion-title acc_head" href="#" uk-tooltip="title: clich here to open your profile">#1 Your Profile</a>
                     <div class="uk-accordion-content">
                         @include('admin.admin-profile')   
                     </div>
                 </li>
-                <li>
-                    <a class="uk-accordion-title acc_head" href="#">#2 Procurement</a>
+                <li class="{{ !$procurement ? 'uk-open' : '' }}">
+                    <a class="uk-accordion-title acc_head" href="#" uk-tooltip="title: clich here to open procurement profile">
+                       <span class="uk-align-left">#2 Procurement </span> 
+                        @if($procurement)
+                            @if($procurement->password =='')
+                            <span class="uk-label uk-align-right" style="background-color:yellow;color:#000">
+                                Activation Pending</span>
+                            @else
+                            <span class="uk-label uk-align-right" style="background-color:green">
+                                Active</span>
+                            @endif
+                        @endif  
+                    </a>
                     <div class="uk-accordion-content">
                         @if($procurement)
                            @include('admin.procurement-profile-view')  
@@ -29,8 +40,20 @@
                         @endif   
                     </div>
                 </li>
-                <li>
-                    <a class="uk-accordion-title acc_head" href="#">#3 Sales</a>
+                <li class="{{ !$sales ? 'uk-open' : '' }}">
+                    <a class="uk-accordion-title acc_head" href="#" uk-tooltip="title: clich here to open sales profile">
+                        <span class="uk-align-left">#3 Sales</span>
+                        @if($sales)
+                            @if($sales->password =='')
+                            <span class="uk-label uk-align-right" style="background-color:yellow;color:#000">
+                                Activation Pending</span>
+                            @else
+                            <span class="uk-label uk-align-right" style="background-color:green">
+                                Active</span>
+                            @endif
+                        @endif 
+                        
+                    </a>
                     <div class="uk-accordion-content">
                         @if($sales)
                            @include('admin.sales-profile-view') 

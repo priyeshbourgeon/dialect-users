@@ -48,11 +48,7 @@
                     </a>
                 </div>
                 <div class="col header_right">
-                <!-- @isset($url)
                     <a href="{{ url('login') }}" class="btn_com">Login</a>
-                @else
-                    <a href="{{ url('login/company') }}" class="btn_com">Exclusive Login</a>
-                @endisset             -->
                 </div>
             </div>
         </div>

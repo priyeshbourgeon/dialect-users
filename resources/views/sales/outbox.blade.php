@@ -1,4 +1,4 @@
-@extends('procurement.layouts.app')
+@extends('sales.layouts.app')
 @section('content')
 <section class="mail_wrap">
     <div>   
@@ -13,17 +13,20 @@
                     
                     <hr>
                     <ul>
-                        <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
-                        <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
-                   </ul>
+                       <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
+                       <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                       <li><a href=""><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                       <li><a href=""><i class="fa fa-calendar-times-o"></i>  <span class="nav_text"> Enquiry Timeout </span> </a></li>
+                       <li><a href=""><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
+                    </ul>
                 </div>
             </div>
             <div class="col_right_ca">
-                <h1 class="comm_title">Sent</h1>
+                <h1 class="comm_title">Hi, {{ Auth::user()->name ?? '' }}</h1>
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">        
-                            <div class="panel_header"> Notification</div>
+                            <div class="panel_header"> Sent</div>
                                 <div class="uk-overflow-auto table_ct">
                                     <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">   
                                       <tbody>
@@ -58,7 +61,7 @@
 
                           <div class="col_maii_right">
                             <div class=" uk-card uk-card-default uk-card-small uk-card-body">
-                                <div class="panel_header"> General Statics</div>
+                                <div class="panel_header">Notification & Approvals</div>
     
                             </div>
     

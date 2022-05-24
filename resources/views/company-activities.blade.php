@@ -7,7 +7,7 @@
                     <h3>Selected Services</h3>
                     <div class="uk-overflow-auto">
                         @foreach($companyActivities  as $key => $ca)
-                        <span class="uk-label uk-padding">{{ $ca->name ?? ''  }}</span>
+                        <span class="uk-label uk-padding uk-margin" uk-tooltip="title: Click here to remove {{ $ca->name }}">{{ $ca->name ?? ''  }}</span>
                         @endforeach
                     </div>
 

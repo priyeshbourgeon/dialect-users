@@ -54,7 +54,7 @@
                                 <div class="uk-inline dp_wrap">
 
                                      <ul class="more_info">
-                                         <li>
+                                        <!-- <li>
                                             <div class="icon_box">
                                               <i class="fa fa-bell-o"></i>
                                               <span>5</span>
@@ -125,21 +125,46 @@
 
                                             </div>
                                         
-                                        </li>
+                                        </li> -->
                                      </ul>
                                     <div class="dp_name">Hi,  {{ Auth::user()->name }} </div>
                                     <div class="dp_profile">  </div>
                                      
                                     <div uk-dropdown>
                                         <ul class="uk-nav uk-dropdown-nav">
-                                            <li><a href="#"> 
-												  <p class="uk-text-bolder uk-text-center">{{ Auth::user()->name }}<br>
-                                                  <span class="uk-badge">{{ Auth::user()->designation ?? '' }}</span>
-                                                  </p></a>
+                                            <li class="uk-align-center">
+                                                {{ Auth::user()->name }}<br>
+                                                <span class="uk-badge">{{ Auth::user()->designation ?? '' }}</span>
                                             </li>
-                                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            <li class="uk-align-center uk-margin-small">
+                                                <a href="#" uk-margin-small> 
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                    Manage Profile</a>
+                                                </a>
+                                            </li>
+                                            <li class="uk-align-center uk-margin-small">
+                                                <a href="#" uk-margin-small> 
+                                                <i class="fa fa-key" aria-hidden="true"></i>
+                                                   Change Password</a>
+                                                </a>
+                                            </li>
+                                            <li class="uk-align-center uk-margin-small">
+                                                <a href="#" uk-margin-small> 
+                                                <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                                                  Change Color Theme</a>
+                                                </a>
+                                            </li>
+                                            <li class="uk-align-center uk-margin-small">
+                                                <a href="#" uk-margin-small> 
+                                                <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                                  Feedback</a>
+                                                </a>
+                                            </li>
+                                            <li  class="uk-align-center">
+                                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();"> 
-												<i class="fa fa-power-off" aria-hidden="true"></i> &nbsp;  {{ __('Logout') }}</a></li>
+												<i class="fa fa-power-off" aria-hidden="true"></i>
+                                                   {{ __('Logout') }}</a></li>
                                             
                                         </ul>
                                     </div>
