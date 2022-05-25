@@ -34,7 +34,7 @@
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">        
                             <div class="panel_header"> Choose Category</div>   
                                 <div uk-grid>
-                                    <div  class="uk-width-1-2@m" style="border-right: 1px dotted red;">
+                                    <div  class="uk-width-3-4@m">
                                         <div class=" form_wraper">
                                             <div class=" form_group">
                                                 <ul class="sector_list">
@@ -54,12 +54,12 @@
                                             </div>
                                             <div class="form_group category_list">
                                             @foreach($categories as $key => $cat)
-                                                <a class="uk-form-label category uk-margin-right" for="form-stacked-text" data-id="{{ $cat->id }}"><i class="fa fa-arrow-circle-right"></i> {{ $cat->name ?? '' }}</a>
+                                                <a class="uk-form-label category uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $cat->id }}"><i class="fa fa-arrow-circle-right"></i> {{ $cat->name ?? '' }}</a>
                                             @endforeach
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="uk-width-1-2@m">
+                                    <div class="uk-width-1-4@m">
                                         <div class=" form_wraper">
                                             <div class=" form_group">
                                                 <label class="uk-form-label" for="form-stacked-text">Sub category</label>
@@ -103,7 +103,7 @@
                                     $(".category_list").empty();
                                     $('#parentbox').empty();
                                     $.each(res,function(key,value){
-                                        $(".category_list").append('<a class="uk-form-label category  uk-margin-right" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                        $(".category_list").append('<a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
                                     });
                                 }
                             }
@@ -129,7 +129,7 @@
                                     $(".category_list").empty();
                                     $('#parentbox').empty();
                                     $.each(res,function(key,value){
-                                        $(".category_list").append('<a class="uk-form-label category  uk-margin-right" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                        $(".category_list").append('<a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
                                     });
                                 }
                             }
@@ -156,7 +156,7 @@
                                     $.each(res,function(key,value){
                                         var name = res[key].name.charAt(0);
                                         let letter = name.toUpperCase();
-                                        $("#parentbox").append('<a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" class="uk-form-label subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                        $("#parentbox").append('<a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" class="uk-form-label subcategory  uk-margin-right cat_block_linear" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
                                     });
                                 }
                             else{

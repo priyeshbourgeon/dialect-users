@@ -240,7 +240,7 @@ class HomeController extends Controller
 
     public function searchAlphaService(Request $request){
         if($request->keyword != ''){
-        $cat = Category::where("name",'like',$request->keyword.'%')->get();
+        $cat = Category::where("name",'like',$request->keyword.'%')->orderBy('name','asc')->get();
         }
         else{
             $cat = Category::all();
@@ -249,7 +249,7 @@ class HomeController extends Controller
     } 
 
     public function getSubService(Request $request){
-        $sql = "SELECT * FROM `sub_categories` WHERE id IN (SELECT subcategory_id FROM category_sub_categories WHERE category_id = $request->cat_id)";
+        $sql = "SELECT * FROM `sub_categories` WHERE id IN (SELECT subcategory_id FROM category_sub_categories WHERE category_id = $request->cat_id) ORDER BY name asc";
         $services = \DB::select($sql);
         return response()->json($services);
     }

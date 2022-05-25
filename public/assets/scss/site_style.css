@@ -431,7 +431,7 @@ footer a {
 .sector_list li .s_block {
   background: #eee;
   display: block;
-  padding: 6px 10px;
+  padding: 5px 9px;
   cursor: pointer;
   transition: ease-in 0.5s;
 }
@@ -443,6 +443,27 @@ footer a {
   background: #EC2531;
   color: #fff;
   transition: ease-in-out 0.5s;
+}
+
+.cat_block {
+  border-bottom: 1px solid rgb(92, 85, 85);
+  display: block;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: ease-in 0.5s;
+  width: 25%;
+  margin: 2px;
+  float: left;
+}
+
+.cat_block_linear {
+  border-bottom: 1px solid rgb(129, 125, 125);
+  display: block;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: ease-in 0.5s;
+  width: 90%;
+  margin: 2px;
 }
 
 .uk-table {
