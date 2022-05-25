@@ -52,6 +52,10 @@ class HomeController extends Controller
         $company = Company::findOrFail($user->company_id);
         $company_users = CompanyUser::where('company_id',$user->company_id)->where('status',1)->get();
         if($company_users->count('id') == 3){
+            if($company->status !=1){
+                $company->status = 1;
+                $company->save();
+            }
             return view('admin-home',compact('company'));
         }
         else{

@@ -1,65 +1,66 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
+<!-- banner -->
+<!-- banner -->
+<section class="banner">
+    <div class="inner_banner">
+        <div class="uk_container "> 
+            <div class="wrap_home_hero_login_block">
+                <div class="home_hero_login_block ">
+                    <div class="uk-align-center">
+                        <div>
+                            <h2 class="uk-align-center "> {{ __('Reset Password') }}</h2>
+                            <p>Cras ultricies mauris velit, vitae ornare ex tristique id. Morbi congue commodo lacinia. </p>
+                        </div>
+                        <form method="POST" action="{{ route('password.update') }}" class="uk-form-stacked">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        @if (session('status'))
+                            <span>{{ session('status') }}</span>
+                        @endif           
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" ><img src="{{ asset('assets/images/user.svg') }}" alt=""></span>
+                                    <input class="uk-input  @error('email') uk-form-danger uk-animation-shake @enderror" id="email" type="email" name="email" placeholder="Email Address" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                    @error('email')
+                                        <div class="error_msg">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" ><img src="{{ asset('assets/images/user.svg') }}" alt=""></span>
+                                    <input class="uk-input  @error('password') uk-form-danger uk-animation-shake @enderror" id="password" type="password"  name="password" required autocomplete="new-password" placeholder="New Password">
+                                    @error('password')
+                                        <div class="error_msg">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" ><img src="{{ asset('assets/images/user.svg') }}" alt=""></span>
+                                    <input class="uk-input  @error('password_confirmation') uk-form-danger uk-animation-shake @enderror" id="password-confirm" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
+                                    @error('password_confirmation')
+                                        <div class="error_msg">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
+                            <div class="uk-margin uk-margin-remove-bottom">
+                                <div class="uk-inline">
+                                    <button class="btn_com submit" type="submit"> {{ __('Reset Password') }}</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="go_signup uk-margin">
+                                <a href="{{ url('/') }}">Back to home</a> 
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!-- banner -->
 @endsection
+
