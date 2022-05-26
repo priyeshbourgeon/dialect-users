@@ -19,6 +19,7 @@ use App\Models\SubCategory;
 use App\Models\Payment;
 use Auth;
 use Session;
+use PDF;
 
 class RegisterController extends Controller
 {
@@ -290,6 +291,12 @@ class RegisterController extends Controller
         return view('company-activities',compact('company','companyActivities'));
     }
 
+    public function deleteDocument($id){
+        $document =  CompanyDocument::find($id);
+        $document->delete();
+        return redirect()->route('registration.documentUpload');
+    }
+
     public function deleteCategory(Request $request){
         $cat_id = $request->id;
         $company_id = $request->session()->get('comp_id');
@@ -321,8 +328,8 @@ class RegisterController extends Controller
         }
         $id = $request->session()->get('comp_id');
         $company  = Company::find($id);
-       // $payments = Company::whereHas('payments')->where('companies.id',$id)->first();
-       //'payments'
+        // $payments = Company::whereHas('payments')->where('companies.id',$id)->first();
+        //'payments'
         return view('step-four',compact('company'));
     } 
 
@@ -334,7 +341,8 @@ class RegisterController extends Controller
         $company  = Company::find($id);
         $companyUsers = CompanyUser::where('company_id',$id)->orderBy('name','desc')->get();
         $companyDocuments = CompanyDocument::with('document')->where('company_id',$id)->first();
-        $companyActivities = CompanyActivity::with('services','services.sector','services.parent')->where('company_id',$id)->get();
+        $selected = CompanyActivity::where('company_id',$id)->pluck('service_id')->toArray();
+        $companyActivities = SubCategory::whereIn('id',$selected)->get();
         $data = array(
              'company' => $company,
              'document' =>  $companyDocuments,

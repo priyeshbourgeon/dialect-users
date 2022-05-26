@@ -39,7 +39,7 @@
                                 <h3>Category</h3>
                                 <div class="form_group">
                                     <ul class="sector_list uk-align-center">
-                                        <li><div id="all" class="s_block btn active">All</div></li>
+                                        <li><div id="all" class="s_block btn active" onClick="window.location.reload();">All</div></li>
                                         @foreach(range('A', 'Z') as $char)
                                         <li><div class="s_block btn alpha-category " style="margin:5px;" data-alpha="{{ $char }}">{{ $char }}</div></li>
                                         @endforeach
