@@ -137,13 +137,13 @@
                                                 <span class="uk-badge">{{ Auth::user()->designation ?? '' }}</span>
                                             </li>
                                             <li class="uk-align-center uk-margin-small">
-                                                <a href="#" uk-margin-small> 
+                                                <a href="{{ route('profile') }}" uk-margin-small> 
                                                 <i class="fa fa-user" aria-hidden="true"></i>
                                                   Manage Profile</a>
                                                 </a>
                                             </li>
                                             <li class="uk-align-center uk-margin-small">
-                                                <a href="#" uk-margin-small> 
+                                                <a href="{{ route('change-password') }}" uk-margin-small> 
                                                 <i class="fa fa-key" aria-hidden="true"></i>
                                                   Change Password</a>
                                                 </a>

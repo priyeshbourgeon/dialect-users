@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StaffController;
-
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,3 +93,12 @@ Route::get('/procurement-mail-trash', 'User\Procurement\EnquiryController@mailTr
 Route::get('/procurement-mail-pending', 'User\Procurement\EnquiryController@mailPending')->name('procurement.mailPending');
 Route::post('procurement-mail-save', 'User\Procurement\EnquiryController@store')->name('procurement.mailSave');
 
+
+Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+Route::get('/profile/edit', [ProfileController::class, 'profileEdit'])->name('profile.edit');
+Route::post('/profile/update', [ProfileController::class, 'profileSave'])->name('profile.save');
+
+Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('profile.change-dp');
+
+Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+Route::get('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
