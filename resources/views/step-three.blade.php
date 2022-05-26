@@ -41,7 +41,7 @@
                                     <ul class="sector_list uk-align-center">
                                         <li><div id="all" class="s_block btn active">All</div></li>
                                         @foreach(range('A', 'Z') as $char)
-                                        <li><div class="s_block btn alpha-category" style="margin:5px;" data-alpha="{{ $char }}">{{ $char }}</div></li>
+                                        <li><div class="s_block btn alpha-category " style="margin:5px;" data-alpha="{{ $char }}">{{ $char }}</div></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="uk-width-1-1@m uk-margin-small-top">
                                     <div class="category_list">
                                     @foreach($categories as $key => $category)
-                                        <a class="uk-form-label category  uk-margin-right" for="form-stacked-text" data-id="{{ $category->id }}"><i class="fa fa-arrow-circle-right"></i>{{ $category->name }}</a>
+                                        <a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $category->id }}"><i class="fa fa-arrow-circle-right"></i>{{ $category->name }}</a>
                                     @endforeach
                                    </div>   
                                 </div>
@@ -80,8 +80,7 @@
                             <a id="cart-button" type="button" href="{{ route('registration.companyActivity') }}" 
                             class="btn_com uk-button-large uk-margin" style="margin-top:10px;float: right;">
                                 Selected Business Categories  
-                                <span class="uk-badge" id="cart-count">{{ count($companyActivities) ?? 0 }}</span>
-                                <span id="countloader"></span></a>
+                                <span class="uk-badge" id="cart-count">{{ count($companyActivities) ?? 0 }}</span></a>
                             </div>    
                         </div>
                     </div>
@@ -111,14 +110,14 @@
                     },
                     beforeSend: function() {
                         $(".category_list").empty();
-                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 1"></div></li>');
                     },
                     success:function(res){       
                         if(res){
                             $(".category_list").empty();
                             $('#parentbox').empty();
                             $.each(res,function(key,value){
-                                $(".category_list").append('<a class="uk-form-label category  uk-margin-right" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                $(".category_list").append('<a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
                             });
                         }
                     }
@@ -137,14 +136,14 @@
                     },
                     beforeSend: function() {
                         $(".category_list").empty();
-                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center "><div uk-spinner="ratio: 3"></div></li>');
                     },
                     success:function(res){       
                         if(res){
                             $(".category_list").empty();
                             $('#parentbox').empty();
                             $.each(res,function(key,value){
-                                $(".category_list").append('<a class="uk-form-label category  uk-margin" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                $(".category_list").append('<a class="uk-form-label category  uk-margin cat_block" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
                             });
                         }
                     }
@@ -171,7 +170,7 @@
                             $.each(res,function(key,value){
                                 var name = res[key].name.charAt(0);
                                 let letter = name.toUpperCase();
-                                $("#parentbox").append('<a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" class="uk-form-label subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                $("#parentbox").append('<a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" class="uk-form-label subcategory  uk-margin-right cat_block_linear" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
                             });
                         }
                         else{
@@ -194,11 +193,11 @@
                     },
                     beforeSend: function(){
                         $('#countloader').append('<li class="uk-text-large uk-text-success uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
-                        $('#loading-text').text('Processing... please wait');
+                        $('#loading-text').append('<div><span uk-spinner="ratio: 1"></span>Processing... please wait</div>');
                     },
                     success:function(res){ 
                         $('#countloader').empty();
-                        $('#loading-text').text('');
+                        $('#loading-text').empty('');
                         if(res){
                             var countItem = res.length;
 							$('#cart-count').text(countItem);

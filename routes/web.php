@@ -40,6 +40,7 @@ Route::post('registration/payment-upload-save',  [RegisterController::class,'pay
 Route::post('registration/payment-refernce-save',  [RegisterController::class,'paymentTransferSave'])->name('registration.paymentTransferSave');
 Route::get('registration-registration-completed', [RegisterController::class,'registrationSuccess'])->name('registration.registrationSuccess');
 Route::get('registration/delete-document/{id}',  [RegisterController::class,'deleteDocument'])->name('registration.deleteDocument');
+Route::post('registration/delete-category',  [RegisterController::class,'deleteCategory'])->name('registration.deleteCategory');
 
 Route::get('registration/{token}',  [RegisterController::class,'registrationProcess'])->name('registration');
 Route::get('onboarding/{token}',  [RegisterController::class,'onboarding'])->name('onboarding');

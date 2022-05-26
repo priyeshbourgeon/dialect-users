@@ -290,6 +290,24 @@ class RegisterController extends Controller
         return view('company-activities',compact('company','companyActivities'));
     }
 
+    public function deleteCategory(Request $request){
+        $cat_id = $request->id;
+        $company_id = $request->session()->get('comp_id');
+        $cat = CompanyActivity::where('service_id',$cat_id)->where('company_id',$company_id)->first();
+        $company  = Company::find($company_id);
+
+        if($cat->delete()){
+            $selected = CompanyActivity::where('company_id',$company_id)->pluck('service_id')->toArray();
+            $companyActivities = SubCategory::whereIn('id',$selected)->get();
+            return $companyActivities;
+        }
+        else{
+            $selected = CompanyActivity::where('company_id',$company_id)->pluck('service_id')->toArray();
+            $companyActivities = SubCategory::whereIn('id',$selected)->get();
+            return $companyActivities;
+        }
+    }
+
     public function saveService(Request $request){
         $id = $request->session()->get('comp_id');
         $selected = CompanyActivity::where('company_id',$id)->pluck('service_id')->toArray();
