@@ -167,7 +167,7 @@ class HomeController extends Controller
                       ->whereIn('service',$companyActivities)
                       ->whereNull('ref_id')
 			          ->where('mails.created_at','>',$company->created_at)
-                      ->latest()->paginate(10);
+                      ->orderBy('mails.created_at','desc')->paginate(10);
         return view('sales-home',compact('company','user','mails'));
     }
 
