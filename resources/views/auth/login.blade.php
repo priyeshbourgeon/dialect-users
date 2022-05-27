@@ -10,7 +10,7 @@
                     <div class="uk-align-center">
                         <div>
                             <h2 class="uk-align-center "> Login</h2>
-                            <p>Cras ultricies mauris velit, vitae ornare ex tristique id. Morbi congue commodo lacinia. </p>
+                            <!-- <p>Cras ultricies mauris velit, vitae ornare ex tristique id. Morbi congue commodo lacinia. </p> -->
                         </div>
                         <form method="POST" action="{{ route('login') }}" class="uk-form-stacked">
                         @csrf

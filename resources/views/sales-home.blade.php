@@ -12,7 +12,7 @@
                     </div>  
                     <hr>
                     <ul>
-                       <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> <span class="count">5</span> </a></li>
+                       <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span>  </a></li>
                        <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
                        <li><a href=""><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
                        <li><a href=""><i class="fa fa-calendar-times-o"></i>  <span class="nav_text"> Enquiry Timeout </span> </a></li>
@@ -42,6 +42,11 @@
                                                         {{ $mail->subject }}
                                                     
                                                     </a>
+                                                </td>
+                                                <td>
+                                                <a class="uk-link-reset" href="{{ route('sales.inbox.show',$mail->id) }}">
+                                                    Expiry : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
+                                                </a>
                                                 </td>
                                                 <td class="uk-text-nowrap mail_date">
                                                     {{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}

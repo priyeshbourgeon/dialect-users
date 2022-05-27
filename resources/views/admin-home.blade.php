@@ -7,25 +7,25 @@
                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                            <i class="fa fa-bell-o"></i>
                            <h4>Notification</h4>
-                           <h2>10</h2>
+                           <h2>0</h2>
                            <div><progress class="uk-progress" value="50" max="100"></progress></div>
                        </div>
                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                         <i class="fa fa-file-o"></i>
                         <h4>Reports</h4>
-                        <h2>10</h2>
+                        <h2>0</h2>
                         <div><progress class="uk-progress   progress-green" value="50" max="100"></progress></div>
                     </div>
                     <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                         <i class="fa fa-bullhorn "></i>
                         <h4>Approvals</h4>
-                        <h2>10</h2>
+                        <h2>0</h2>
                         <div><progress class="uk-progress progress-lightseagreen" value="50" max="100"></progress></div>
                     </div>
                     <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                         <i class="fa fa-calendar"></i>
                         <h4>Upcoming Events</h4>
-                        <h2>10</h2>
+                        <h2>0</h2>
                         <div><progress class="uk-progress progress-orange" value="50" max="100"></progress></div>
                     </div>
                    </div>
@@ -130,7 +130,7 @@
                     </div>
                     <div class="col_p" >
                         <div class="col uk-card uk-card-default uk-card-small uk-card-body">
-                            <div class="panel_header"> General Statics</div>
+                            <div class="panel_header">Events</div>
                         </div>
                     </div>
 

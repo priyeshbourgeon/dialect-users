@@ -65,6 +65,7 @@ Route::post('/sales/send-mail', [App\Http\Controllers\HomeController::class, 'se
 Route::get('/sales/outbox', [App\Http\Controllers\HomeController::class, 'salesOutBox'])->name('sales.outbox');
 Route::get('/sales/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesOutBoxShow'])->name('sales.outbox.show');
 
+Route::get('/staff/{role}', [StaffController::class,'index'])->name('staff.index');
 Route::post('/staff/store', [StaffController::class,'store'])->name('staff.store');
 Route::get('/staff/edit/{id}', [StaffController::class,'edit'])->name('staff.edit');
 Route::put('/staff/update/{id}', [StaffController::class,'update'])->name('staff.update');

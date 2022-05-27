@@ -11,8 +11,8 @@
                       <i class="fa fa-caret-down"></i>
                 </div>
                 <div class="dropdown-content">
-                    <a href="#"><i class="fa fa-diamond "></i>Procurement</a>
-                    <a href="#"><i class="fa fa-tag"></i>Sale</a>
+                    <a href="{{ route('staff.index','Procurement') }}"><i class="fa fa-diamond "></i>Procurement</a>
+                    <a href="{{ route('staff.index','Sales') }}"><i class="fa fa-tag"></i>Sale</a>
                 </div>
               </div> 
             <div class="dropdown">

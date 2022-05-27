@@ -19,9 +19,11 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($role)
     {
-        //
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $user = CompanyUser::where('company_id',$company->id)->where('designation',$role)->first();
+        return view('admin.staff.index',compact('company','user'));
     }
 
     /**
