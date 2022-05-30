@@ -22,7 +22,7 @@
                     <ul>
                        <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
                        <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
-                       <li><a uk-tooltip="title: Draft" href="#"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                       <li><a uk-tooltip="title: Draft" href="{{ route('procurement.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
                        <li><a uk-tooltip="title: Upcoming Events" href="#"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
                 </div>
@@ -53,9 +53,9 @@
                                                 </div>
                                             </div>
                                             <div class="form_group category_list">
-                                            @foreach($categories as $key => $cat)
-                                                <a class="uk-form-label category uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $cat->id }}"><i class="fa fa-arrow-circle-right"></i> {{ $cat->name ?? '' }}</a>
-                                            @endforeach
+                                                @foreach($categories as $key => $cat)
+                                                    <a class="uk-form-label category uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $cat->id }}"><i class="fa fa-arrow-circle-right"></i> {{ $cat->name ?? '' }}</a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>

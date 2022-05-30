@@ -70,21 +70,30 @@ class HomeController extends Controller
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
         $mailids = Mail::where('from_company_id',$company->id)->get(['id']);
-        $mails = Mail::where('from_company_id','!=',$company->id)->whereIn('ref_id',$mailids)->latest()->paginate(10);
+        $mails = Mail::where('from_company_id','!=',$company->id)
+                       ->whereIn('ref_id',$mailids)
+                       ->where('is_draft','!=',1)
+                       ->latest()->paginate(10);
         return view('procurement-home',compact('company','user','mails'));
     }
 
     public function proOutBox(){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','procurement')->latest()->paginate(10);
+        $mails = Mail::where('from_company_id',$company->id)
+                       ->where('sender_type','procurement')
+                       ->where('is_draft','!=',1)
+                       ->latest()->paginate(10);
         return view('procurement.outbox',compact('company','user','mails'));
     }
 
     public function salesOutBox(){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','sales')->latest()->paginate(10);
+        $mails = Mail::where('from_company_id',$company->id)
+                       ->where('sender_type','sales')
+                       ->where('is_draft','!=',1)
+                       ->latest()->paginate(10);
         return view('sales.outbox',compact('company','user','mails'));
     }
 
@@ -105,6 +114,7 @@ class HomeController extends Controller
 
 
     public function composeOne(){
+        \Session::forget('selected'); 
         $categories   = Category::all();
         session()->put('selected', []);
         return view('procurement.compose-one',compact('categories'));
@@ -132,7 +142,7 @@ class HomeController extends Controller
              $path = asset('attachment/');
              $imageUrl = $path.'/'.$imageName;
          }
-
+ 
         $company_id = Auth::user()->company_id;
         $company = Company::find($company_id);
         $mode = ($request->submit == 'draft') ? '1' : '0';
@@ -168,6 +178,7 @@ class HomeController extends Controller
                       ->whereNull('ref_id')
 			          ->where('mails.created_at','>',$company->created_at)
                       ->orderBy('mails.created_at','desc')->paginate(10);
+                      
         return view('sales-home',compact('company','user','mails'));
     }
 
@@ -188,7 +199,7 @@ class HomeController extends Controller
     public function sendReply(Request $request){
         $mail_id = $request->mail_id;
         $maildetails = Mail::findOrFail($mail_id);
-
+        $mode = ($request->submit == 'draft') ? '1' : '0';
         $imageUrl  = '';
          if($request->hasFile('attachment')){
              $imageName = time().'.'.$request->attachment->extension();  
@@ -215,11 +226,85 @@ class HomeController extends Controller
         $mail->sender_user             = Auth::user()->id;
         $mail->ref_id                  = $maildetails->id;
         $mail->verified_at             = date('Y-m-d h:i:s');
-        $mail->is_draft                = 0;
+        $mail->is_draft                = $mode;
         $mail->attachment              = $imageUrl;
         $mail->save();
         return redirect()->route('sales.home')->with('success','Mail Send!');
     }
+
+    public function proDraft(Request $request){
+        $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
+        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','procurement')->where('is_draft',1)->latest()->paginate(10);
+        return view('procurement.draft',compact('company','user','mails'));
+    } 
+
+    public function proDraftShow($id){
+        $user = Auth::user();;
+        $company = Company::findOrFail($user->company_id);
+        $mail = Mail::withTrashed()->find($id);
+        $category = SubCategory::find($mail->service);        
+        $countries  = Country::where('status',1)->get();
+        $regions  = Region::where('country_id',$mail->country_id)->where('status',1)->get();
+        return view('procurement.edit-draft',compact('category','company','user','mail','countries','regions'));
+    } 
+
+    public function saveDraft(Request $request,$id){
+        $request->validate([  
+            'country_id'=> 'required',
+            'region_id' => 'required',
+            'body' => 'required',
+            'subject'=> 'required',
+            'timeframe'=> 'required',
+        ]);
+
+        $imageUrl  = '';
+         if($request->hasFile('attachment')){
+             $imageName = time().'.'.$request->attachment->extension();  
+             $request->attachment->move(public_path('attachment'), $imageName);
+             $path = asset('attachment/');
+             $imageUrl = $path.'/'.$imageName;
+         }
+ 
+        $company_id = Auth::user()->company_id;
+        $company = Company::find($company_id);
+        $mode = ($request->submit == 'draft') ? '1' : '0';
+        $mail                          = Mail::find($id);
+        $mail->service                 = $request->services;
+        $mail->country_id              = $request->country_id;
+        $mail->region_id               = $request->region_id;
+        $mail->cc                      = $request->cc;
+        $mail->subject                 = $request->subject;
+        $mail->description             = $request->body;
+        $mail->from_company_id         = $company_id;
+        $mail->sender_name             = $company->name; 
+        $mail->sender_type             = 'procurement';
+        $mail->sender_user             = Auth::user()->id;
+        $mail->verified_at             = date('Y-m-d h:i:s');
+        $mail->request_time            = $request->timeframe;
+        $mail->is_draft                = $mode;
+        $mail->attachment              = $imageUrl;
+        $mail->save();
+
+        return redirect()->route('procurement.home')->with('success','Mail Send!');
+    }
+
+    public function salesEnquiryTimeout(Request $request){
+        $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
+        $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
+        $company_id = Auth::user()->company_id;
+        $mails = Mail::where('from_company_id','!=',$company->id)
+                      ->where('is_draft','!=',1)
+                      ->where('country_id',$company->country_id)
+                      ->whereIn('service',$companyActivities)
+                      ->whereNull('ref_id')
+			          ->where('mails.created_at','>',$company->created_at)
+                      ->where('mails.request_time','>=',today())
+                      ->orderBy('mails.created_at','desc')->paginate(10);
+                      
+        return view('sales.timeout',compact('company','user','mails'));
+    } 
 
     public function getRegion(Request $request){
         $regions = Region::where("country_id",$request->country_id)
@@ -264,5 +349,9 @@ class HomeController extends Controller
         $selected = SubCategory::whereIn('id',session('selected'))->get();
         return response()->json($selected);
     }
+
+    public static function AlphaService($alpha){
+            return Category::where('name','like',$alpha.'%')->orderBy('name','asc')->get();
+    } 
 
 }

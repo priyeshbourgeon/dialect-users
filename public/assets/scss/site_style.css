@@ -454,6 +454,7 @@ footer a {
   width: 25%;
   margin: 2px;
   float: left;
+  min-height: 45px;
 }
 
 .cat_block_linear {
@@ -464,6 +465,7 @@ footer a {
   transition: ease-in 0.5s;
   width: 90%;
   margin: 2px;
+  min-height: 45px;
 }
 
 .uk-table {

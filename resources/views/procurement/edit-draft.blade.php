@@ -35,22 +35,23 @@
                                 
                                 
                                 <div class="panel_header"> Compose Quote</div>
-                                <form action="{{ route('procurement.send') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('procurement.send.draft',$mail->id) }}" method="post" enctype="multipart/form-data">
                                    @csrf
                                     <div class="uk-margin-bottom">
                                         <h3>Selected Services</h3>
-                                        @forelse($services as $service)
-                                            <span class="uk-badge uk-padding">{{ $service->name }}</span>
-                                            <input type="hidden" name="services" value="{{ $service->id }}">
-                                        @empty
+                                        @if($category)
+                                            <span class="uk-badge uk-padding">{{ $category->name }}</span>
+                                            <input type="hidden" name="services" value="{{ $category->id }}">
+                                        @else
                                         <div> Please select a category</div>
-                                        @endforelse
+                                        @endif
                                     </div>
                                 <div class=" form_wraper">
                                 <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Subject</label>
                                         <div class="uk-form-controls">
-                                            <input name="subject" class="uk-input" id="form-stacked-text" type="text" placeholder="Some text...">
+                                            <input name="subject" class="uk-input" id="form-stacked-text" type="text" placeholder="Some text..." 
+                                            value="{{ $mail->subject }}">
                                         </div>
                                         @error('subject')
 								        <small class="error">{{ $message }}</small>
@@ -60,7 +61,7 @@
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Body</label>
                                         <div class="uk-form-controls">
-                                            <textarea id="summernote" name="body"></textarea>
+                                            <textarea id="summernote" name="body">{{ $mail->description }}</textarea>
                                         </div>
                                         @error('body')
 								        <small class="error">{{ $message }}</small>
@@ -73,7 +74,7 @@
                                                 <div class=" form_group">
                                                     <label class="uk-form-label" for="form-stacked-text">Time Frame </label>
                                                     <div class="uk-form-controls">
-                                                        <input type="date" class="uk-input" name="timeframe" required>
+                                                        <input type="date" class="uk-input" name="timeframe" value="{{ $mail->request_time }}" required>
                                                     </div>
                                                     @error('timeframe')
                                                     <small class="error">{{ $message }}</small>
@@ -89,13 +90,14 @@
                                                            <select  id="country" name="country_id" class="drop_category uk-input  drop_select hide " style="width: 100%;">
                                                                 <option value="">Choose Country</option>
                                                                     @foreach($countries as $key => $country)
-                                                                    <option value="{{ $country->id }}">{{$country->name}}</option>
+                                                                    <option {{ $mail->country_id == $country->id ? 'selected' : '' }}
+                                                                    value="{{ $country->id }}">{{$country->name}}</option>
                                                                     @endforeach
                                                                </select>
                                                            </div>
                                                            @error('country_id')
-								           <small class="error">{{ $message }}</small>
-							               @enderror
+                                                            <small class="error">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -109,6 +111,12 @@
                                                             <div class="wrap_select_dropdown">
                                                            <select name="region_id"  id="region" class="drop_category uk-input  drop_select hide " style="width: 100%;">
                                                                <option value="">Choose Region</option>
+                                                               @if($mail->region_id)
+                                                                   @foreach($regions as $key => $region)
+                                                                        <option {{ $mail->region_id == $region->id ? 'selected' : '' }}
+                                                                        value="{{ $region->id }}">{{$region->name}}</option>
+                                                                    @endforeach
+                                                               @endif
                                                               </select>
                                                            </div>
                                                         </div>

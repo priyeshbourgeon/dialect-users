@@ -27,19 +27,19 @@
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">        
-                            <div class="panel_header"> Sent</div>
+                            <div class="panel_header"> Draft</div>
                                 <div class="uk-overflow-auto table_ct">
                                     <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">   
                                       <tbody>
                                       @forelse( $mails as $key => $mail )
                                           <tr>                         
                                                 <td class="uk-table-link">
-                                                    <a class="uk-link-reset" href="{{ route('procurement.outbox.show',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('procurement.draft.show',$mail->id) }}">
                                                     <strong> {{ $mail->subject }}</strong>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                <a class="uk-link-reset" href="{{ route('procurement.outbox.show',$mail->id) }}">
+                                                <a class="uk-link-reset" href="{{ route('procurement.draft.show',$mail->id) }}">
                                                 @if($mail->request_time > \Carbon\Carbon::today())
                                                 <p class="uk-article-meta"><strong>Valid Upto : </strong> {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}</p>
                                                 @else
@@ -48,7 +48,7 @@
                                                 </a>
                                                 </td>
                                                 <td class="uk-text-nowrap mail_date">
-                                                <a class="uk-link-reset" href="{{ route('procurement.outbox.show',$mail->id) }}">
+                                                <a class="uk-link-reset" href="{{ route('procurement.draft.show',$mail->id) }}">
                                                     {{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}
                                                 </a>
                                                 </td>

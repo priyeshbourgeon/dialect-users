@@ -58,12 +58,16 @@ Route::get('/procurement/compose', [App\Http\Controllers\HomeController::class, 
 Route::post('/procurement/send-mail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('procurement.send');
 Route::get('/procurement/outbox', [App\Http\Controllers\HomeController::class, 'proOutBox'])->name('procurement.outbox');
 Route::get('/procurement/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proOutBoxShow'])->name('procurement.outbox.show');
+Route::get('/procurement/draft', [App\Http\Controllers\HomeController::class, 'proDraft'])->name('procurement.draft');
+Route::get('/procurement/draft/edit/{id}', [App\Http\Controllers\HomeController::class, 'proDraftShow'])->name('procurement.draft.show');
+Route::post('/procurement/send-draft/{id}', [App\Http\Controllers\HomeController::class, 'saveDraft'])->name('procurement.send.draft');
 
 Route::get('/sales/home', [App\Http\Controllers\HomeController::class, 'sales'])->name('sales.home');
 Route::get('/sales/inbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesInboxBoxShow'])->name('sales.inbox.show');
 Route::post('/sales/send-mail', [App\Http\Controllers\HomeController::class, 'sendReply'])->name('sales.sendreply');
 Route::get('/sales/outbox', [App\Http\Controllers\HomeController::class, 'salesOutBox'])->name('sales.outbox');
 Route::get('/sales/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesOutBoxShow'])->name('sales.outbox.show');
+Route::get('/sales/enquiry-timeout', [App\Http\Controllers\HomeController::class, 'salesEnquiryTimeout'])->name('sales.enquiry-timeout');
 
 Route::get('/staff/{role}', [StaffController::class,'index'])->name('staff.index');
 Route::post('/staff/store', [StaffController::class,'store'])->name('staff.store');
@@ -98,8 +102,9 @@ Route::post('procurement-mail-save', 'User\Procurement\EnquiryController@store')
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 Route::get('/profile/edit', [ProfileController::class, 'profileEdit'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'profileSave'])->name('profile.save');
+Route::get('/profile/business-category', [ProfileController::class, 'profileCategories'])->name('profile.categories');
 
 Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('profile.change-dp');
 
 Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
-Route::get('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');

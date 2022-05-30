@@ -41,6 +41,7 @@
                                     </div> 
                                     <div class="footer">
                                         <a href="{{ url()->previous() }}" class="btn_com"> Back</a>
+                                        <a href="{{ route('profile.categories') }}" class="btn_com"> Business Categories</a>
                                         <a href="{{ route('profile.edit') }}" class="btn_com"> Edit Profile</a>
                                     </div>                    
      
@@ -49,6 +50,7 @@
                         </div>
 
                 </div>
+                
  
             </div>
         </section>

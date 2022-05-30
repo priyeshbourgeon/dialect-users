@@ -11,6 +11,8 @@ class CompanyUser extends Authenticatable
 {
     use SoftDeletes,Notifiable;
 
+    protected $guarded = [''];
+
     public function company(){
         return $this->belongsTo(Company::class,'company_id','id');
     }
