@@ -1,4 +1,4 @@
-@extends(auth()->user()->designation.'.layouts.app')
+@extends(strtolower(auth()->user()->designation).'.layouts.app')
 @section('content')
  <!-- banner -->
         <section class="mail_wrap">
