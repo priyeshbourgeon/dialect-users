@@ -163,6 +163,7 @@
 					if(res){
 						$("#region").empty();
 						$("#region").append('<option>Select Region</option>');
+                        $("#region").append('<option value="0">All Region</option>');
 						$.each(res,function(key,value){
 							$("#region").append('<option value="'+key+'">'+value+'</option>');
 						});
