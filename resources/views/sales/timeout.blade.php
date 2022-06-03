@@ -14,7 +14,7 @@
                     <ul>
                        <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span>  </a></li>
                        <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
-                       <li><a href=""><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                       <!-- <li><a href=""><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li> -->
                        <li><a href="{{ route('sales.enquiry-timeout') }}"><i class="fa fa-calendar-times-o"></i>  <span class="nav_text"> Enquiry Timeout </span> </a></li>
                        <li><a href=""><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
@@ -32,13 +32,19 @@
                                       @forelse( $mails as $key => $mail )
                                           <tr>
                                           <td class="uk-text-nowrap">
-                                                    <a class="uk-link-reset" href="{{ route('sales.outbox.show',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('sales.enquiry-timeout.show',$mail->id) }}">
                                                         {{ ucfirst($mail->sender_name) }}
                                                     </a>    
                                                 </td>                               
                                                 <td class="uk-table-link">
-                                                    <a class="uk-link-reset" href="{{ route('sales.outbox.show',$mail->id) }}">
+                                                    <a class="uk-link-reset" href="{{ route('sales.enquiry-timeout.show',$mail->id) }}">
                                                         {{ $mail->subject }}
+                                                    
+                                                    </a>
+                                                </td>
+                                                <td class="uk-table-link">
+                                                    <a class="uk-link-reset" href="{{ route('sales.enquiry-timeout.show',$mail->id) }}">
+                                                        Expired On : {{ \Carbon\Carbon::parse($mail->request_time)->format('d-m-Y') }}
                                                     
                                                     </a>
                                                 </td>

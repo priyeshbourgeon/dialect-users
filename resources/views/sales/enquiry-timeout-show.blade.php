@@ -37,7 +37,7 @@
                             <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                                 
                                 
-                                <div class="panel_header"> Sent</div>
+                                <div class="panel_header"> Enquiry Timeout</div>
                                
     
                                 <div class="uk-overflow-auto table_ct">
@@ -53,6 +53,10 @@
                         <hr class="uk-divider-icon">
                         @if($mail->attachment)
                             <a href="{{ $mail->attachment ?? '' }}" download>Download Attachment</a>
+                        @endif
+
+                        @if($mail->request_time < date('Y-m-d'))
+                        <p style="color:red">This enquiry has been expired on {{ \Carbon\Carbon::parse($mail->request_time)->format('d-m-Y') }}</p>
                         @endif
                         </article>
                                 

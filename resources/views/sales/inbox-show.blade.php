@@ -14,7 +14,7 @@
                     <ul>
                        <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
                        <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
-                       <li><a href=""><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                       <!-- <li><a href=""><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li> -->
                        <li><a href="{{ route('sales.enquiry-timeout') }}"><i class="fa fa-calendar-times-o"></i>  <span class="nav_text"> Enquiry Timeout </span> </a></li>
                        <li><a href=""><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
@@ -44,6 +44,7 @@
                             <a href="{{ $mail->attachment ?? '' }}" download>Download Attachment</a>
                         @endif
                         <div class="uk-overflow-auto table_ct">
+                        @if($mail->request_time >= date('Y-m-d'))
                         <form action="{{ route('sales.sendreply') }}" method="post"  enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="mail_id" value="{{ $mail->id }}" /> 
@@ -75,6 +76,9 @@
                                 <button type="submit" class="btn_com">Send</button>
                             </div>
                         </form>
+                        @else
+                             <p style="color:red">This enquiry has been expired on {{ \Carbon\Carbon::parse($mail->request_time)->format('d-m-Y') }}</p>
+                        @endif
                     </div>
                         </article>
                                 

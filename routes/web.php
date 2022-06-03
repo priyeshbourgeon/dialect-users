@@ -68,6 +68,7 @@ Route::post('/sales/send-mail', [App\Http\Controllers\HomeController::class, 'se
 Route::get('/sales/outbox', [App\Http\Controllers\HomeController::class, 'salesOutBox'])->name('sales.outbox');
 Route::get('/sales/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesOutBoxShow'])->name('sales.outbox.show');
 Route::get('/sales/enquiry-timeout', [App\Http\Controllers\HomeController::class, 'salesEnquiryTimeout'])->name('sales.enquiry-timeout');
+Route::get('/sales/enquiry-timeout/show/{id}', [App\Http\Controllers\HomeController::class, 'salesEnquiryTimeoutShow'])->name('sales.enquiry-timeout.show');
 
 Route::get('/staff/{role}', [StaffController::class,'index'])->name('staff.index');
 Route::post('/staff/store', [StaffController::class,'store'])->name('staff.store');

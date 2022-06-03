@@ -111,6 +111,12 @@ class HomeController extends Controller
         return view('sales.outbox-show',compact('company','user','mail'));
     }
 
+    public function salesEnquiryTimeoutShow($id){
+        $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
+        $mail = Mail::withTrashed()->find($id);
+        return view('sales.enquiry-timeout-show',compact('company','user','mail'));
+    } 
 
 
     public function composeOne(){
@@ -177,6 +183,7 @@ class HomeController extends Controller
                       ->whereIn('service',$companyActivities)
                       ->whereNull('ref_id')
 			          ->where('mails.created_at','>',$company->created_at)
+                      ->whereDate('mails.request_time','>=',date('Y-m-d'))
                       ->orderBy('mails.created_at','desc')->paginate(10);
                       
         return view('sales-home',compact('company','user','mails'));
@@ -294,15 +301,16 @@ class HomeController extends Controller
         $company = Company::findOrFail($user->company_id);
         $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
         $company_id = Auth::user()->company_id;
+        \DB::enableQueryLog();
         $mails = Mail::where('from_company_id','!=',$company->id)
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
                       ->whereIn('service',$companyActivities)
                       ->whereNull('ref_id')
 			          ->where('mails.created_at','>',$company->created_at)
-                      ->where('mails.request_time','>=',today())
+                      ->whereDate('mails.request_time','<',date('Y-m-d'))
                       ->orderBy('mails.created_at','desc')->paginate(10);
-                      
+       // dd(\DB::getQueryLog());
         return view('sales.timeout',compact('company','user','mails'));
     } 
 
