@@ -57,9 +57,7 @@ Route::get('/procurement/inbox/show/{id}', [App\Http\Controllers\HomeController:
 
 Route::get('/procurement/outbox', [App\Http\Controllers\HomeController::class, 'proOutBox'])->name('procurement.outbox');
 Route::get('/procurement/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proOutBoxShow'])->name('procurement.outbox.show');
-Route::get('/procurement/draft', [App\Http\Controllers\HomeController::class, 'proDraft'])->name('procurement.draft');
-Route::get('/procurement/draft/edit/{id}', [App\Http\Controllers\HomeController::class, 'proDraftShow'])->name('procurement.draft.show');
-Route::post('/procurement/send-draft/{id}', [App\Http\Controllers\HomeController::class, 'saveDraft'])->name('procurement.send.draft');
+
 
 Route::get('/sales/home', [App\Http\Controllers\HomeController::class, 'sales'])->name('sales.home');
 Route::get('/sales/inbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesInboxBoxShow'])->name('sales.inbox.show');
@@ -121,3 +119,6 @@ Route::get('/procurement/compose', [ProcurementController::class, 'composeTwo'])
 Route::post('/procurement/send-mail', [ProcurementController::class, 'sendMail'])->name('procurement.send');
 Route::get('/procurement/events', [ProcurementController::class, 'events'])->name('procurement.events');
 Route::post('/procurement/mail/read',[ProcurementController::class,'getMailContent'])->name('procurement.getMailContent');
+Route::get('/procurement/draft', [ProcurementController::class, 'proDraft'])->name('procurement.draft');
+Route::get('/procurement/draft/edit/{id}', [ProcurementController::class, 'proDraftShow'])->name('procurement.draft.show');
+Route::post('/procurement/send-draft/{id}', [ProcurementController::class, 'saveDraft'])->name('procurement.send.draft');

@@ -93,4 +93,61 @@ class ProcurementController extends Controller
     public function events(){
         return view('procurement.events');
     }
+
+    public function proDraft(Request $request){
+        $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
+        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','procurement')->where('is_draft',1)->latest()->paginate(10);
+        return view('procurement.draft',compact('company','user','mails'));
+    } 
+
+    public function proDraftShow($id){
+        $user = Auth::user();;
+        $company = Company::findOrFail($user->company_id);
+        $mail = Mail::withTrashed()->find($id);
+        $category = SubCategory::find($mail->service);        
+        $countries  = Country::where('status',1)->get();
+        $regions  = Region::where('country_id',$mail->country_id)->where('status',1)->get();
+        return view('procurement.edit-draft',compact('category','company','user','mail','countries','regions'));
+    } 
+
+    public function saveDraft(Request $request,$id){
+        $request->validate([  
+            'country_id'=> 'required',
+            'region_id' => 'required',
+            'body' => 'required',
+            'subject'=> 'required',
+            'timeframe'=> 'required',
+        ]);
+
+        $imageUrl  = '';
+         if($request->hasFile('attachment')){
+             $imageName = time().'.'.$request->attachment->extension();  
+             $request->attachment->move(public_path('attachment'), $imageName);
+             $path = asset('attachment/');
+             $imageUrl = $path.'/'.$imageName;
+         }
+ 
+        $company_id = Auth::user()->company_id;
+        $company = Company::find($company_id);
+        $mode = ($request->submit == 'draft') ? '1' : '0';
+        $mail                          = Mail::find($id);
+        $mail->service                 = $request->services;
+        $mail->country_id              = $request->country_id;
+        $mail->region_id               = $request->region_id;
+        $mail->cc                      = $request->cc;
+        $mail->subject                 = $request->subject;
+        $mail->description             = $request->body;
+        $mail->from_company_id         = $company_id;
+        $mail->sender_name             = $company->name; 
+        $mail->sender_type             = 'procurement';
+        $mail->sender_user             = Auth::user()->id;
+        $mail->verified_at             = date('Y-m-d h:i:s');
+        $mail->request_time            = $request->timeframe;
+        $mail->is_draft                = $mode;
+        $mail->attachment              = $imageUrl;
+        $mail->save();
+
+        return redirect()->route('procurement.home')->with('success','Mail Send!');
+    }
 }

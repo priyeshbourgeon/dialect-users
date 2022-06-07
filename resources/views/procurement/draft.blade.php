@@ -1,8 +1,8 @@
 @extends('procurement.layouts.app')
 @section('content')
 <section class="mail_wrap">
-    <div>   
-        <div class="mail_grip_wrap">
+    <div>
+        <div class="mail_grip_wrap mail_theme">
             <div class="col_maii_left toggle_sidebar">        
                 <div class=" uk-card uk-card-default uk-card-small ">
                     <div class="side_anglebnt">
@@ -22,71 +22,152 @@
                     </ul>
                 </div>
             </div>
-            <div class="col_right_ca">
-                <h1 class="comm_title">Hi, {{ Auth::user()->name ?? '' }}</h1>
+            <div class="col_right_ca">          
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
-                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">        
-                            <div class="panel_header"> Draft</div>
-                                <div class="uk-overflow-auto table_ct">
-                                    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">   
-                                      <tbody>
-                                      @forelse( $mails as $key => $mail )
-                                          <tr>                         
-                                                <td class="uk-table-link">
-                                                    <a class="uk-link-reset" href="{{ route('procurement.draft.show',$mail->id) }}">
-                                                    <strong> {{ $mail->subject }}</strong>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                <a class="uk-link-reset" href="{{ route('procurement.draft.show',$mail->id) }}">
+                        <ul uk-accordion>
+                            @forelse($mails as $key => $mail)
+                            <li class="uk-margin-remove">
+                                <a class="" href="#">
+                                    <div class="main_sml_box">
+                                        <div class="sort_text">
+                                            <!-- dropdow -->   
+                                            <!-- <div class="more_inb"> <i class="fa fa-ellipsis-v"></i> </div>
+                                            <div uk-dropdown="pos: bottom-right" >
+                                                <ul class="uk-nav uk-dropdown-nav">
+                                                    <li>Delete</li>
+                                                </ul>
+                                            </div> -->
+                                            <!-- dropdow -->
+                                            <a  data-id="{{ $mail->id }}" class="readmail">  
+                                            <span class="inb_date">{{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}</span>
+                                            <h4 class="sm_text">{{ $mail->category->name ?? 'fetching cetgory...' }}</h4>
+                                            <h4 class="sm_text sub">{{ $mail->reference_no }}</h4>
+                                            <div class="text-pr">{{ $mail->subject }}</div>
+                                            <div class="posted_date">Posted Date: {{ \Carbon\Carbon::parse($mail->created_at)->format('d F Y') }}</div>
+                                            <div class="posted_date">
                                                 @if($mail->request_time > \Carbon\Carbon::today())
-                                                <p class="uk-article-meta"><strong>Valid Upto : </strong> {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}</p>
+                                                Valid Upto : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
                                                 @else
-                                                <p class="uk-article-meta"><strong>Expired On :</strong> {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}</p>
+                                                Expired On : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
                                                 @endif
-                                                </a>
-                                                </td>
-                                                <td class="uk-text-nowrap mail_date">
-                                                <a class="uk-link-reset" href="{{ route('procurement.draft.show',$mail->id) }}">
-                                                    {{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}
-                                                </a>
-                                                </td>
-                                          </tr>
-                                          @empty
-                                          <tr>
-                                              <td style="height:250px;text-align:center;" colspan="3">No Mails Found!</td>
-                                          </tr>
-                                          @endforelse 
-                                      </tbody>
-                                  </table>
-                              </div>
-                          </div>
-                        </div>
-
-
-                          <div class="col_maii_right">
-                            <div class=" uk-card uk-card-default uk-card-small uk-card-body">
-                                <div class="panel_header"> Notification & Approvals</div>
-    
-                            </div>
-    
-    
-                        </div>  
-    
-                        </div>
-                        
-
+                                            </div>
+                                            </a>
+                                            </hr>
+                                            @if($mail->attachment)
+                                                <a href="{{ $mail->attachment ?? '' }}" download  uk-tooltip="title: Download Attachment" >
+                                                    <i class="fa fa-paperclip mr-2" aria-hidden="true"></i>
+                                                     Download Attachment</a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            @empty
+                            <li class="uk-margin-remove">
+                                <a class="" href="#">
+                                    <div class="main_sml_box">                                      
+                                        <div class="sort_text">
+                                             No Data Found!
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                            </li>
+                            @endforelse
+                        </ul>
                     </div>
+                    <div class="col_maii_right">
+                    <div class="mail_expand uk-padding-right">
+                            <h3 class="subject">
+                                
+                            </h3>
+                            <div class="main_head">
+                                
+                                <div class="mailer_box">
+                                    <h3 class="mailer_name"> </h3>
+                                    <div class="date"></div>
+                                    <div class="mail_id"></div>
+                                </div>
+                            </div>
+                            <div class="mail_text uk-margin-top mail_content">
+                                
+                            </div>
+                            <div class="mail_attachment">
 
-                    
-                  
+                            </div>
+                            <!-- nest Section  -->
+                            <div class="uk-margin-top editbutton">
+                                
+                            </div>           
+                            
+                      </div>
+                    </div>
+                </div>        
+            </div>            
+        </div>          
+    </div>
+</div>
+<input type="hidden" id="fetch_mail_url" value="{{ route('procurement.getMailContent') }}" />
+</section>
+@push('scripts')
+<script>
+    $("body").on("click",".readmail",function(){
+        $('div').removeClass('current_mail');
+		var fetch_mail_url = $("#fetch_mail_url").val();
+		var mailId = $(this).data('id'); 
+        $(this).parent().parent().addClass('current_mail');
+		var token = $('meta[name="csrf-token"]').attr('content');   
+		if(mailId){
+			$.ajax({
+				type:"POST",
+				url: fetch_mail_url,
+				data:{
+					'_token':token,
+					'id':mailId
+				},
+				beforeSend: function() {
+                    $('.subject').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_name').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.date').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mail_id').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mail_attachment').empty();
+					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
+				},
+				success:function(res){        
+					if(res){
+                        obj = jQuery.parseJSON(res);
+						$('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
+                        $('.mailer_name').text(obj.sender_name).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
+                        $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
+                        $('.editbutton').html('<a href="/procurement/draft/edit/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i>Edit Draft</a>');
+                        if(obj.attachment){
+                           $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
+                        }
+                        else{
+                            $('.mail_attachment').empty();
+                        }
+                    }else{
+						$('.subject').empty();
+                        $('.mailer_name').empty();
+                        $('.date').empty();
+                        $('.mail_id').empty();
+                        $('.mail_attachment').empty();
+                        $('.mail_content').empty();
+                        }
+				}
+			});
+		}
+		else{
+			
+		}
+	});
 
-                </div>
- 
-            </div>
-        </section>
-    
+</script>
+@endpush  
 @endsection
 
        
