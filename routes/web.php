@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProcurementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,11 +52,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin.home');
-Route::get('/procurement/home', [App\Http\Controllers\HomeController::class, 'procurement'])->name('procurement.home');
+
 Route::get('/procurement/inbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
-Route::get('/procurement/compose-select-category', [App\Http\Controllers\HomeController::class, 'composeOne'])->name('procurement.compose-one');
-Route::get('/procurement/compose', [App\Http\Controllers\HomeController::class, 'composeTwo'])->name('procurement.compose-two');
-Route::post('/procurement/send-mail', [App\Http\Controllers\HomeController::class, 'sendMail'])->name('procurement.send');
+
 Route::get('/procurement/outbox', [App\Http\Controllers\HomeController::class, 'proOutBox'])->name('procurement.outbox');
 Route::get('/procurement/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proOutBoxShow'])->name('procurement.outbox.show');
 Route::get('/procurement/draft', [App\Http\Controllers\HomeController::class, 'proDraft'])->name('procurement.draft');
@@ -109,3 +108,16 @@ Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('pr
 
 Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
 Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+
+
+
+// Procurement 
+   
+Route::get('/procurement/home', [App\Http\Controllers\HomeController::class, 'procurement'])->name('procurement.home');
+Route::get('/procurement/inbox', [ProcurementController::class, 'inbox'])->name('procurement.inbox');
+Route::get('/procurement/inbox/show/{id}', [ProcurementController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
+Route::get('/procurement/compose-select-category', [ProcurementController::class, 'composeOne'])->name('procurement.compose-one');
+Route::get('/procurement/compose', [ProcurementController::class, 'composeTwo'])->name('procurement.compose-two');
+Route::post('/procurement/send-mail', [ProcurementController::class, 'sendMail'])->name('procurement.send');
+Route::get('/procurement/events', [ProcurementController::class, 'events'])->name('procurement.events');
+Route::post('/procurement/mail/read',[ProcurementController::class,'getMailContent'])->name('procurement.getMailContent');

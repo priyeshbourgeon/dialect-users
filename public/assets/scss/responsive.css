@@ -4,27 +4,55 @@
     margin: 5px 10px;
   }
 }
+
 @media screen and (min-width: 900px) {
+  .mail_wrap {
+    min-height: calc(100% - 231px);
+  }
   .mail_grip_wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 15px;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: stretch;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
     height: 100%;
   }
   .mail_grip_wrap .uk-card {
     height: 100%;
   }
 }
+
 @media screen and (max-width: 760px) {
+  header .header_nav {
+    padding-top: 8px;
+  }
+  .main_sml_box .sort_text .inb_date {
+    position: inherit;
+    float: left;
+    margin-right: 11px;
+    width: 100%;
+  }
+  .main_sml_box .sort_text .sm_text {
+    margin-right: 0;
+  }
   .col_maii_middle {
-    flex-flow: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
   }
   .col_maii_middle .col_maiil_left, .col_maii_middle .col_maii_right {
     width: 100%;
   }
-
   .col_maii_left {
     width: 15%;
   }
@@ -40,18 +68,15 @@
   .col_maii_left .compose_mail a span {
     display: none;
   }
-
   .mail_grip_wrap .col_right_ca {
     width: 85%;
   }
-
   .btn_com {
     border-radius: 5px;
     padding: 9px 16px;
     display: inline-block;
     font-size: 12px;
   }
-
   .wrap_home_hero_login_block .home_hero_login_block {
     margin: 0 auto;
     left: 1px;
@@ -68,35 +93,42 @@
     right: 12px !important;
   }
 }
+
 @media screen and (max-width: 900px) {
+  .col_maii_middle .col_maii_right {
+    padding-right: 0;
+  }
+  .mail_wrap {
+    min-height: calc(100%);
+  }
+  .mail_grip_wrap {
+    height: 100%;
+  }
   .ad_profile .inner {
     padding: 0px;
   }
-
   .bottom_grid {
     display: block;
   }
   .bottom_grid .col_p:nth-child(1), .bottom_grid .col_p:nth-child(2) {
     width: 100%;
   }
-
   .dash_tile {
-    grid-template-columns: repeat(2, 1fr);
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
   }
-
   .dropdown-content {
     margin-top: 0px;
   }
-
   .inner_page {
     height: auto;
   }
-
   .wrap_home_hero_login_block .home_hero_login_block {
     width: 600px;
     margin: 0 auto;
     padding: 1.5rem;
-    transition: width 0.35s ease-in-out;
+    -webkit-transition: width .35s ease-in-out;
+    transition: width .35s ease-in-out;
     left: 1px;
     right: 1px;
   }
@@ -112,16 +144,13 @@
   .wrap_home_hero_login_block .home_hero_login_block.otp_box h3 {
     font-size: 16px;
   }
-
   .topnav a:not(:first-child), .dropdown .dropbtn {
     display: none;
   }
-
   .topnav a.icon {
     float: right;
     display: block !important;
   }
-
   .topnav.responsive {
     position: relative;
   }
@@ -147,28 +176,40 @@
     position: relative;
   }
 }
+
 @media screen and (max-width: 1200px) {
+  .col_maii_middle {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+  }
+  .col_maii_middle .col_maiil_left, .col_maii_middle .col_maii_right {
+    width: 100%;
+  }
   .main_nav .topnav a {
     font-size: 13px;
     padding: 14px 10px;
   }
 }
+
 @media screen and (max-width: 490px) {
   .ad_profile .footer {
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
-
   .dash_tile {
-    grid-template-columns: repeat(1, 1fr);
+    -ms-grid-columns: (1fr)[1];
+        grid-template-columns: repeat(1, 1fr);
   }
-
   header {
     height: 4rem;
   }
   header .dp_name {
     font-size: 12px;
   }
-
   .wrap_home_hero_login_block .home_hero_login_block {
     width: 300px;
   }
@@ -185,7 +226,6 @@
   .wrap_home_hero_login_block .home_hero_login_block a {
     display: block;
   }
-
   .wrap_pop .popup_text {
     padding: 10px 0;
   }
@@ -198,8 +238,8 @@
     width: 100%;
     padding: 15px 0;
   }
-
   .tab_wraper .uk-tab li a {
-    font-size: 0.8rem;
+    font-size: .8rem;
   }
-}/*# sourceMappingURL=responsive.css.map */
+}
+/*# sourceMappingURL=responsive.css.map */

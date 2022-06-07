@@ -16,7 +16,15 @@ class Mail extends Model
         return $this->belongsTo(Country::class,'country_id','id');
     }
 
+    public function region(){
+        return $this->belongsTo(Region::class,'region_id','id');
+    }
+
     public function user(){
         return $this->belongsTo(CompanyUser::class,'sender_user','id');
+    }
+
+    public function reply(){
+        return $this->hasMany(Mail::class,'ref_id','id');
     }
 }
