@@ -39,7 +39,7 @@
                                                 </ul>
                                             </div> -->
                                             <!-- dropdow -->
-                                            <a href="" data-id="{{ $mail->id }}">
+                                            <a  data-id="{{ $mail->id }}" class="readmail">  
                                             <span class="inb_date">{{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}</span>
                                             <h4 class="sm_text">{{ $mail->category->name ?? 'fetching cetgory...' }}</h4>
                                             <h4 class="sm_text sub">{{ $mail->reference_no }}</h4>
@@ -134,47 +134,96 @@
                         </ul>
                     </div>
                     <div class="col_maii_right">
-                        <div class="mail_expand uk-padding-right">
+                    <div class="mail_expand uk-padding-right">
                             <h3 class="subject">
-                                roin sem augue, maximus nec dictum vel,
+                                
                             </h3>
                             <div class="main_head">
-                                <div class="mail_dp">
-                                    <img src="images/profile_dp.jpg" alt="">
-                                </div>
+                                
                                 <div class="mailer_box">
-                                    <h3 class="mailer_name ">  Bourgeon Technologies Pvt. Ltd.  </h3>
-                                    <div class="date"> Fri, 26, 2022, 9.05 AM</div>
-                                    <div class="mail_id">info@123tech.com</div>
+                                    <h3 class="mailer_name"> </h3>
+                                    <div class="date"></div>
+                                    <div class="mail_id"></div>
                                 </div>
                             </div>
-                            <div class="mail_text uk-margin-top">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat leo a lectus molestie varius non eget erat. Nulla tristique nisl in convallis pretium. Nullam maximus, nunc sit amet fermentum tincidunt, velit libero tincidunt ante, eget bibendum ipsum ligula at erat. Nunc tempor augue ut eros porttitor, in vehicula tortor faucibus. Donec rutrum, justo et ornare placerat, velit neque iaculis magna, in ullamcorper erat eros ut neque. Vivamus lacinia ligula tellus, sit amet scelerisque nibh interdum vitae. Phasellus vestibulum ligula a nulla auctor tincidunt at mattis sem. Maecenas mollis blandit facilisis. Quisque luctus justo nec mi luctus tempus. Sed risus nulla, elementum in vulputate ac, commodo sit amet nibh. Nulla a quam ut lacus consectetur pretium              
+                            <div class="mail_text uk-margin-top mail_content">
+                                
+                            </div>
+                            <div class="mail_attachment">
+
                             </div>
                             <!-- nest Section  -->
-                            <div class="uk-margin-top">
-                                <button class="uk-button uk-button-default "><i class="fa fa-reply" aria-hidden="true"></i> Replay</button>
+                            <div class="uk-margin-top editbutton">
+                                
                             </div>           
-                            <div class="main_head uk-margin-medium-top">
-                                <div class="mail_dp">
-                                    <img src="images/profile_dp.jpg" alt="">
-                                </div>
-                                <div class="mailer_box">
-                                <h3 class="mailer_name ">  Bourgeon Technologies Pvt. Ltd.  </h3>
-                                <div class="date"> Fri, 26, 2022, 9.05 AM</div>
-                                <div class="mail_id">info@123tech.com</div>
-                            </div>
-                        </div>
-                        <div class="mail_text uk-margin-top">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat leo a lectus molestie varius non eget erat. Nulla tristique nisl in convallis pretium. Nullam maximus, nunc sit amet fermentum tincidunt, velit libero tincidunt ante, eget bibendum ipsum ligula at erat. Nunc tempor augue ut eros porttitor, in vehicula tortor faucibus. Donec rutrum, justo et ornare placerat, velit neque iaculis magna, in ullamcorper erat eros ut neque. Vivamus lacinia ligula tellus, sit amet scelerisque nibh interdum vitae. Phasellus vestibulum ligula a nulla auctor tincidunt at mattis sem.                    
-                        </div>
+                            
+                      </div>
                     </div>
                 </div>        
             </div>            
         </div>          
     </div>
 </div>
+<input type="hidden" id="fetch_mail_url" value="{{ route('procurement.getMailContent') }}" />
 </section>
+@push('scripts')
+<script>
+    $("body").on("click",".readmail",function(){
+        $('div').removeClass('current_mail');
+		var fetch_mail_url = $("#fetch_mail_url").val();
+		var mailId = $(this).data('id'); 
+        $(this).parent().parent().addClass('current_mail');
+		var token = $('meta[name="csrf-token"]').attr('content');   
+		if(mailId){
+			$.ajax({
+				type:"POST",
+				url: fetch_mail_url,
+				data:{
+					'_token':token,
+					'id':mailId
+				},
+				beforeSend: function() {
+                    $('.subject').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_name').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.date').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mail_id').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mail_attachment').empty();
+					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
+				},
+				success:function(res){        
+					if(res){
+                        obj = jQuery.parseJSON(res);
+						$('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
+                        $('.mailer_name').text(obj.sender_name).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
+                        $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
+                        $('.editbutton').html('<a class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i> Update Time Frame</a>');
+                        if(obj.attachment){
+                           $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
+                        }
+                        else{
+                            $('.mail_attachment').empty();
+                        }
+                    }else{
+						$('.subject').empty();
+                        $('.mailer_name').empty();
+                        $('.date').empty();
+                        $('.mail_id').empty();
+                        $('.mail_attachment').empty();
+                        $('.mail_content').empty();
+                        }
+				}
+			});
+		}
+		else{
+			
+		}
+	});
+
+</script>
+@endpush  
 @endsection
 
        
