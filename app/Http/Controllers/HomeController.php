@@ -130,7 +130,7 @@ class HomeController extends Controller
                       ->whereDate('mails.request_time','>=',date('Y-m-d'))
                       ->orderBy('mails.created_at','desc')->paginate(10);
                       
-        return view('sales-home',compact('company','user','mails'));
+        return view('sales.inbox',compact('company','user','mails'));
     }
 
     public function salesInboxBoxShow($id){
