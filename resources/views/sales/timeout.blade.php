@@ -45,11 +45,11 @@
                                             <div class="text-pr">{{ $mail->subject }}</div>
                                             <div class="posted_date">Posted Date: {{ \Carbon\Carbon::parse($mail->created_at)->format('d F Y') }}</div>
                                             <div class="posted_date">
-                                                @if($mail->request_time > \Carbon\Carbon::today())
+                                            @if($mail->request_time > \Carbon\Carbon::today())
                                                 Valid Upto : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
-                                                @else
+                                            @else
                                                 Expired On : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
-                                                @endif
+                                            @endif
                                             </div>
                                             </a>
                                             </hr>
