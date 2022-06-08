@@ -65,13 +65,8 @@
                             </li>
                             @empty
                             <li class="uk-margin-remove">
-                                <a class="uk-accordion-title" href="#">
-                                    <div class="main_sml_box">                                      
-                                        <div class="sort_text">
-                                              No Data Found!
-                                        </div>
-                                    </div>
-                                </a>
+                                <img src="{{ asset('assets/images/data/nodatafound.png') }}" style="margin-left:25%;"/>
+                                <h4 style="margin-left:32%;">No Enquiries Found!</h4>
                             </li>
                             @endforelse
                         </ul>

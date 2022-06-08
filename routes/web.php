@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProcurementController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +60,9 @@ Route::get('/procurement/inbox/show/{id}', [App\Http\Controllers\HomeController:
 Route::get('/procurement/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'proOutBoxShow'])->name('procurement.outbox.show');
 
 
-Route::get('/sales/home', [App\Http\Controllers\HomeController::class, 'sales'])->name('sales.home');
+
 Route::get('/sales/inbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesInboxBoxShow'])->name('sales.inbox.show');
-Route::post('/sales/send-mail', [App\Http\Controllers\HomeController::class, 'sendReply'])->name('sales.sendreply');
+
 Route::get('/sales/outbox', [App\Http\Controllers\HomeController::class, 'salesOutBox'])->name('sales.outbox');
 Route::get('/sales/outbox/show/{id}', [App\Http\Controllers\HomeController::class, 'salesOutBoxShow'])->name('sales.outbox.show');
 Route::get('/sales/enquiry-timeout', [App\Http\Controllers\HomeController::class, 'salesEnquiryTimeout'])->name('sales.enquiry-timeout');
@@ -125,3 +126,13 @@ Route::post('/procurement/mail/read',[ProcurementController::class,'getMailConte
 
 Route::get('/procurement/draft/edit/{id}', [ProcurementController::class, 'proDraftShow'])->name('procurement.draft.show');
 Route::post('/procurement/send-draft/{id}', [ProcurementController::class, 'saveDraft'])->name('procurement.send.draft');
+
+
+// Sales
+Route::get('/sales/home', [App\Http\Controllers\HomeController::class, 'sales'])->name('sales.home');
+Route::get('/sales/inbox', [SalesController::class, 'inbox'])->name('sales.inbox');
+Route::get('/sales/outbox', [SalesController::class, 'outbox'])->name('sales.outbox');
+Route::get('/sales/draft', [SalesController::class, 'draft'])->name('sales.draft');
+Route::get('/sales/events', [SalesController::class, 'events'])->name('sales.events');
+Route::get('/sales/enquiry-timeout', [SalesController::class, 'salesEnquiryTimeout'])->name('sales.enquiry-timeout');
+Route::post('/sales/send-mail', [SalesController::class, 'sendReply'])->name('sales.sendreply');
