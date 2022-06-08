@@ -83,6 +83,11 @@ class SalesController extends Controller
         return view('sales.enquiry-timeout-show',compact('company','user','mail'));
     } 
 
+    public function composeReply($id){
+        $mail = Mail::withTrashed()->find($id);
+        return view('sales.compose-mail',compact('mail'));
+    }
+
     public function sendReply(Request $request){
         $mail_id = $request->mail_id;
         $maildetails = Mail::findOrFail($mail_id);

@@ -135,4 +135,5 @@ Route::get('/sales/outbox', [SalesController::class, 'outbox'])->name('sales.out
 Route::get('/sales/draft', [SalesController::class, 'draft'])->name('sales.draft');
 Route::get('/sales/events', [SalesController::class, 'events'])->name('sales.events');
 Route::get('/sales/enquiry-timeout', [SalesController::class, 'salesEnquiryTimeout'])->name('sales.enquiry-timeout');
+Route::get('/sales/compose-mail/{id}', [SalesController::class, 'composeReply'])->name('sales.composereply');
 Route::post('/sales/send-mail', [SalesController::class, 'sendReply'])->name('sales.sendreply');

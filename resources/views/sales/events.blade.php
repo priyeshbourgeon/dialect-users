@@ -10,10 +10,7 @@
                             <i class="fa fa-angle-left"></i>
                         </div>
                     </div>  
-                    <div class="compose_mail">
-                        <a  href="{{ route('procurement.compose-one') }}"> <i class="fa fa-plus"></i> <span> Generate Quote </span></a>
-                    </div>
-                    <hr>
+                   
                     <ul>
                         <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span>  </a></li>
                         <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Outbox </span> </a></li>
