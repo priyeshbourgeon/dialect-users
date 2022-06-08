@@ -37,6 +37,7 @@
                                 <div class="panel_header">Reply to mail : {{ $mail->reference_no ?? ''}} </div>
                                 <form action="{{ route('sales.sendreply') }}" method="post"  enctype="multipart/form-data">
                                  @csrf
+                                 <input type="hidden" name="mail_id" value="{{ $mail->id }}" /> 
                                 <div class=" form_wraper">
                                 <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Subject</label>
@@ -51,7 +52,7 @@
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Body</label>
                                         <div class="uk-form-controls">
-                                            <textarea id="summernote" name="body"></textarea>
+                                            <textarea id="summernote" name="reply_body"></textarea>
                                         </div>
                                         @error('body')
 								        <small class="error">{{ $message }}</small>

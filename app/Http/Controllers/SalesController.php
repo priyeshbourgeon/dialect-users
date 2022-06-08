@@ -110,7 +110,7 @@ class SalesController extends Controller
         $mail->country_id              = $maildetails->country_id;
         $mail->region_id               = $maildetails->region_id;
         $mail->cc                      = $request->cc;
-        $mail->subject                 = 'RE:'.$maildetails->subject;
+        $mail->subject                 = $request->subject;
         $mail->description             = $request->reply_body;
         $mail->from_company_id         = $company_id;
         $mail->sender_name             = $company->name;
