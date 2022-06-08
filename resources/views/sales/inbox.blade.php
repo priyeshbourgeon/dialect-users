@@ -143,6 +143,11 @@
                                     <div class="date"></div>
                                     <div class="mail_id"></div>
                                 </div>
+                                <div class="mailer_box_params" style="margin-left: 85px;">
+                                     <div class="mailer_category"> </div>
+                                     <div class="mailer_country"> </div>
+                                     <div class="mailer_region"> </div>
+                                </div>
                             </div>
                             <div class="mail_text uk-margin-top mail_content">
                                 
@@ -197,7 +202,7 @@
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
                         $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
-                        $('.editbutton').html('<a class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i> Update Time Frame</a>');
+                        $('.editbutton').html('<a class="uk-button uk-button-default "><i class="fa fa-reply" aria-hidden="true"></i> Reply</a>');
                         if(obj.attachment){
                            $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
                         }

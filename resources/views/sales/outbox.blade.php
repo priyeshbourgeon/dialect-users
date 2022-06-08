@@ -143,6 +143,11 @@
                                     <div class="date"></div>
                                     <div class="mail_id"></div>
                                 </div>
+                                <div class="mailer_box_params" style="margin-left: 85px;">
+                                     <div class="mailer_category"> </div>
+                                     <div class="mailer_country"> </div>
+                                     <div class="mailer_region"> </div>
+                                </div>
                             </div>
                             <div class="mail_text uk-margin-top mail_content">
                                 

@@ -126,12 +126,6 @@ class HomeController extends Controller
         return view('sales.inbox-show',compact('company','user','mail'));
     } 
 
-    public function proInboxBoxShow($id){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mail = Mail::withTrashed()->find($id);
-        return view('procurement.inbox-show',compact('company','user','mail'));
-    } 
     
     public function sendReply(Request $request){
         $mail_id = $request->mail_id;
@@ -195,16 +189,19 @@ class HomeController extends Controller
             'timeframe'=> 'required',
         ]);
 
-        $imageUrl  = '';
+        $company_id = Auth::user()->company_id;
+        $company = Company::find($company_id);
          if($request->hasFile('attachment')){
              $imageName = time().'.'.$request->attachment->extension();  
              $request->attachment->move(public_path('attachment'), $imageName);
              $path = asset('attachment/');
              $imageUrl = $path.'/'.$imageName;
          }
+         else{
+            $imageUrl = $company->attachment;
+         }
  
-        $company_id = Auth::user()->company_id;
-        $company = Company::find($company_id);
+       
         $mode = ($request->submit == 'draft') ? '1' : '0';
         $mail                          = Mail::find($id);
         $mail->service                 = $request->services;
