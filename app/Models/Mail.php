@@ -26,6 +26,6 @@ class Mail extends Model
     }
 
     public function reply(){
-        return $this->hasMany(Mail::class,'ref_id','id');
+        return $this->hasMany(Mail::class,'ref_id','id')->where('is_draft','!=',1);
     }
 }
