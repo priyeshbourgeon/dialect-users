@@ -1,34 +1,6 @@
 @extends('procurement.layouts.app')
 @section('content')
-<style>
-    .skeleton {
-        animation: skeleton-loading 1s linear infinite alternate;
-        }
 
-        @keyframes skeleton-loading {
-        0% {
-            background-color: hsl(200, 20%, 80%);
-        }
-        100% {
-            background-color: hsl(200, 20%, 95%);
-        }
-        }
-
-        .skeleton-text {
-        width: 100%;
-        height: 0.7rem;
-        margin-bottom: 0.5rem;
-        border-radius: 0.25rem;
-        }
-
-        .skeleton-text__body {
-        width: 75%;
-        }
-
-        .skeleton-footer {
-        width: 30%;
-        }
-</style>
 <section class="mail_wrap">
     <div>
         <div class="mail_grip_wrap mail_theme">
@@ -45,7 +17,7 @@
                     <hr>
                     <ul>
                        <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
-                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Outbox </span> </a></li>
                        <li><a uk-tooltip="title: Draft" href="{{ route('procurement.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
                        <li><a uk-tooltip="title: Upcoming Events" href="{{ route('procurement.events') }}"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
@@ -54,6 +26,7 @@
             <div class="col_right_ca">          
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
+                        <div class="panel_header" style="padding-left:10px"><i class="fa fa-inbox "></i> Inbox</div>  
                         <ul uk-accordion>
                             @forelse($mails as $key => $mail)
                             <li class="uk-margin-remove">
@@ -106,7 +79,7 @@
                                 <a class="uk-accordion-title" href="#">
                                     <div class="main_sml_box">                                      
                                         <div class="sort_text">
-                                        
+                                              No Data Found!
                                         </div>
                                     </div>
                                 </a>
@@ -163,12 +136,14 @@
                     $('.mailer_name').empty().addClass('skeleton skeleton-text skeleton-footer');
                     $('.date').empty().addClass('skeleton skeleton-text skeleton-footer');
                     $('.mail_id').empty().addClass('skeleton skeleton-text skeleton-footer');
-                    $('.mail_attachment').empty();
+                    $('.mail_attachment').empty().addClass('skeleton skeleton-text skeleton-footer');
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
+                    $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
 				},
 				success:function(res){        
 					if(res){
                         obj = jQuery.parseJSON(res);
+                        $('.editbutton').removeClass('skeleton skeleton-text skeleton-footer');
 						$('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
                         $('.mailer_name').text(obj.sender_name).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
@@ -176,10 +151,10 @@
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
                         $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
                         if(obj.attachment){
-                           $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
+                           $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>').removeClass('skeleton skeleton-text skeleton-footer');
                         }
                         else{
-                            $('.mail_attachment').empty();
+                            $('.mail_attachment').empty().removeClass('skeleton skeleton-text skeleton-footer');
                         }
                     }else{
 						$('.subject').empty();

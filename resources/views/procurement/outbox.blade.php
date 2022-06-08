@@ -16,7 +16,7 @@
                     <hr>
                     <ul>
                        <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
-                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Outbox </span> </a></li>
                        <li><a uk-tooltip="title: Draft" href="{{ route('procurement.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
                        <li><a uk-tooltip="title: Upcoming Events" href="{{ route('procurement.events') }}"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
@@ -25,6 +25,7 @@
             <div class="col_right_ca">          
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
+                        <div class="panel_header" style="padding-left:10px"><i class="fa fa-paper-plane-o "></i> Outbox</div>     
                         <ul uk-accordion>
                             @forelse($mails as $key => $mail)
                             <li class="uk-margin-remove">
@@ -68,67 +69,10 @@
                                 <a class="uk-accordion-title" href="#">
                                     <div class="main_sml_box">                                      
                                         <div class="sort_text">
-                                        <!-- dropdow -->   
-                                        <!-- <div class="more_inb"> <i class="fa fa-ellipsis-v"></i> </div>
-                                                <div uk-dropdown="pos: bottom-right" >
-                                                    <ul class="uk-nav uk-dropdown-nav">
-                                                        <li>Delete</li>
-                                                    </ul>
-                                                </div> -->
-                                        <!-- dropdow -->       
-                                            <span class="inb_date">Sun.8:08 AM</span>
-                                            <h4 class="sm_text">Muhammed Shareef</h4>
-                                            <h4 class="sm_text sub">Lorem ipsum dolor sit amet </h4>
-                                            <div class="text-pr">
-                                                roin sem augue, maximus nec dictum vel,
-                                            </div>
+                                       
                                         </div>
                                     </div>
                                 </a>
-                                <div class="uk-accordion-content uk-margin-remove-top">
-                                    <div class="main_sml_box sub">
-                                        <div class="mail_dp">
-                                            <img src="images/profile_dp.jpg" alt="">
-                                        </div>
-                                        <div class="sort_text">        
-                                            <span class="inb_date">Sun.8:08 AM</span>
-                                            <h4 class="sm_text">Muhammed Shareef  <span class="uk-badge">New</span></h4>
-                                            <h4 class="sm_text sub">Lorem ipsum dolor sit amet </h4>
-                                            <div class="text-pr">
-                                                roin sem augue, maximus nec dictum vel,
-                                            </div>
-                                            <div class="posted_date">Posted Date: Tue, 27 ,2022 : 08:00 AM</div>
-                                        </div>
-                                    </div>
-                                    <div class="main_sml_box sub">
-                                        <div class="mail_dp">
-                                            <img src="images/profile_dp.jpg" alt="">
-                                        </div>
-                                        <div class="sort_text">                    
-                                            <span class="inb_date">Sun.8:08 AM</span>
-                                            <h4 class="sm_text">Muhammed Shareef  <span class="uk-badge">New</span></h4>
-                                            <h4 class="sm_text sub">Lorem ipsum dolor sit amet </h4>
-                                            <div class="text-pr">
-                                                roin sem augue, maximus nec dictum vel,
-                                            </div>
-                                            <div class="posted_date">Posted Date: Tue, 27 ,2022 : 08:00 AM</div>
-                                        </div>
-                                    </div>
-                                    <div class="main_sml_box sub">
-                                        <div class="mail_dp">
-                                            <img src="images/profile_dp.jpg" alt="">
-                                        </div>   
-                                        <div class="sort_text">        
-                                            <span class="inb_date">Sun.8:08 AM</span>
-                                            <h4 class="sm_text">Muhammed Shareef  <span class="uk-badge">New</span></h4>
-                                            <h4 class="sm_text sub">Lorem ipsum dolor sit amet </h4>
-                                            <div class="text-pr">
-                                                roin sem augue, maximus nec dictum vel,
-                                            </div>
-                                            <div class="posted_date">Posted Date: Tue, 27 ,2022 : 08:00 AM</div>
-                                        </div>
-                                    </div>
-                                </div>
                             </li>
                             @endforelse
                         </ul>
@@ -189,10 +133,12 @@
                     $('.mail_id').empty().addClass('skeleton skeleton-text skeleton-footer');
                     $('.mail_attachment').empty();
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
+                    $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
 				},
 				success:function(res){        
 					if(res){
                         obj = jQuery.parseJSON(res);
+                        $('.editbutton').removeClass('skeleton skeleton-text skeleton-footer');
 						$('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
                         $('.mailer_name').text(obj.sender_name).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
@@ -213,6 +159,7 @@
                         $('.mail_id').empty();
                         $('.mail_attachment').empty();
                         $('.mail_content').empty();
+                        $('.editbutton').empty();
                         }
 				}
 			});

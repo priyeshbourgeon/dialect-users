@@ -594,10 +594,10 @@ footer a {
           align-items: end;
   gap: 15px;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .dash_tile .col {
@@ -932,7 +932,7 @@ footer a {
 
 .mail_grip_wrap ul li {
   list-style-type: none;
-  border-bottom: 0px solid #eee;
+  /* border-bottom: 0px solid #eee; */
 }
 
 .mail_grip_wrap ul li a {
