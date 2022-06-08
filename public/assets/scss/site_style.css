@@ -541,7 +541,7 @@ footer a {
 .sector_list li .s_block {
   background: #eee;
   display: block;
-  padding: 6px 10px;
+  padding: 4px 9px;
   cursor: pointer;
   -webkit-transition: ease-in 0.5s;
   transition: ease-in 0.5s;
@@ -932,7 +932,7 @@ footer a {
 
 .mail_grip_wrap ul li {
   list-style-type: none;
-  border-bottom: 1px solid #eee;
+  border-bottom: 0px solid #eee;
 }
 
 .mail_grip_wrap ul li a {
