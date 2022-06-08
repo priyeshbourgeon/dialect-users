@@ -31,7 +31,6 @@
                 <h1 class="comm_title">Generate Quote</h1>
                 <div class="col_maii_middle">
                     <div class="col_maiil_left"  style="width:100%">
-                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">    
                         <div class="form_group">
                             <div class=" form_group">
                                 <label class="uk-form-label" for="form-stacked-text">Search</label>
@@ -40,6 +39,7 @@
                                 </div>
                             </div>
                         </div>    
+                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">    
                             <div class="panel_header"> Choose Category</div>   
                                 <div uk-grid>
                                     <div  class="uk-width-3-4@m">
