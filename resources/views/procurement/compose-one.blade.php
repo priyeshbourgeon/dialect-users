@@ -31,7 +31,15 @@
                 <h1 class="comm_title">Generate Quote</h1>
                 <div class="col_maii_middle">
                     <div class="col_maiil_left"  style="width:100%">
-                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">        
+                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">    
+                        <div class="form_group">
+                            <div class=" form_group">
+                                <label class="uk-form-label" for="form-stacked-text">Search</label>
+                                <div class="uk-form-controls" style="    margin-right: 5px;">
+                                    <input class="uk-input"  type="text" id="search-category" placeholder="Search Category">
+                                </div>
+                            </div>
+                        </div>    
                             <div class="panel_header"> Choose Category</div>   
                                 <div uk-grid>
                                     <div  class="uk-width-3-4@m">
@@ -44,14 +52,6 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <div class="form_group">
-                                                <div class=" form_group">
-                                                    <label class="uk-form-label" for="form-stacked-text">Search</label>
-                                                    <div class="uk-form-controls" style="    margin-right: 5px;">
-                                                        <input class="uk-input"  type="text" id="search-category" placeholder="Search Category">
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="form_group category_list">
                                                 @foreach($categories as $key => $cat)
                                                     <a class="uk-form-label category uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $cat->id }}"><i class="fa fa-arrow-circle-right"></i> {{ $cat->name ?? '' }}</a>
@@ -63,9 +63,9 @@
                                         <div class=" form_wraper">
                                             <div class=" form_group">
                                                 <label class="uk-form-label" for="form-stacked-text">Sub category</label>
-                                                <div class="uk-form-controls">
+                                                <!-- <div class="uk-form-controls">
                                                     <input class="uk-input"  type="text" id="search-subcategory" placeholder="Search Sub Category" data-search>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="form_group" id="parentbox"></div>
                                         </div>
