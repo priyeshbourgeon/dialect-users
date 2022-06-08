@@ -10,20 +10,19 @@
                             <i class="fa fa-angle-left"></i>
                         </div>
                     </div>  
-                  
                     <ul>
-                                <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span>  </a></li>
-                                <li><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
-                                <li><a href="{{ route('sales.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
-                                <li class="{{ request()->is('sales/enquiry-timeout') ? 'm-active' : '' }}"><a href="{{ route('sales.enquiry-timeout') }}"><i class="fa fa-calendar-times-o"></i>  <span class="nav_text"> Enquiry Timeout </span> </a></li>
-                                <li><a href="{{ route('sales.events') }}"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
-                            </ul>
+                        <li><a href="{{ route('sales.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span>  </a></li>
+                        <li class="{{ request()->is('sales/outbox') ? 'm-active' : '' }}"><a href="{{ route('sales.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Sent </span> </a></li>
+                        <li><a href="{{ route('sales.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
+                        <li><a href="{{ route('sales.enquiry-timeout') }}"><i class="fa fa-calendar-times-o"></i>  <span class="nav_text"> Enquiry Timeout </span> </a></li>
+                        <li><a href="{{ route('sales.events') }}"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
+                    </ul>
                 </div>
             </div>
             <div class="col_right_ca">          
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
-                        <div class="panel_header" style="padding-left:10px"><i class="fa fa-calendar-times-o"></i> Enquiry Timeout</div>
+                        <div class="panel_header" style="padding-left:10px"><i class="fa fa-file-text-o"></i> Draft</div>   
                         <ul uk-accordion>
                             @forelse($mails as $key => $mail)
                             <li class="uk-margin-remove">
@@ -45,11 +44,11 @@
                                             <div class="text-pr">{{ $mail->subject }}</div>
                                             <div class="posted_date">Posted Date: {{ \Carbon\Carbon::parse($mail->created_at)->format('d F Y') }}</div>
                                             <div class="posted_date">
-                                            @if($mail->request_time > \Carbon\Carbon::today())
+                                                @if($mail->request_time > \Carbon\Carbon::today())
                                                 Valid Upto : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
-                                            @else
+                                                @else
                                                 Expired On : {{ \Carbon\Carbon::parse($mail->request_time)->format('d F Y') }}
-                                            @endif
+                                                @endif
                                             </div>
                                             </a>
                                             </hr>
@@ -131,6 +130,7 @@
                     $('.mail_id').empty().addClass('skeleton skeleton-text skeleton-footer');
                     $('.mail_attachment').empty();
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
+                    $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
                     $('.mailer_category').empty().addClass('skeleton skeleton-text');
                     $('.mailer_country').empty().addClass('skeleton skeleton-text');
                     $('.mailer_region').empty().addClass('skeleton skeleton-text');
@@ -143,6 +143,8 @@
                         $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
+                        $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
+                        $('.editbutton').html('<a href="/sales/draft/edit/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i>Edit Draft</a>').removeClass('skeleton skeleton-text skeleton-footer');;
                         if(obj.attachment){
                            $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
                         }
@@ -152,7 +154,7 @@
                         $('.mailer_category').text('Category : '+obj.category.name).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mailer_country').text('Country : '+obj.country.name).removeClass('skeleton skeleton-text skeleton-footer');
                         var regionname = !obj.region ?  'All Region' : obj.region.name; 
-                        $('.mailer_region').text('Region : '+regionname).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mailer_region').text('Region : '+regionname).removeClass('skeleton skeleton-text skeleton-footer'); 
                     }else{
 						$('.subject').empty();
                         $('.mailer_name').empty();

@@ -51,7 +51,12 @@ class SalesController extends Controller
                        ->where('sender_type','sales')
                        ->where('is_draft',1)
                        ->latest()->paginate(10);
-        return view('sales.outbox',compact('company','user','mails'));
+        return view('sales.draft',compact('company','user','mails'));
+    }
+
+    public function editDraft($id){
+        $mail = Mail::withTrashed()->find($id);
+        return view('sales.edit-draft',compact('mail'));
     }
 
     public function events(){

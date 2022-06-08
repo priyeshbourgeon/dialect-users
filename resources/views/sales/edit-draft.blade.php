@@ -34,15 +34,15 @@
                             <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
                                 
                                 
-                                <div class="panel_header">Reply to mail : {{ $mail->reference_no ?? ''}} </div>
-                                <form action="{{ route('sales.sendreply') }}" method="post"  enctype="multipart/form-data">
+                                <div class="panel_header">Reply to mail : {{ $mail->procurement_reference ?? ''}} </div>
+                                <form action="" method="post"  enctype="multipart/form-data">
                                  @csrf
-                                 <input type="hidden" name="mail_id" value="{{ $mail->id }}" /> 
+                                 <input type="hidden" name="mail_id" value="{{ $mail->ref_id }}" /> 
                                 <div class=" form_wraper">
                                 <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Subject</label>
                                         <div class="uk-form-controls">
-                                            <input name="subject" class="uk-input" id="form-stacked-text" type="text" placeholder="Some text...">
+                                            <input name="subject" class="uk-input" id="form-stacked-text" type="text" placeholder="Some text..." value="{{ $mail->subject }}">
                                         </div>
                                         @error('subject')
 								        <small class="error">{{ $message }}</small>
@@ -52,7 +52,7 @@
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Body</label>
                                         <div class="uk-form-controls">
-                                            <textarea id="summernote" name="reply_body"></textarea>
+                                            <textarea id="summernote" name="reply_body">{{ $mail->description ?? '' }}</textarea>
                                         </div>
                                         @error('body')
 								        <small class="error">{{ $message }}</small>
