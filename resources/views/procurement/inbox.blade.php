@@ -33,15 +33,7 @@
                                 <a class="uk-accordion-title" href="#">
                                     <div class="main_sml_box">
                                         <div class="sort_text">
-                                            <!-- dropdow -->   
-                                            <!-- <div class="more_inb"> <i class="fa fa-ellipsis-v"></i> </div>
-                                            <div uk-dropdown="pos: bottom-right" >
-                                                <ul class="uk-nav uk-dropdown-nav">
-                                                    <li>Delete</li>
-                                                </ul>
-                                            </div> -->
-                                            <!-- dropdow -->
-                                            <span class="inb_date">{{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}</span>
+                                            <span class="inb_date">Reply : {{ $mail->reply->count() ?? 0 }}</span>
                                             <h4 class="sm_text">{{ $mail->category->name ?? 'fetching cetgory...' }}</h4>
                                             <h4 class="sm_text sub">{{ $mail->reference_no }}</h4>
                                             <div class="text-pr">{{ $mail->subject }}</div>
@@ -52,13 +44,10 @@
                                 <div class="uk-accordion-content uk-margin-remove-top">
                                     @foreach($mail->reply as $reply)
                                     <div class="main_sml_box sub ">
-                                        <div class="mail_dp">
-                                            <img src="images/profile_dp.jpg" alt="">
-                                        </div>   
                                         <div class="sort_text"> 
                                             <a  data-id="{{ $reply->id }}" class="readmail">    
                                             <span class="inb_date">{{ \Carbon\Carbon::parse($reply->created_at)->diffForhumans() }}</span>
-                                            <h4 class="sm_text">{{ $reply->sender_name ?? '' }}<span class="uk-badge">New</span></h4>    
+                                            <h4 class="sm_text">{{ $reply->sender_name ?? '' }}<span class="uk-badge" style="margin-left:10px;">New</span></h4>    
                                             <h4 class="sm_text sub">{{ $reply->subject ?? '' }} </h4>
                                             <div class="posted_date">Received Date: {{ \Carbon\Carbon::parse($reply->created_at)->format('d F Y') }}</div>
                                             </a>   
@@ -100,7 +89,9 @@
                                     <div class="mail_id"></div>
                                 </div>
                                 <div class="mailer_box_params" style="margin-left: 85px;">
-                                    
+                                     <div class="mailer_category"> </div>
+                                     <div class="mailer_country"> </div>
+                                     <div class="mailer_region"> </div>
                                 </div>
                             </div>
                             <div class="mail_text uk-margin-top mail_content">
@@ -142,7 +133,9 @@
                     $('.mail_attachment').empty().addClass('skeleton skeleton-text skeleton-footer');
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
                     $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
-                    $('.mailer_box_params').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mailer_category').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_country').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_region').empty().addClass('skeleton skeleton-text');
 				},
 				success:function(res){        
 					if(res){
@@ -153,22 +146,25 @@
                         $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
-                        $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
                         if(obj.attachment){
                            $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>').removeClass('skeleton skeleton-text skeleton-footer');
                         }
                         else{
                             $('.mail_attachment').empty().removeClass('skeleton skeleton-text skeleton-footer');
                         }
-                        $('.mailer_box_params').removeClass('skeleton skeleton-text skeleton-footer');
-                        $('.mailer_box_params').html('<div>Category : '+obj.category.name+'</div><div>Country : '+obj.country.name+'</div><div>Region : '+obj.region.name+'</div>');
-                    }else{
+                        $('.mailer_category').text('Category : '+obj.category.name).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mailer_country').text('Country : '+obj.country.name).removeClass('skeleton skeleton-text skeleton-footer');
+                        var regionname = !obj.region ?  'All Region' : obj.region.name; 
+                        $('.mailer_region').text('Region : '+regionname).removeClass('skeleton skeleton-text skeleton-footer');                
+                    }
+                    else{
 						$('.subject').empty();
                         $('.mailer_name').empty();
                         $('.date').empty();
                         $('.mail_id').empty();
                         $('.mail_attachment').empty();
                         $('.mail_content').empty();
+                        $('.mailer_box_params').empty();
                         }
 				}
 			});

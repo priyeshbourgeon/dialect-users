@@ -28,54 +28,36 @@
                         <div class="panel_header" style="padding-left:10px"><i class="fa fa-calendar"></i> Upcoming Events</div>
                         <ul uk-accordion>
                            <li>
-                              <div class="text-pr">dwehfkjslfkhsdjkgsh</div>
-                              <div class="posted_date">Posted Date: {{ date('Y-m-d')}}</div>
-                           </li>
-                           <li>
-                              <div class="text-pr">dwehfkjslfkhsdjkgsh</div>
-                              <div class="posted_date">Posted Date: {{ date('Y-m-d')}}</div>
-                           </li>
-                           <li>
-                              <div class="text-pr">dwehfkjslfkhsdjkgsh</div>
-                              <div class="posted_date">Posted Date: {{ date('Y-m-d')}}</div>
+                              <div class="main_sml_box">
+                                  <div class="sort_text">
+                                        <span class="inb_date">20 May 2022</span>
+                                        <h4 class="sm_text">Ajhasfhwefg<span class="uk-badge" style="margin-left:10px;">New</span></h4>    
+                                        <h4 class="sm_text sub">JHSGBhbdjkbfdshnvjksdnbhvhs </h4>
+                                  </div>
+                              </div>    
                            </li>
                         </ul>
                     </div>
                     <div class="col_maii_right">
                         <div class="mail_expand uk-padding-right">
                             <h3 class="subject">
-                                roin sem augue, maximus nec dictum vel,
+                                
                             </h3>
                             <div class="main_head">
-                                <div class="mail_dp">
-                                    <img src="images/profile_dp.jpg" alt="">
-                                </div>
                                 <div class="mailer_box">
-                                    <h3 class="mailer_name ">  Bourgeon Technologies Pvt. Ltd.  </h3>
-                                    <div class="date"> Fri, 26, 2022, 9.05 AM</div>
-                                    <div class="mail_id">info@123tech.com</div>
+                                    <h3 class="mailer_name ">  </h3>
+                                    <div class="date"></div>
+                                    <div class="mail_id"></div>
                                 </div>
                             </div>
                             <div class="mail_text uk-margin-top">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat leo a lectus molestie varius non eget erat. Nulla tristique nisl in convallis pretium. Nullam maximus, nunc sit amet fermentum tincidunt, velit libero tincidunt ante, eget bibendum ipsum ligula at erat. Nunc tempor augue ut eros porttitor, in vehicula tortor faucibus. Donec rutrum, justo et ornare placerat, velit neque iaculis magna, in ullamcorper erat eros ut neque. Vivamus lacinia ligula tellus, sit amet scelerisque nibh interdum vitae. Phasellus vestibulum ligula a nulla auctor tincidunt at mattis sem. Maecenas mollis blandit facilisis. Quisque luctus justo nec mi luctus tempus. Sed risus nulla, elementum in vulputate ac, commodo sit amet nibh. Nulla a quam ut lacus consectetur pretium              
+                               
                             </div>
                             <!-- nest Section  -->
-                            <div class="uk-margin-top">
-                                <button class="uk-button uk-button-default "><i class="fa fa-reply" aria-hidden="true"></i> Replay</button>
-                            </div>           
-                            <div class="main_head uk-margin-medium-top">
-                                <div class="mail_dp">
-                                    <img src="images/profile_dp.jpg" alt="">
-                                </div>
-                                <div class="mailer_box">
-                                <h3 class="mailer_name ">  Bourgeon Technologies Pvt. Ltd.  </h3>
-                                <div class="date"> Fri, 26, 2022, 9.05 AM</div>
-                                <div class="mail_id">info@123tech.com</div>
-                            </div>
+                                 
+                            
                         </div>
-                        <div class="mail_text uk-margin-top">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat leo a lectus molestie varius non eget erat. Nulla tristique nisl in convallis pretium. Nullam maximus, nunc sit amet fermentum tincidunt, velit libero tincidunt ante, eget bibendum ipsum ligula at erat. Nunc tempor augue ut eros porttitor, in vehicula tortor faucibus. Donec rutrum, justo et ornare placerat, velit neque iaculis magna, in ullamcorper erat eros ut neque. Vivamus lacinia ligula tellus, sit amet scelerisque nibh interdum vitae. Phasellus vestibulum ligula a nulla auctor tincidunt at mattis sem.                    
-                        </div>
+                        
                     </div>
                 </div>        
             </div>            

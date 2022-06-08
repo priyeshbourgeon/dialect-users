@@ -89,6 +89,11 @@
                                     <div class="date"></div>
                                     <div class="mail_id"></div>
                                 </div>
+                                <div class="mailer_box_params" style="margin-left: 85px;">
+                                     <div class="mailer_category"> </div>
+                                     <div class="mailer_country"> </div>
+                                     <div class="mailer_region"> </div>
+                                </div>
                             </div>
                             <div class="mail_text uk-margin-top mail_content">
                                 
@@ -134,6 +139,9 @@
                     $('.mail_attachment').empty();
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
                     $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mailer_category').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_country').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_region').empty().addClass('skeleton skeleton-text');
 				},
 				success:function(res){        
 					if(res){
@@ -152,6 +160,10 @@
                         else{
                             $('.mail_attachment').empty();
                         }
+                        $('.mailer_category').text('Category : '+obj.category.name).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mailer_country').text('Country : '+obj.country.name).removeClass('skeleton skeleton-text skeleton-footer');
+                        var regionname = !obj.region ?  'All Region' : obj.region.name; 
+                        $('.mailer_region').text('Region : '+regionname).removeClass('skeleton skeleton-text skeleton-footer');
                     }else{
 						$('.subject').empty();
                         $('.mailer_name').empty();

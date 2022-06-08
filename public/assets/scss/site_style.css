@@ -1329,7 +1329,7 @@ footer a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border-bottom: 1px solid #eee;
+  /* border-bottom: 1px solid #eee; */
   padding-bottom: 30px;
 }
 

@@ -8,6 +8,7 @@ class Mail extends Model
 {
     use SoftDeletes;
 
+
     public function category(){
         return $this->belongsTo(SubCategory::class,'service','id');
     }

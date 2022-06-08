@@ -24,6 +24,16 @@ class ProcurementController extends Controller
         return view('procurement.inbox',compact('company','user','mails'));               
     }
 
+    public function proOutBox(){
+        $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
+        $mails = Mail::where('from_company_id',$company->id)
+                       ->where('sender_type','procurement')
+                       ->where('is_draft','!=',1)
+                       ->latest()->paginate(10);
+        return view('procurement.outbox',compact('company','user','mails'));
+    }
+
     public function getMailContent(Request $request){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);

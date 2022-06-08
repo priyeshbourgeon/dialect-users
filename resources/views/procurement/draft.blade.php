@@ -16,7 +16,7 @@
                     <hr>
                     <ul>
                        <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
-                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Outbox </span> </a></li>
+                       <li><a uk-tooltip="title: Outbox" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Outbox </span> </a></li>
                        <li><a uk-tooltip="title: Draft" href="{{ route('procurement.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
                        <li><a uk-tooltip="title: Upcoming Events" href="{{ route('procurement.events') }}"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
                     </ul>
@@ -90,6 +90,11 @@
                                     <div class="date"></div>
                                     <div class="mail_id"></div>
                                 </div>
+                                <div class="mailer_box_params" style="margin-left: 85px;">
+                                     <div class="mailer_category"> </div>
+                                     <div class="mailer_country"> </div>
+                                     <div class="mailer_region"> </div>
+                                </div>
                             </div>
                             <div class="mail_text uk-margin-top mail_content">
                                 
@@ -134,6 +139,10 @@
                     $('.mail_id').empty().addClass('skeleton skeleton-text skeleton-footer');
                     $('.mail_attachment').empty();
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
+                    $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mailer_category').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_country').empty().addClass('skeleton skeleton-text');
+                    $('.mailer_region').empty().addClass('skeleton skeleton-text');
 				},
 				success:function(res){        
 					if(res){
@@ -144,13 +153,17 @@
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
                         $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
-                        $('.editbutton').html('<a href="/procurement/draft/edit/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i>Edit Draft</a>');
+                        $('.editbutton').html('<a href="/procurement/draft/edit/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i>Edit Draft</a>').removeClass('skeleton skeleton-text skeleton-footer');;
                         if(obj.attachment){
                            $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
                         }
                         else{
                             $('.mail_attachment').empty();
                         }
+                        $('.mailer_category').text('Category : '+obj.category.name).removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mailer_country').text('Country : '+obj.country.name).removeClass('skeleton skeleton-text skeleton-footer');
+                        var regionname = !obj.region ?  'All Region' : obj.region.name; 
+                        $('.mailer_region').text('Region : '+regionname).removeClass('skeleton skeleton-text skeleton-footer'); 
                     }else{
 						$('.subject').empty();
                         $('.mailer_name').empty();

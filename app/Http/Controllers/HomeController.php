@@ -70,15 +70,7 @@ class HomeController extends Controller
         return redirect()->route('procurement.inbox');
     }
 
-    public function proOutBox(){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mails = Mail::where('from_company_id',$company->id)
-                       ->where('sender_type','procurement')
-                       ->where('is_draft','!=',1)
-                       ->latest()->paginate(10);
-        return view('procurement.outbox',compact('company','user','mails'));
-    }
+    
 
     public function salesOutBox(){
         $user = Auth::user();
@@ -90,12 +82,6 @@ class HomeController extends Controller
         return view('sales.outbox',compact('company','user','mails'));
     }
 
-    public function proOutBoxShow($id){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mail = Mail::with('category')->withTrashed()->find($id);
-        return view('procurement.outbox-show',compact('company','user','mail'));
-    }
 
     public function salesOutBoxShow($id){
         $user = Auth::user();
