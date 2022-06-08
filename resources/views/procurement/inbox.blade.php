@@ -99,6 +99,9 @@
                                     <div class="date"></div>
                                     <div class="mail_id"></div>
                                 </div>
+                                <div class="mailer_box_params" style="margin-left: 85px;">
+                                    
+                                </div>
                             </div>
                             <div class="mail_text uk-margin-top mail_content">
                                 
@@ -139,6 +142,7 @@
                     $('.mail_attachment').empty().addClass('skeleton skeleton-text skeleton-footer');
 					$('.mail_content').empty().addClass('skeleton skeleton-text skeleton-text__body');
                     $('.editbutton').empty().addClass('skeleton skeleton-text skeleton-footer');
+                    $('.mailer_box_params').empty().addClass('skeleton skeleton-text skeleton-footer');
 				},
 				success:function(res){        
 					if(res){
@@ -156,6 +160,8 @@
                         else{
                             $('.mail_attachment').empty().removeClass('skeleton skeleton-text skeleton-footer');
                         }
+                        $('.mailer_box_params').removeClass('skeleton skeleton-text skeleton-footer');
+                        $('.mailer_box_params').html('<div>Category : '+obj.category.name+'</div><div>Country : '+obj.country.name+'</div><div>Region : '+obj.region.name+'</div>');
                     }else{
 						$('.subject').empty();
                         $('.mailer_name').empty();
