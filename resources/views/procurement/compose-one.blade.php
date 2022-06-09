@@ -6,9 +6,9 @@
     }
 </style>
 <section class="mail_wrap">
-    <div>
+    <div>            
         <div class="mail_grip_wrap">
-            <div class="col_maii_left toggle_sidebar">
+            <div class="col_maii_left toggle_sidebar">        
                 <div class=" uk-card uk-card-default uk-card-small ">
                     <div class="side_anglebnt">
                         <div class="tog_btn">
@@ -28,56 +28,61 @@
                 </div>
             </div>
             <div class="col_right_ca">
-                <h1 class="comm_title">Generate Quote</h1>
+                <h1 class="comm_title">Inbox</h1>
                 <div class="col_maii_middle">
                     <div class="col_maiil_left"  style="width:100%">
-                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">    
-                            <div class="form_group">
-                                <div class=" form_group">
-                                    <label class="uk-form-label" for="form-stacked-text">Search</label>
-                                    <div class="uk-form-controls" style="    margin-right: 5px;">
-                                        <input class="uk-input"  type="text" id="search-category" placeholder="Search Category">
+                        <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">                
+                            <div class="panel_header"> Generate Quote</div>
+                                <div class="uk-margin-medium-bottom">
+                                    <div class=" form_group">
+                                        <ul class="sector_list">
+                                            <li><div class="s_block" onClick="window.location.reload();">All</div></li>
+                                        @foreach(range('A', 'Z') as $char)
+                                            <li><div class="s_block alpha-category" data-alpha="{{ $char }}">{{ $char }}</div></li>
+                                        @endforeach
+                                        </ul>
                                     </div>
                                 </div>
-                            </div>    
-                            <div class="panel_header"> Choose Category</div>   
-                                <div uk-grid>
-                                    <div  class="uk-width-3-4@m">
+                                <div  uk-grid>
+                                    <div  class="uk-width-expand@m">
                                         <div class=" form_wraper">
                                             <div class=" form_group">
-                                                <ul class="sector_list">
-                                                    <li><div class="s_block uk-margin" onClick="window.location.reload();" >All</div></li>
-                                                    @foreach(range('A', 'Z') as $char)
-                                                    <li><div class="s_block uk-margin alpha-category" data-alpha="{{ $char }}">{{ $char }}</div></li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            <div class="form_group category_list">
-                                                @foreach($categories as $key => $cat)
-                                                    <a class="uk-form-label category uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $cat->id }}"><i class="fa fa-arrow-circle-right"></i> {{ $cat->name ?? '' }}</a>
-                                                @endforeach
+                                                <div class=" form_group">
+                                                    <label class="uk-form-label" for="form-stacked-text">Search</label>
+                                                    <div class="uk-form-controls">
+                                                        <input id="search-category" class="uk-input"  type="text" placeholder="Search">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="uk-width-1-4@m">
-                                        <div class=" form_wraper">
-                                            <div class=" form_group">
-                                                <label class="uk-form-label" for="form-stacked-text">Sub category</label>
-                                                <!-- <div class="uk-form-controls">
-                                                    <input class="uk-input"  type="text" id="search-subcategory" placeholder="Search Sub Category" data-search>
-                                                </div> -->
-                                            </div>
-                                            <div class="form_group" id="parentbox"></div>
-                                        </div>
-                                    </div>
                                 </div>
+                                <!-- <div class="uk-text-right">
+                                    <button class="btn_com uk-modal-close" style="width: 150px;">Next &nbsp; <i class="fa fa-long-arrow-right"></i></button>
+                                </div> -->
+                                <div  uk-grid>
+                                    <div class="uk-width-expand@m">
+                                        <div class="panel_header">  Category</div>
+                                        <ul class="list_catg uk-margin-medium-bottom category_list">
+                                            @foreach($categories as $key => $cat)
+                                            <li><a class="category" data-id="{{ $cat->id }}" data-name="{{ $cat->name }}">{{ $cat->name ?? '' }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <div  class="uk-width-1-3@m">
+                                        <div class="panel_header"> Sub Category <span id="cat_selected"></span></div>
+                                        <ul class="list_catg uk-margin-medium-bottom" id="parentbox">
+                                            
+                                        </ul>
+                                    </div>
+                                </div>                                
                             </div>
-                        </div>
+                        </div>    
                     </div>   
                 </div>
             </div>
         </div>
-    <input id="token" type="hidden" value="{{ csrf_token() }}" />
+        <input id="token" type="hidden" value="{{ csrf_token() }}" />
 </section>
 <!-- CONTAINER CLOSED -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -103,7 +108,7 @@
                                     $(".category_list").empty();
                                     $('#parentbox').empty();
                                     $.each(res,function(key,value){
-                                        $(".category_list").append('<a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                        $(".category_list").append('<li><a class="category" data-id="'+res[key].id+'" data-name="'+res[key].name+'">'+res[key].name+'</a></li>');
                                     });
                                 }
                             }
@@ -129,7 +134,7 @@
                                     $(".category_list").empty();
                                     $('#parentbox').empty();
                                     $.each(res,function(key,value){
-                                        $(".category_list").append('<a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                        $(".category_list").append('<li><a class="category" data-id="'+res[key].id+'" data-name="'+res[key].name+'">'+res[key].name+'</a></li>');
                                     });
                                 }
                             }
@@ -139,6 +144,7 @@
 
                 $(document.body).on('click', '.category' ,function(){
                     var cat_id = $(this).data('id');
+                    var cat_name = $(this).data('name');
                     if(cat_id){
                         $.ajax({
                             type:"POST",
@@ -151,12 +157,13 @@
                                 $('#parentbox').append('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
                             },
                             success:function(res){ 
+                                $('#cat_selected').text('('+cat_name+')');
                                 $('#parentbox').empty();
                                 if(res){
                                     $.each(res,function(key,value){
                                         var name = res[key].name.charAt(0);
                                         let letter = name.toUpperCase();
-                                        $("#parentbox").append('<a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" class="uk-form-label subcategory  uk-margin-right cat_block_linear" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                        $("#parentbox").append('<li style="width: 100%"><a class="subcategory" data-id="'+res[key].id+'">'+res[key].name+'</a></li>');
                                     });
                                 }
                             else{
@@ -199,18 +206,7 @@
                 });
           
 
-                $('[data-search]').on('keyup', function() {
-                    var searchVal = $(this).val();
-                    
-                    var filterItems = $('[data-filter-item]');
-
-                    if ( searchVal != '' ) {
-                        filterItems.addClass('hidden');
-                        $('[data-filter-item][data-filter-name*="' + searchVal.toLowerCase() + '"]').removeClass('hidden');
-                    } else {
-                        filterItems.removeClass('hidden');
-                    }
-                });
+            
                 
             });
         </script>
