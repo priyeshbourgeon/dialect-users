@@ -160,4 +160,18 @@ class ProcurementController extends Controller
 
         return redirect()->route('procurement.home')->with('success','Mail Send!');
     }
+
+
+    public function editTimeFrame($id){
+        $mail = Mail::withTrashed()->find($id);
+        return view('procurement.edit-timeframe',compact('mail'));
+    } 
+
+    public function updateTimeframe(Request $request){
+        $id = $request->mail_id;
+        $mail = Mail::find($id);
+        $mail->request_time = $request->timeframe;
+        $mail->save();
+        return redirect()->route('procurement.outbox');
+    }
 }

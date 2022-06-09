@@ -110,7 +110,7 @@
                                                         <div class="uk-form-controls">
                                                             <div class="wrap_select_dropdown">
                                                            <select name="region_id"  id="region" class="drop_category uk-input  drop_select hide " style="width: 100%;">
-                                                               <option value="">Choose Region</option>
+                                                               <option value="0" {{ $mail->region_id == 0 ? 'selected' : '' }}>All Region</option>
                                                                @if($mail->region_id)
                                                                    @foreach($regions as $key => $region)
                                                                         <option {{ $mail->region_id == $region->id ? 'selected' : '' }}
@@ -175,7 +175,7 @@
 				success:function(res){        
 					if(res){
 						$("#region").empty();
-						$("#region").append('<option>Select Region</option>');
+						$("#region").append('<option>All Region</option>');
 						$.each(res,function(key,value){
 							$("#region").append('<option value="'+key+'">'+value+'</option>');
 						});

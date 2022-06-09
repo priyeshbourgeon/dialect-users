@@ -147,8 +147,7 @@
                         $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
-                        $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
-                        $('.editbutton').html('<a class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i> Update Time Frame</a>');
+                        $('.editbutton').html('<a href="/procurement/outbox/edit-timeframe/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i> Update Time Frame</a>');
                         if(obj.attachment){
                            $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
                         }

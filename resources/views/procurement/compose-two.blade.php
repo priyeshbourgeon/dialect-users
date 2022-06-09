@@ -50,7 +50,7 @@
                                 <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Subject</label>
                                         <div class="uk-form-controls">
-                                            <input name="subject" class="uk-input" id="form-stacked-text" type="text" placeholder="Some text...">
+                                            <input name="subject" class="uk-input" id="form-stacked-text" type="text" placeholder="Some text..." value="{{ old('subject') }}">
                                         </div>
                                         @error('subject')
 								        <small class="error">{{ $message }}</small>
@@ -60,7 +60,7 @@
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Body</label>
                                         <div class="uk-form-controls">
-                                            <textarea id="summernote" name="body"></textarea>
+                                            <textarea id="summernote" name="body">{{ old('body') }}</textarea>
                                         </div>
                                         @error('body')
 								        <small class="error">{{ $message }}</small>
@@ -73,7 +73,7 @@
                                                 <div class=" form_group">
                                                     <label class="uk-form-label" for="form-stacked-text">Time Frame </label>
                                                     <div class="uk-form-controls">
-                                                        <input type="date" class="uk-input" name="timeframe" required>
+                                                        <input type="date" class="uk-input" name="timeframe" value="{{ old('timeframe') }}" required>
                                                     </div>
                                                     @error('timeframe')
                                                     <small class="error">{{ $message }}</small>
@@ -162,7 +162,6 @@
 				success:function(res){        
 					if(res){
 						$("#region").empty();
-						$("#region").append('<option>Select Region</option>');
                         $("#region").append('<option value="0">All Region</option>');
 						$.each(res,function(key,value){
 							$("#region").append('<option value="'+key+'">'+value+'</option>');

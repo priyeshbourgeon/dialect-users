@@ -16,7 +16,7 @@
                         </div>
                     </div>  
                     <div class="compose_mail">
-                        <a  href="{{ route('procurement.compose-one') }}"> <i class="fa fa-plus"></i> <span> Compose </span></a>
+                        <a  href="{{ route('procurement.compose-one') }}"> <i class="fa fa-plus"></i> <span> Generate Quote </span></a>
                     </div>
                     <hr>
                     <ul>
@@ -203,11 +203,7 @@
                             }
                         });
                     }
-                });
-          
-
-            
-                
+                }); 
             });
         </script>
         @endsection

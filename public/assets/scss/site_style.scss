@@ -538,7 +538,7 @@ footer {
         .s_block {
             background: #eee;
             display: block;
-            padding:4px 9px;
+            padding:6px 10px;
             cursor: pointer;
             transition: ease-in 0.5s;
             &.active {
@@ -1287,7 +1287,7 @@ footer {
     }
     .main_head {
         display: flex;
-        // border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #eee;
         padding-bottom: 30px;
         
         .mailer_box {

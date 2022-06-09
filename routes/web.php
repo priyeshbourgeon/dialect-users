@@ -116,16 +116,17 @@ Route::get('/procurement/home', [App\Http\Controllers\HomeController::class, 'pr
 Route::get('/procurement/inbox', [ProcurementController::class, 'inbox'])->name('procurement.inbox');
 Route::get('/procurement/outbox', [ProcurementController::class, 'proOutBox'])->name('procurement.outbox');
 Route::get('/procurement/draft', [ProcurementController::class, 'proDraft'])->name('procurement.draft');
-
-Route::get('/procurement/inbox/show/{id}', [ProcurementController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
 Route::get('/procurement/compose-select-category', [ProcurementController::class, 'composeOne'])->name('procurement.compose-one');
 Route::get('/procurement/compose', [ProcurementController::class, 'composeTwo'])->name('procurement.compose-two');
 Route::post('/procurement/send-mail', [ProcurementController::class, 'sendMail'])->name('procurement.send');
-Route::get('/procurement/events', [ProcurementController::class, 'events'])->name('procurement.events');
-Route::post('/procurement/mail/read',[ProcurementController::class,'getMailContent'])->name('procurement.getMailContent');
-
 Route::get('/procurement/draft/edit/{id}', [ProcurementController::class, 'proDraftShow'])->name('procurement.draft.show');
 Route::post('/procurement/send-draft/{id}', [ProcurementController::class, 'saveDraft'])->name('procurement.send.draft');
+Route::get('/procurement/events', [ProcurementController::class, 'events'])->name('procurement.events');
+Route::post('/procurement/mail/read',[ProcurementController::class,'getMailContent'])->name('procurement.getMailContent');
+Route::get('/procurement/outbox/edit-timeframe/{id}', [ProcurementController::class, 'editTimeFrame'])->name('procurement.outbox.edit-timeframe');
+Route::post('/procurement/outbox', [ProcurementController::class, 'updateTimeframe'])->name('procurement.outbox.update-timeframe');
+
+Route::get('/procurement/inbox/show/{id}', [ProcurementController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
 
 
 // Sales

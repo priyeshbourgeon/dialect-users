@@ -541,7 +541,7 @@ footer a {
 .sector_list li .s_block {
   background: #eee;
   display: block;
-  padding: 4px 9px;
+  padding: 6px 10px;
   cursor: pointer;
   -webkit-transition: ease-in 0.5s;
   transition: ease-in 0.5s;
@@ -594,10 +594,10 @@ footer a {
           align-items: end;
   gap: 15px;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -ms-grid-columns: (1fr)[4];
-  grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr);
 }
 
 .dash_tile .col {
@@ -932,7 +932,7 @@ footer a {
 
 .mail_grip_wrap ul li {
   list-style-type: none;
-  /* border-bottom: 0px solid #eee; */
+  border-bottom: 1px solid #eee;
 }
 
 .mail_grip_wrap ul li a {
@@ -1329,7 +1329,7 @@ footer a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  /* border-bottom: 1px solid #eee; */
+  border-bottom: 1px solid #eee;
   padding-bottom: 30px;
 }
 
