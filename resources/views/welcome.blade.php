@@ -149,7 +149,7 @@ $('#country').on("change",function(){
            success:function(res){        
               if(res){
                   $("#region").empty();
-                  $("#region").append('<option value="">Select Region</option>');
+                  $("#region").append('<option value="">Select Location</option>');
                   $.each(res,function(key,value){
                      $("#region").append('<option value="'+key+'">'+value+'</option>');
                   });
