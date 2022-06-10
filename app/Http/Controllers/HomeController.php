@@ -167,7 +167,7 @@ class HomeController extends Controller
 
     public function searchService(Request $request){
         if($request->keyword != ''){
-        $cat = Category::where("name",'like','%'.$request->keyword.'%')->get();
+        $cat = SubCategory::where("name",'like','%'.$request->keyword.'%')->get();
         }
         else{
             $cat = Category::all();

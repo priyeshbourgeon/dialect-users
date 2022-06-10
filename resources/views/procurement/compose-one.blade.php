@@ -28,23 +28,12 @@
                 </div>
             </div>
             <div class="col_right_ca">
-                <h1 class="comm_title">Inbox</h1>
+                <h1 class="comm_title">Generate Quote</h1>
                 <div class="col_maii_middle">
                     <div class="col_maiil_left"  style="width:100%">
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">                
-                            <div class="panel_header"> Generate Quote</div>
+                            <div class="panel_header">Choose Category</div>
                                 <div class="uk-margin-medium-bottom">
-                                    <div class=" form_group">
-                                        <ul class="sector_list">
-                                            <li><div class="s_block" onClick="window.location.reload();">All</div></li>
-                                        @foreach(range('A', 'Z') as $char)
-                                            <li><div class="s_block alpha-category" data-alpha="{{ $char }}">{{ $char }}</div></li>
-                                        @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div  uk-grid>
-                                    <div  class="uk-width-expand@m">
                                         <div class=" form_wraper">
                                             <div class=" form_group">
                                                 <div class=" form_group">
@@ -55,14 +44,21 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    <div class="form_group" style="margin-top:10px;">
+                                        <ul class="sector_list">
+                                            <li><div class="s_block" onClick="window.location.reload();">All</div></li>
+                                        @foreach(range('A', 'Z') as $char)
+                                            <li><div class="s_block alpha-category" data-alpha="{{ $char }}">{{ $char }}</div></li>
+                                        @endforeach
+                                        </ul>
                                     </div>
                                 </div>
+                                
                                 <!-- <div class="uk-text-right">
                                     <button class="btn_com uk-modal-close" style="width: 150px;">Next &nbsp; <i class="fa fa-long-arrow-right"></i></button>
                                 </div> -->
                                 <div  uk-grid>
                                     <div class="uk-width-expand@m">
-                                        <div class="panel_header">  Category</div>
                                         <ul class="list_catg uk-margin-medium-bottom category_list">
                                             @foreach($categories as $key => $cat)
                                             <li><a class="category" data-id="{{ $cat->id }}" data-name="{{ $cat->name }}">{{ $cat->name ?? '' }}</a></li>
@@ -70,7 +66,7 @@
                                         </ul>
                                     </div>
                                     <div  class="uk-width-1-3@m">
-                                        <div class="panel_header"> Sub Category <span id="cat_selected"></span></div>
+                                        <h4 id="cat_selected"></h4>
                                         <ul class="list_catg uk-margin-medium-bottom" id="parentbox">
                                             
                                         </ul>
@@ -101,6 +97,7 @@
                             },
                             beforeSend: function() {
                                 $(".category_list").empty();
+                                $('#cat_selected').text('');
                                 $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
                             },
                             success:function(res){       
@@ -108,7 +105,7 @@
                                     $(".category_list").empty();
                                     $('#parentbox').empty();
                                     $.each(res,function(key,value){
-                                        $(".category_list").append('<li><a class="category" data-id="'+res[key].id+'" data-name="'+res[key].name+'">'+res[key].name+'</a></li>');
+                                        $(".category_list").append('<li><a class="subcategory" data-id="'+res[key].id+'" data-name="'+res[key].name+'">'+res[key].name+'</a></li>');
                                     });
                                 }
                             }
