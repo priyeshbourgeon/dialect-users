@@ -33,6 +33,7 @@ Route::get('registration-company-activity', [RegisterController::class,'companyA
 Route::post('registration/get-region', [RegisterController::class,'getRegionsByCountryId'])->name('registration.getRegion');
 Route::post('registration/get-country', [RegisterController::class,'getCountryById'])->name('registration.getCountry');
 Route::post('registration/search-service',[RegisterController::class,'searchCategory'])->name('registration.searchcategory');
+Route::post('registration/search-sub-service',[RegisterController::class,'searchSubCategory'])->name('registration.searchsubcategory');
 Route::post('registration/search-alpha-service', [RegisterController::class,'searchAlphaCategory'])->name('registration.searchalphacategory');
 Route::post('registration/get-subservice', [RegisterController::class,'getSubCategory'])->name('registration.getSubCategory');
 Route::post('registration/save-subservice', [RegisterController::class,'saveCategory'])->name('registration.saveCategory');

@@ -449,6 +449,18 @@ class RegisterController extends Controller
         }
         return $cat->toArray();
     } 
+
+    public function searchSubCategory(Request $request){
+        if($request->keyword != ''){
+        $cat = SubCategory::where("name",'like','%'.$request->keyword.'%')->get();
+        }
+        else{
+            $cat = Category::all();
+        }
+        return $cat->toArray();
+    } 
+
+
     public function searchAlphaCategory(Request $request){
         if($request->keyword != ''){
         $cat = Category::where("name",'like',$request->keyword.'%')->get();

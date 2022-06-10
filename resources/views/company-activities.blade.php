@@ -1,16 +1,29 @@
 @extends('layouts.app')
 @section('content')
 <!-- banner -->
+<style>
+    .category-selected{
+        padding: 10px;
+        margin:3px;
+    }
+</style>
 <section class="inner_page uk-clearfix">
             <div class="uk_container ">
                 <div class="uk-card uk-card-default uk-card-body">
-                    <h3>Selected Services</h3>
+                    <h3><a href="{{ route('registration.selectService') }}">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </a>Selected Services</h3>
                     <div id="loader"></div>
-                    <div class="uk-overflow-auto" id="cat-list">
-                        @foreach($companyActivities  as $key => $ca)
-                        <span class="uk-label uk-padding uk-margin category-selected" data-id="{{ $ca->id }}" uk-tooltip="title: Click here to remove {{ $ca->name }}">{{ $ca->name ?? ''  }}</span>
-                        @endforeach
-                    </div>
+                    <ul class="uk-overflow-auto" id="cat-list">
+                        @forelse($companyActivities  as $key => $ca)
+                        <li class="uk-label category-selected" data-id="{{ $ca->id }}" uk-tooltip="title: Click here to remove {{ $ca->name }}">{{ $ca->name ?? ''  }}</li>
+                        @empty
+                        <li style="margin: auto;width: 50%;list-style:none">
+                            <img src="{{ asset('assets/images/data/nocategories.jpg') }}"/>
+                            <h4 style="text-align:center">No Enquiries Found!</h4>
+                        </li>        
+                        @endforelse
+                    </ul>
 
                 <div class="uk-width-1-1@m uk-margin-medium-top uk-text-right">
                     <div class=" form_group">
