@@ -94,6 +94,7 @@ class RegisterController extends Controller
             try{
                 \DB::beginTransaction();
                 $company = new Company();
+                $company->name = $registation['name'];
                 $company->country_id = $registation['country_id'];
                 $company->region_id = $registation['region_id'];
                 $company->pobox = $registation['pobox'];
@@ -103,7 +104,7 @@ class RegisterController extends Controller
 
                 $companyuser = new CompanyUser();
                 $companyuser->company_id    = $company->id;
-                $companyuser->name          = $registation['name'];
+                $companyuser->name          = '';
                 $companyuser->mobile        = $registation['mobile'];
                 $companyuser->designation   = "Admin";
                 $companyuser->email         = $registation['email'];

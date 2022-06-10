@@ -16,7 +16,7 @@
                         <div class="uk-margin">
                             <div class="uk-inline">
                                 <span class="uk-form-icon" > <img src="{{ asset('assets/images/user.svg') }}" alt=""></span>
-                                <input class="uk-input @error('name') uk-form-danger uk-animation-shake @enderror" type="text" name="name" placeholder="User Name *" value="{{ old('name') }}">
+                                <input class="uk-input @error('name') uk-form-danger uk-animation-shake @enderror" type="text" name="name" placeholder="Company Name *" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="error_msg">{{ $message }}</div>
                                 @enderror  

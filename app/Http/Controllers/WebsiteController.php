@@ -23,7 +23,10 @@ class WebsiteController extends Controller
         $countries = Country::where('status',1)->get();
         $regions = Region::all();
         return view('welcome',compact('countries','regions'));
+        //return redirect('login');
     }
+
+    
 
     
 
