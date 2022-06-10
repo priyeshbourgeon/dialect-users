@@ -119,7 +119,6 @@ class StaffController extends Controller
         $companyuser->landline      = $request->landline;
         $companyuser->designation   = $request->role;
         $companyuser->email         = $request->email;
-        $companyuser->password      = '';
         $companyuser->status        = 1;
        
         $companyuser->save();
