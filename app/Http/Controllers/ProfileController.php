@@ -14,7 +14,9 @@ class ProfileController extends Controller
 {
     public function profile(){
         $company = Company::where('id',auth()->user()->company_id)->first();
-        return view('profile',compact('company'));
+        $categories = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
+        $subcategories = SubCategory::whereIn('id',$categories)->get();
+        return view('profile',compact('company','subcategories'));
     }
 
     public function profileEdit(){

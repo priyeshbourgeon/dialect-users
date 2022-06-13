@@ -17,8 +17,8 @@ use App\Http\Controllers\SalesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [App\Http\Controllers\WebsiteController::class, 'index']);
+Route::get('/company/register', [App\Http\Controllers\WebsiteController::class, 'register']);
 Route::post('registrations', [RegisterController::class,'registration'])->name('registrations');
 Route::get('registration-otp', [RegisterController::class,'registrationOtp'])->name('registration.otp');
 Route::post('register-verify-otp', [RegisterController::class,'verifyOtp'])->name('registration.verifyOtp');
@@ -125,8 +125,7 @@ Route::post('/procurement/send-draft/{id}', [ProcurementController::class, 'save
 Route::get('/procurement/events', [ProcurementController::class, 'events'])->name('procurement.events');
 Route::post('/procurement/mail/read',[ProcurementController::class,'getMailContent'])->name('procurement.getMailContent');
 Route::get('/procurement/outbox/edit-timeframe/{id}', [ProcurementController::class, 'editTimeFrame'])->name('procurement.outbox.edit-timeframe');
-Route::post('/procurement/outbox', [ProcurementController::class, 'updateTimeframe'])->name('procurement.outbox.update-timeframe');
-
+Route::post('/procurement/outbox/update-timeframe', [ProcurementController::class, 'updateTimeFrame'])->name('procurement.outbox.update-timeframe');
 Route::get('/procurement/inbox/show/{id}', [ProcurementController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
 
 

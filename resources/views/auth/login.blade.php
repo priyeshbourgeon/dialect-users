@@ -50,7 +50,7 @@
                             </div>
                             <div class="go_signup">
                                 Not registered ? 
-                                <a href="{{ url('/') }}"> Click here to register</a> 
+                                <a href="{{ url('/company/register') }}"> Click here to register</a> 
                             </div>
                         </form>
                     </div>

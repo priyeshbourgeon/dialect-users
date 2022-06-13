@@ -20,10 +20,13 @@ class WebsiteController extends Controller
 
     public function index()
     {
+        return redirect('login');
+    }
+    public function register()
+    {
         $countries = Country::where('status',1)->get();
         $regions = Region::all();
         return view('welcome',compact('countries','regions'));
-        //return redirect('login');
     }
 
     
