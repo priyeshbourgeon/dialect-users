@@ -28,4 +28,8 @@ class Mail extends Model
     public function reply(){
         return $this->hasMany(Mail::class,'ref_id','id')->where('is_draft','!=',1);
     }
+
+    public function myreply(){
+        return $this->belongsTo(Mail::class,'id','ref_id')->where('is_draft','!=',1)->where('from_company_id',auth()->user()->company_id);
+    }
 }

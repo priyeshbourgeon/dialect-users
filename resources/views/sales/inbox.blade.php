@@ -139,13 +139,14 @@
 				success:function(res){        
 					if(res){
                         obj = jQuery.parseJSON(res);
+                        
 						$('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
                         $('.mailer_name').text(obj.sender_name).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.date').text(obj.created_at).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
                         $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
-                        $('.editbutton').html('<a href="/sales/compose-mail/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-reply" aria-hidden="true"></i> Reply</a>');
+                       
                         if(obj.attachment){
                            $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
                         }
@@ -156,6 +157,20 @@
                         $('.mailer_country').text('Country : '+obj.country.name).removeClass('skeleton skeleton-text skeleton-footer');
                         var regionname = !obj.region ?  'All Region' : obj.region.name; 
                         $('.mailer_region').text('Region : '+regionname).removeClass('skeleton skeleton-text skeleton-footer');
+                        if(obj.myreply){
+                              var reply_content = '<hr class="uk-divider-icon">';
+                              reply_content +='<div class="main_head uk-margin-medium-top">';
+                              reply_content += '<h3 class="mailer_name ">'+obj.myreply.subject+'</h3></div>';
+                              reply_content += '<p>'+obj.myreply.created_at+'</p>';
+                              reply_content += '<div class="mail_text uk-margin-top">'+obj.myreply.description+'</div>';
+                              if(obj.myreply.attachment){
+                                 reply_content += '<a href="'+obj.myreply.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>';
+                              }
+                              $('.editbutton').html(reply_content);
+                        }
+                        else{
+                            $('.editbutton').html('<a href="/sales/compose-mail/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-reply" aria-hidden="true"></i> Reply</a>');
+                        }
                     }else{
 						$('.subject').empty();
                         $('.mailer_name').empty();

@@ -37,7 +37,7 @@ class ProcurementController extends Controller
     public function getMailContent(Request $request){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mail = Mail::with('category','country','region')->withTrashed()->find($request->id)->toJson();
+        $mail = Mail::with('category','country','region','myreply')->withTrashed()->find($request->id)->toJson();
         return $mail;
     }
 

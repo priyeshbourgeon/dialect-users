@@ -22,7 +22,7 @@ class SalesController extends Controller
         $company = Company::findOrFail($user->company_id);
         $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
         $company_id = Auth::user()->company_id;
-        $mails = Mail::where('from_company_id','!=',$company->id)
+        $mails = Mail::with('myreply')->where('from_company_id','!=',$company->id)
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
                       ->whereIn('service',$companyActivities)
@@ -30,7 +30,7 @@ class SalesController extends Controller
 			          ->where('mails.created_at','>',$company->created_at)
                       ->whereDate('mails.request_time','>=',date('Y-m-d'))
                       ->orderBy('mails.created_at','desc')->paginate(10);
-                      
+                 //ddd($mails);     
         return view('sales.inbox',compact('company','user','mails'));            
     }
 
@@ -95,6 +95,7 @@ class SalesController extends Controller
 
     public function sendReply(Request $request){
         $mail_id = $request->mail_id;
+       
         $maildetails = Mail::findOrFail($mail_id);
         $mode = ($request->submit == 'draft') ? '1' : '0';
         $imageUrl  = '';
@@ -126,6 +127,47 @@ class SalesController extends Controller
         $mail->is_draft                = $mode;
         $mail->attachment              = $imageUrl;
         $mail->save();
+        return redirect()->route('sales.home')->with('success','Mail Send!');
+    }
+
+    public function sendDraftReply(Request $request){
+        $mail_id = $request->mail_id;
+        $maildetails = Mail::findOrFail($mail_id);
+        $mode = ($request->submit == 'draft') ? '1' : '0';
+        $imageUrl  = '';
+        $company_id = Auth::user()->company_id;
+        $company = Company::find($company_id);
+        $mail  =  Mail::find($mail_id);
+         if($request->hasFile('attachment')){
+             $imageName = time().'.'.$request->attachment->extension();  
+             $request->attachment->move(public_path('attachment'), $imageName);
+             $path = asset('attachment/');
+             $imageUrl = $path.'/'.$imageName;
+         }
+         else{
+            $imageUrl = $mail->attachment;
+         }
+        
+       
+        $mail->sector_id               = $maildetails->sector_id;
+        $mail->service_parent_id       = $maildetails->service_id;
+        $mail->type                    = 2;
+        $mail->service                 = $maildetails->service;
+        $mail->country_id              = $maildetails->country_id;
+        $mail->region_id               = $maildetails->region_id;
+        $mail->cc                      = $request->cc;
+        $mail->subject                 = $request->subject;
+        $mail->description             = $request->reply_body;
+        $mail->from_company_id         = $company_id;
+        $mail->sender_name             = $company->name;
+        $mail->sender_type             = 'sales';
+        $mail->sender_user             = Auth::user()->id;
+        $mail->ref_id                  = $maildetails->ref_id;
+        $mail->verified_at             = date('Y-m-d h:i:s');
+        $mail->is_draft                = $mode;
+        $mail->attachment              = $imageUrl;
+        $mail->save();
+        //dd($mail);
         return redirect()->route('sales.home')->with('success','Mail Send!');
     }
 

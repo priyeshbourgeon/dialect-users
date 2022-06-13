@@ -139,3 +139,4 @@ Route::get('/sales/enquiry-timeout', [SalesController::class, 'salesEnquiryTimeo
 Route::get('/sales/compose-mail/{id}', [SalesController::class, 'composeReply'])->name('sales.composereply');
 Route::get('/sales/draft/edit/{id}', [SalesController::class, 'editDraft'])->name('sales.editDraft');
 Route::post('/sales/send-mail', [SalesController::class, 'sendReply'])->name('sales.sendreply');
+Route::post('/sales/send-reply', [SalesController::class, 'sendDraftReply'])->name('sales.senddraftreply');
