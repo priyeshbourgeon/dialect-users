@@ -42,7 +42,7 @@
                                 <div class="inner">
                                     <div class="profile_dp">
                                         <a href="{{ url()->previous() }}" class="btn_com"> Back</a>
-                                        <a href="{{ route('change-password') }}" class="btn_com"> Change Password</a>
+                                        <a href="#" class="btn_com"> Change Password</a>
                                     </div> 
                                     <hr>          
                                     <div class="profile_information">
@@ -74,10 +74,8 @@
                                     </div>                  
                                 </div>
                             </div>
-                </div>
-				</div>
-			</div>
-            
-			
+                        </div>
+				    </div>
+			    </div>
         </section>
     @endsection
