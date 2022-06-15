@@ -20,8 +20,8 @@
                 <div class="ad_profile">
                         <div class="">
                             <div class=" uk-card uk-card-default uk-card-small uk-card-body">
+                            <a href="{{ url()->previous() }}" class="btn_com"> Back to inbox</a>
                                 <div class="inner">
-                                    <a href="{{ url()->previous() }}" class="btn_com"> Back to inbox</a>
                                     <div class="profile_dp">
                                             <div class="dp" style="background: url(images/dp_150x150.png);">
                                                 <a href="{{ route('profile.change-dp') }}"> <i class="fa fa-edit"></i> </a>
