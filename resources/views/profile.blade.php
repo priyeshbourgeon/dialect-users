@@ -1,27 +1,19 @@
 @extends(strtolower(auth()->user()->designation).'.layouts.app')
 @section('content')
-
-        <section class="mail_wrap">
-        <div class="mail_grip_wrap">
-            <div class="col_maii_left toggle_sidebar">        
-                <div class=" uk-card uk-card-default uk-card-small ">
-                    <div class="side_anglebnt">
-                        <div class="tog_btn">
-                            <i class="fa fa-angle-left"></i>
-                        </div>
-                    </div>  
-                    <div class="compose_mail">
-                        <a  href="{{ route('procurement.compose-one') }}"> <i class="fa fa-plus"></i> <span> Generate Quote </span></a>
-                    </div>
-                    <hr>
-                    <ul>
-                       <li><a uk-tooltip="title: Inbox" href="{{ route('procurement.home') }}"> <i class="fa fa-inbox "></i> <span class="nav_text">  Inbox </span> </a></li>
-                       <li><a uk-tooltip="title: Sent" href="{{ route('procurement.outbox') }}"><i class="fa fa-paper-plane-o "></i>  <span class="nav_text"> Outbox </span> </a></li>
-                       <li><a uk-tooltip="title: Draft" href="{{ route('procurement.draft') }}"><i class="fa fa-file-text-o"></i>  <span class="nav_text"> Draft </span> </a></li>
-                       <li><a uk-tooltip="title: Upcoming Events" href="{{ route('procurement.events') }}"><i class="fa fa-calendar"></i>  <span class="nav_text"> Upcoming Events </span> </a></li>
-                    </ul>
-                </div>
+<section class=" uk-padding-small uk-clearfix">
+            <div class="uk_container ">
+                <ul class="uk-breadcrumb">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Profile</a></li>
+                    
+                </ul>
             </div>
+
+ 
+
+        </section>
+        
+        <section class="mail_wrap">
 		    <div uk-grid>
 			    <div>
 					<div class="uk_container">
@@ -29,6 +21,7 @@
                         <div class="">
                             <div class=" uk-card uk-card-default uk-card-small uk-card-body">
                                 <div class="inner">
+                                    <a href="{{ url()->previous() }}" class="btn_com"> Back to inbox</a>
                                     <div class="profile_dp">
                                             <div class="dp" style="background: url(images/dp_150x150.png);">
                                                 <a href="{{ route('profile.change-dp') }}"> <i class="fa fa-edit"></i> </a>
