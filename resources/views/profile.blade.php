@@ -20,7 +20,8 @@
                 <div class="ad_profile">
                         <div class="">
                             <div class=" uk-card uk-card-default uk-card-small uk-card-body">
-                            <a href="{{ url(strtolower(auth()->user()->designation).'/inbox') }}" style="background: #20285b;width:70%;" class="btn_com uk-align-center"> Back to inbox</a>
+                            @php $url = strtolower(auth()->user()->designation) == 'admin' ? 'admin/home' : strtolower(auth()->user()->designation).'/inbox'; @endphp    
+                            <a href="{{ url($url) }}" style="background: #20285b;width:70%;" class="btn_com uk-align-center"> Back to inbox</a>
                                 <div class="inner">
                                     <div class="profile_dp">
                                             <div class="dp" style="background: url(images/dp_150x150.png);">
