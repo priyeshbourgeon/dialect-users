@@ -25,10 +25,12 @@
                         @if($procurement)
                             @if($procurement->password =='')
                             <span class="uk-label uk-align-right" style="background-color:yellow;color:#000">
-                                Activation Pending</span>
+                                Activation Pending
+                            </span>
                             @else
                             <span class="uk-label uk-align-right" style="background-color:green">
-                                Active</span>
+                                Active
+                            </span>
                             @endif
                         @endif  
                     </a>

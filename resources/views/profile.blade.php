@@ -69,7 +69,9 @@
                                     </div> 
                                     <hr>          
                                     <div class="profile_information">
-                                         <h3 class="name">Business Categories</h3>
+                                         <h3 class="name">Business Categories
+                                         <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Edit</a>
+                                         </h3>
                                          <div>
                                          @foreach($subcategories as $key => $val)
                                              <span class="uk-label">{{ $val->name ?? ''}}</span>

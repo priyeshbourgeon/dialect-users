@@ -1,5 +1,5 @@
 <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
                             <form  action="{{ route('staff.update',$user->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

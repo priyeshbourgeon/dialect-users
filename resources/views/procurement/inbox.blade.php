@@ -142,7 +142,9 @@
                         $('.mail_id').text(obj.request_time).removeClass('skeleton skeleton-text skeleton-footer');
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
                         if(obj.attachment){
-                           $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>').removeClass('skeleton skeleton-text skeleton-footer');
+                           var attchhtml =  '<div><a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>';
+                           var attchhtml +=  '<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a></div>';
+                           $('.mail_attachment').html(attchhtml).removeClass('skeleton skeleton-text skeleton-footer');
                         }
                         else{
                             $('.mail_attachment').empty().removeClass('skeleton skeleton-text skeleton-footer');

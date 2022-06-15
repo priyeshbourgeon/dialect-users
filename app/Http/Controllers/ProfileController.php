@@ -20,7 +20,8 @@ class ProfileController extends Controller
     }
 
     public function profileEdit(){
-        return view('profile-edit');
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        return view('profile-edit',compact('company'));
     }
 
     public function profileSave(Request $request){
