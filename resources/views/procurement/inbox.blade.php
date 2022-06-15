@@ -56,6 +56,9 @@
                                                 <a href="{{ $mail->attachment ?? '' }}" download  uk-tooltip="title: Download Attachment" >
                                                     <i class="fa fa-paperclip mr-2" aria-hidden="true"></i>
                                                      Download Attachment</a>
+                                                <a href="{{ $mail->attachment ?? '' }}" target="_blank"  uk-tooltip="title: Download Attachment" >
+                                                    <i class="fa fa-paperclip mr-2" aria-hidden="true"></i>
+                                                     View Attachment</a>     
                                             @endif
                                             </div>
                                         </div>
@@ -143,7 +146,7 @@
                         $('.mail_content').html(obj.description).removeClass('skeleton skeleton-text skeleton-text__body');
                         if(obj.attachment){
                            var attchhtml =  '<div><a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>';
-                           var attchhtml +=  '<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a></div>';
+                            attchhtml +=  '<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a></div>';
                            $('.mail_attachment').html(attchhtml).removeClass('skeleton skeleton-text skeleton-footer');
                         }
                         else{
