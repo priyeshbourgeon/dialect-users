@@ -59,6 +59,9 @@
                                                 <a href="{{ $mail->attachment ?? '' }}" download  uk-tooltip="title: Download Attachment" >
                                                     <i class="fa fa-paperclip mr-2" aria-hidden="true"></i>
                                                      Download Attachment</a>
+                                                <a href="{{ $mail->attachment ?? '' }}" target="_blank"  uk-tooltip="title: View Attachment" >
+                                                    <i class="fa fa-paperclip mr-2" aria-hidden="true"></i>
+                                                     View Attachment</a>       
                                             @endif
                                         </div>
                                     </div>
@@ -149,7 +152,9 @@
                         $('.dp').html('<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
                         $('.editbutton').html('<a href="/procurement/draft/edit/'+obj.id+'" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i>Edit Draft</a>').removeClass('skeleton skeleton-text skeleton-footer');;
                         if(obj.attachment){
-                           $('.mail_attachment').html('<a href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>')
+                            var attchhtml =  '<div><a class="uk-button uk-button-default" href="'+obj.attachment+'" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>';
+                            attchhtml +=  '<a class="uk-button uk-button-default" href="'+obj.attachment+'" target="_blank"  uk-tooltip="title: View Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>View Attachment</a></div>';
+                           $('.mail_attachment').html(attchhtml).removeClass('skeleton skeleton-text skeleton-footer');
                         }
                         else{
                             $('.mail_attachment').empty();
