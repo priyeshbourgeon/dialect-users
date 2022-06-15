@@ -1,18 +1,6 @@
 @extends(strtolower(auth()->user()->designation).'.layouts.app')
 @section('content')
-<section class=" uk-padding-small uk-clearfix">
-            <div class="uk_container ">
-                <ul class="uk-breadcrumb">
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Profile</a></li>
-                    
-                </ul>
-            </div>
 
- 
-
-        </section>
-        
         <section class="mail_wrap">
         <div class="mail_grip_wrap">
             <div class="col_maii_left toggle_sidebar">        
