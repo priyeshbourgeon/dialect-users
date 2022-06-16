@@ -32,14 +32,14 @@
                             <label class="uk-form-label" for="form-stacked-text">Change Password </label>
                             <div class="uk-form-controls">
                                 <div class="uk-margin  uploads"  uk-margin>
-                                    <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                     
-                                        <input style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Current Password" name="current-password" required >
+                                    <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                
+                                        <input style="width: 100%;" class="uk-input uk-form-width-medium" type="password" placeholder="Current Password" name="current-password" required >
                                     </div>
                                     <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                     
-                                        <input style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="New Password" name="new-password" required>
+                                        <input style="width: 100%;" class="uk-input uk-form-width-medium" type="password" placeholder="New Password" name="new-password" required>
                                     </div>
                                     <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">
-                                        <input style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Confirm Password"  name="new-password_confirmation" required>
+                                        <input style="width: 100%;" class="uk-input uk-form-width-medium" type="password" placeholder="Confirm Password"  name="new-password_confirmation" required>
                                     </div>                 
                                     <div class="uk-text-center">  
                                         <a href="{{ route('profile') }}"><button class="  btn_com">Back</button></a>

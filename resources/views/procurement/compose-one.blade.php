@@ -46,7 +46,7 @@
                                         </div>
                                     <div class="form_group" style="margin-top:10px;">
                                         <ul class="sector_list">
-                                            <li><div class="s_block" onClick="window.location.reload();">All</div></li>
+                                            <li><div class="s_block active" onClick="window.location.reload();">All</div></li>
                                         @foreach(range('A', 'Z') as $char)
                                             <li><div class="s_block alpha-category" data-alpha="{{ $char }}">{{ $char }}</div></li>
                                         @endforeach
@@ -114,6 +114,8 @@
                 });
                 $(".alpha-category").click(function(){
                    var keyword = $(this).data('alpha');
+                   $(".s_block").removeClass('active');
+                   $(this).addClass('active');
                    if(keyword){
                         $.ajax({
                             type:"POST",
