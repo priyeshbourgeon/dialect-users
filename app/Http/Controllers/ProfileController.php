@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\CompanyUser;
 use App\Models\CompanyActivity;
+use App\Models\CompanyDocument;
 use App\Models\SubCategory;
 use Hash;
 use Auth;
@@ -16,7 +17,8 @@ class ProfileController extends Controller
         $company = Company::where('id',auth()->user()->company_id)->first();
         $categories = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
         $subcategories = SubCategory::whereIn('id',$categories)->get();
-        return view('profile',compact('company','subcategories'));
+        $document = CompanyDocument::with('document')->where('company_id',$company->id)->first();
+        return view('profile',compact('company','subcategories','document'));
     }
 
     public function profileEdit(){
@@ -79,5 +81,16 @@ class ProfileController extends Controller
         return view('categories',compact('company','subcategories'));
     }
 
+    public function chooseTheme(){
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        return view('theme',compact('company'));
+    }
+
+    public function updateTheme(Request $request){
+        $user = Auth::user();
+        $user->color = $request->color;
+        $user->save();
+        return redirect()->back();
+    }
 
 }

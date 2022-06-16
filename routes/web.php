@@ -102,6 +102,9 @@ Route::post('procurement-mail-save', 'User\Procurement\EnquiryController@store')
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 Route::get('/profile/edit', [ProfileController::class, 'profileEdit'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'profileSave'])->name('profile.save');
+Route::get('/profile/theme', [ProfileController::class, 'chooseTheme'])->name('profile.theme');
+Route::post('/profile/update-theme', [ProfileController::class, 'updateTheme'])->name('profile.update-theme');
+
 Route::get('/profile/business-category', [ProfileController::class, 'profileCategories'])->name('profile.categories');
 
 Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('profile.change-dp');

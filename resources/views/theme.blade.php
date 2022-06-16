@@ -1,5 +1,15 @@
 @extends(strtolower(auth()->user()->designation).'.layouts.app')
 @section('content')
+<style>
+   
+    input[type="color"] {
+        border: none;
+        border-radius: 50%;
+        width: 100%;
+        height: 200px;
+    }
+
+</style>
 <section class=" uk-padding-small uk-clearfix">
             <div class="uk_container ">
                 <ul class="uk-breadcrumb">
@@ -69,41 +79,14 @@
                                         <a href="{{ route('profile.theme') }}" class="btn_com"> Change Color Theme</a>
                                         <a href="{{ route('change-password') }}" class="btn_com"> Change Password</a>
                                     </div> 
-                                    <hr>   
+                                    <hr>    
                                     <div class="profile_information">
-                                         <h3 class="name">Document
-                                         @if(strtolower(auth()->user()->designation) == 'admin')   
-                                         <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Edit</a>
-                                         @endif
-                                         </h3>
-                                         <div uk-grid>
-                                            <div>
-                                                <ul>
-                                                   <li>Document : {{ $document->document->name ?? '' }}</li> 
-                                                   <li>Document No: {{ $document->doc_number ?? '' }} </li> 
-                                                   <li>Expiry Date : {{ $document->expiry_date ?? '' }}</li> 
-                                                   <li>Status : {{ $document->expiry_date > date('Y-m-d') ? 'active' : 'expired' }}</li>
-                                                </ul>
-                                            </div>
-                                            <div>
-                                            <a href="{{ $document->doc_file }}" target="popup"  uk-tooltip="title: Click here to preview"
-                                            onclick="window.open('{{ $document->doc_file }}','{{ $document->document->name ?? '' }}','width=1600,height=2400,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no')">
-                                            <embed src="{{ $document->doc_file }}" width="150px" height="200px" />
-                                            </a>
-                                            </div>     
-                                         </div>										 
-                                    </div>    
-                                    <hr>       
-                                    <div class="profile_information">
-                                         <h3 class="name">Business Categories
-                                         @if(strtolower(auth()->user()->designation) == 'admin')   
-                                         <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Edit</a>
-                                         @endif
-                                         </h3>
-                                         <div>
-                                         @foreach($subcategories as $key => $val)
-                                             <span class="uk-label">{{ $val->name ?? ''}}</span>
-                                         @endforeach    
+                                         <h3 class="name">Change Color Theme</h3>
+                                         <form action="{{ route('profile.update-theme') }}" method="post">
+                                            @csrf
+                                         <input type="color" name="color" id="colorPicker" value="{{ (Auth::user()->color) ? Auth::user()->color : '#ffffff' }}">
+                                         <button type="submit" class="btn_com"> Update Theme</button>
+                                         </form>
                                          </div>										 
                                     </div>                  
                                 </div>
@@ -114,4 +97,14 @@
             
 			
         </section>
+        <script>
+            const body = document.querySelector("body");
+            const input = document.getElementById("colorPicker");
+
+            setColor();
+            input.addEventListener("input", setColor);
+            function setColor() {
+                body.style.backgroundColor = input.value;
+            }
+        </script>
     @endsection

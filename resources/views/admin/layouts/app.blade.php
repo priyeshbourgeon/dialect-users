@@ -36,7 +36,7 @@
      
 
 </head>
-<body >
+<body style="background:{{ (Auth::user()->color) ? Auth::user()->color : '#ffffff' }}">
         <!-- header -->
         <header>
             <div class="uk_container"> 
@@ -149,7 +149,7 @@
                                                 </a>
                                             </li>
                                             <li class="uk-align-center uk-margin-small">
-                                                <a href="#" uk-margin-small> 
+                                                <a href="{{ route('profile.theme') }}" uk-margin-small> 
                                                 <i class="fa fa-paint-brush" aria-hidden="true"></i>
                                                   Change Color Theme</a>
                                                 </a>
