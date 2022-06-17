@@ -55,15 +55,16 @@ class ProcurementController extends Controller
     }
 
     public function sendMail(Request $request){
-        $request->validate([  
-            'country_id'=> 'required',
-            'region_id' => 'required',
-            'body' => 'required',
-            'subject'=> 'required',
-            'timeframe'=> 'required',
-        ]);
+        if($request->submit != 'draft'){
+            $request->validate([  
+                'country_id'=> 'required',
+                'region_id' => 'required',
+                'body' => 'required',
+                'subject'=> 'required',
+                'timeframe'=> 'required',
+            ]);
+        }
         
-
         $imageUrl  = '';
          if($request->hasFile('attachment')){
              $imageName = time().'.'.$request->attachment->extension();  

@@ -73,7 +73,7 @@
                                                 <div class=" form_group">
                                                     <label class="uk-form-label" for="form-stacked-text">Time Frame </label>
                                                     <div class="uk-form-controls">
-                                                        <input type="date" class="uk-input" name="timeframe" value="{{ old('timeframe') }}" required>
+                                                        <input type="date" class="uk-input" name="timeframe" value="{{ old('timeframe') }}">
                                                     </div>
                                                     @error('timeframe')
                                                     <small class="error">{{ $message }}</small>

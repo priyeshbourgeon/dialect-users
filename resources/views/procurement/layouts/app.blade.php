@@ -256,7 +256,9 @@
 @stack('scripts')
 <script>
     $(document).ready(function() {
-        $('#summernote').summernote();
+        $('#summernote').summernote({
+            height:500,
+        });
     });
     
   </script>
