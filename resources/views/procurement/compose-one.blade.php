@@ -105,7 +105,7 @@
                                     $(".category_list").empty();
                                     $('#parentbox').empty();
                                     $.each(res,function(key,value){
-                                        $(".category_list").append('<li><a class="subcategory" data-id="'+res[key].id+'" data-name="'+res[key].name+'">'+res[key].name+'</a></li>');
+                                        $(".category_list").append('<li style="background:#eeeeee"><a class="subcategory" data-id="'+res[key].id+'" data-name="'+res[key].name+'">'+res[key].name+'</a></li>');
                                     });
                                 }
                             }
