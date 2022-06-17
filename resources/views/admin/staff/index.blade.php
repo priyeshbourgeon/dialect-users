@@ -47,8 +47,12 @@
                                     <hr>          
                                     <div class="profile_information">
                                          <h3 class="name">Edit Profile</h3>
+                                         <form  action="{{ route('staff.update',$user->id) }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
                                          <div class="uk-margin  uploads"  uk-margin>
-                                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
+                                            <input type="hidden" name="user_id" value="{{ $user->id }}" />
+                                            <input type="hidden" name="role" value="{{ $user->designation }}" />
                                             <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                             
                                                 <input name="name" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Name" value="{{ $user->name ?? '' }}">
                                             </div>
@@ -70,7 +74,8 @@
                                             <div class="uk-text-center">  
                                                 <button type="submit" class="btn_com">Submit</button>
                                             </div>
-                                        </div> 									 
+                                        </div> 
+                                       </form>									 
                                     </div>                  
                                 </div>
                             </div>

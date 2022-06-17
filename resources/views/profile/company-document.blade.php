@@ -73,39 +73,44 @@
                                     <div class="profile_information">
                                          <h3 class="name">Document
                                          @if(strtolower(auth()->user()->designation) == 'admin')   
-                                         <a href="{{ route('profile.document') }}" class="btn_com uk-align-right">Edit</a>
+                                         <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Back</a>
                                          @endif
                                          </h3>
                                          <div uk-grid>
-                                            <div>
-                                                <ul>
-                                                   <li>Document : {{ $document->document->name ?? '' }}</li> 
-                                                   <li>Document No: {{ $document->doc_number ?? '' }} </li> 
-                                                   <li>Expiry Date : {{ $document->expiry_date ?? '' }}</li> 
-                                                   <li>Status : {{ $document->expiry_date > date('Y-m-d') ? 'active' : 'expired' }}</li>
-                                                </ul>
+                                         <div class="uk-form-controls">                         
+                                        <div class="uk-margin  uploads"  uk-margin>
+                                            <input type="hidden" name="company_id" value="{{ auth()->user()->company_id }}" />
+                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                             
+                                            <select  name="doc_type" id="doc_type" class="drop_category uk-input  drop_select hide  @error('doc_type') uk-form-danger uk-animation-shake @enderror" style="width: 100%;">
+                                                <option value=" ">Select Document Type</option>
+                                                @foreach($documents as $key => $document)
+                                                <option {{ old('doc_type') == $document->id ? 'selected' : '' }} value="{{ $document->id }}">{{$document->name}}</option>
+                                                @endforeach
+                                            </select>
                                             </div>
-                                            <div>
-                                            <a href="{{ $document->doc_file }}" target="popup"  uk-tooltip="title: Click here to preview"
-                                            onclick="window.open('{{ $document->doc_file }}','{{ $document->document->name ?? '' }}','width=1600,height=2400,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no')">
-                                            <embed src="{{ $document->doc_file }}" width="150px" height="200px" />
-                                            </a>
-                                            </div>     
-                                         </div>										 
+                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                         
+                                            <input class="uk-input  @error('doc_number') uk-form-danger uk-animation-shake @enderror" id="doc_number"   name="doc_number" type="text" value="{{ old('doc_number') }}" placeholder="Document Number">
+                                            </div>
+                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">             
+                                            <input class="uk-input  @error('expiry_date') uk-form-danger uk-animation-shake @enderror" id="expiry_date"   name="expiry_date" type="date" value="{{ old('expiry_date') }}" min="{{ date('Y-m-d') }}">
+                                            </div>
+                                            <div class="uk-margin-small-bottom">         
+                                                <div class="uk-form-controls">    
+                                                    <input class="uk-input upload" id="doc_file"   name="doc_file" type="file" value="{{ old('doc_file') }}">
+                                                </div>
+                                            </div>
+                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">             
+                                            <small>Format: pdf, jpg, png, jpeg | Max-Size : 4MB</small>
+                                            </div>   
+                                            <div class="uk-text-center">  
+                                                <a href="{{ route('profile') }}"><button class="  btn_com">Back</button></a>
+                                                <button type="submit" class="btn_com">Submit</button>
+                                            </div>
+                                        </div> 
+                                           								 
                                     </div>    
-                                    <hr>       
-                                    <div class="profile_information">
-                                         <h3 class="name">Business Categories
-                                         @if(strtolower(auth()->user()->designation) == 'admin')   
-                                         <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Edit</a>
-                                         @endif
-                                         </h3>
-                                         <div>
-                                         @foreach($subcategories as $key => $val)
-                                             <span class="uk-label">{{ $val->name ?? ''}}</span>
-                                         @endforeach    
-                                         </div>										 
-                                    </div>                  
+                                         
+                                                  
                                 </div>
                             </div>
                 </div>

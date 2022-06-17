@@ -110,7 +110,7 @@ class StaffController extends Controller
             'designation' => 'required',
             'mobile' => 'required',
         ]);
-        
+        //dd($request);
         $companyuser =  CompanyUser::find($id);
         $companyuser->company_id    = $company_id;
         $companyuser->name          = $request->name;

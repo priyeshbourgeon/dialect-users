@@ -8,6 +8,7 @@ use App\Models\CompanyUser;
 use App\Models\CompanyActivity;
 use App\Models\CompanyDocument;
 use App\Models\SubCategory;
+use App\Models\Document;
 use Hash;
 use Auth;
 
@@ -91,6 +92,13 @@ class ProfileController extends Controller
         $user->color = $request->color;
         $user->save();
         return redirect()->back();
+    }
+
+    public function chooseDocument(){
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $documents  = Document::where('country_id',$company->country_id)->get();
+        $document = CompanyDocument::with('document')->where('company_id',$company->id)->first();
+        return view('profile.company-document',compact('company','document','documents'));
     }
 
 }

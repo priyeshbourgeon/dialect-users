@@ -104,6 +104,7 @@ Route::get('/profile/edit', [ProfileController::class, 'profileEdit'])->name('pr
 Route::post('/profile/update', [ProfileController::class, 'profileSave'])->name('profile.save');
 Route::get('/profile/theme', [ProfileController::class, 'chooseTheme'])->name('profile.theme');
 Route::post('/profile/update-theme', [ProfileController::class, 'updateTheme'])->name('profile.update-theme');
+Route::get('/profile/document', [ProfileController::class, 'chooseDocument'])->name('profile.document');
 
 Route::get('/profile/business-category', [ProfileController::class, 'profileCategories'])->name('profile.categories');
 
