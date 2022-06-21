@@ -97,7 +97,7 @@
                                     <div class="profile_information">
                                          <h3 class="name">Business Categories
                                          @if(strtolower(auth()->user()->designation) == 'admin')   
-                                         <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Edit</a>
+                                         <a href="{{ route('profile.categories') }}" class="btn_com uk-align-right">Add New Category</a>
                                          @endif
                                          </h3>
                                          <div>

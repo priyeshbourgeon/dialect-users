@@ -8,6 +8,7 @@ use App\Models\CompanyUser;
 use App\Models\CompanyActivity;
 use App\Models\CompanyDocument;
 use App\Models\SubCategory;
+use App\Models\Category;
 use App\Models\Document;
 use Hash;
 use Auth;
@@ -77,9 +78,11 @@ class ProfileController extends Controller
 
     public function profileCategories(){
         $company = Company::where('id',auth()->user()->company_id)->first();
-        $categories = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
-        $subcategories = SubCategory::whereIn('id',$categories)->get();
-        return view('categories',compact('company','subcategories'));
+        // $categories = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
+        // $subcategories = SubCategory::whereIn('id',$categories)->get();
+        // return view('categories',compact('company','subcategories','categories'));
+        $categories = Category::all();
+        return view('categories',compact('company','categories'));
     }
 
     public function chooseTheme(){

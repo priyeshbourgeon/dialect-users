@@ -17,6 +17,7 @@ use App\Http\Controllers\SalesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', [App\Http\Controllers\WebsiteController::class, 'index']);
 Route::get('/company/register', [App\Http\Controllers\WebsiteController::class, 'register']);
 Route::post('registrations', [RegisterController::class,'registration'])->name('registrations');
