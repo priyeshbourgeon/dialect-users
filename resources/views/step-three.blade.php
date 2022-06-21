@@ -2,7 +2,6 @@
 @section('content')
 <!-- banner -->
 <style>
-    
 .float{
 	position:fixed;
 	width:60px;
