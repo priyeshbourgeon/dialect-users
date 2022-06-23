@@ -1,6 +1,10 @@
 @extends('procurement.layouts.app')
 @section('content')
-
+<style>
+    .mainmail:active{
+        background:#d9d9d9;
+    }
+</style>
 <section class="mail_wrap">
     <div>
         <div class="mail_grip_wrap mail_theme">
@@ -9,9 +13,9 @@
                 <div class="col_maii_middle">
                     <div class="col_maiil_left">
                         <div class="panel_header" style="padding-left:10px"><i class="fa fa-inbox "></i> Inbox</div>
-                        <ul uk-accordion>
+                        <ul uk-accordion style="background:#e6e9ff;">
                             @forelse($mails as $key => $mail)
-                            <li class="uk-margin-remove">
+                            <li class="uk-margin-remove mainmail" >
                                 <a class="uk-accordion-title" href="#">
                                     <div class="main_sml_box">
                                         <div class="sort_text">
@@ -25,7 +29,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <div class="uk-accordion-content uk-margin-remove-top">
+                                <div class="uk-accordion-content uk-margin-remove-top" style="background:#fff;">
                                     @foreach($mail->reply as $reply)
                                     <div class="main_sml_box sub ">
                                         <div class="sort_text">

@@ -39,7 +39,7 @@ class RegisterController extends Controller
             'name' => 'required',
             'pobox' => 'required',
             'country_id' => 'required',
-            'region_id' => 'required',
+            //'region_id' => 'required',
             'email' =>  'required|unique:company_users,email',
             'phone' => 'required|unique:company_users,mobile|numeric',
         ]);
