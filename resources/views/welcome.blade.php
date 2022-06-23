@@ -62,7 +62,7 @@
                                 @enderror   
                             </div>
                         </div>
-                        <div class="uk-margin">
+                        <!-- <div class="uk-margin">
                             <div class="uk-inline eye_wrap">
                                 <span class="uk-form-icon" ><img src="{{ asset('assets/images/globe.png') }}" alt=""></span>
                                 <select class="uk-input  @error('region_id') uk-form-danger uk-animation-shake @enderror" name="region_id"   id="region">
@@ -77,7 +77,7 @@
                                     <div class="error_msg">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="uk-margin">
                             <div class="uk-inline">
                                 <span class="uk-form-icon" > <img src="{{ asset('assets/images/icon-map.svg') }}" alt=""></span>

@@ -13,7 +13,7 @@
                 <div class="col_maii_middle">
                     <div class="col_maiil_left"  style="width:100%">
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">                
-                            <div class="panel_header">Choose Category</div>
+                            <div class="panel_header" style="background:#fff;color:#000;">Choose Category</div>
                                 <div class="uk-margin-medium-bottom">
                                         <div class=" form_wraper">
                                             <div class=" form_group">
@@ -159,7 +159,7 @@
                     if(subcat_id){
                         $.ajax({
                             type:"POST",
-                            url: "",
+                            url: "{{ route('profile.add-category') }}",
                             data:{
                                 '_token':token,
                                 'subcat_id':subcat_id
@@ -170,12 +170,7 @@
                             success:function(res){ 
                                 $('#selectedbox').empty();
                                 if(res){
-                                    // $.each(res,function(key,value){
-                                    //     var name = res[key].name.charAt(0);
-                                    //     let letter = name.toUpperCase();
-                                    //     $("#selectedbox").append(' <a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" type="button" class="uk-button uk-button-default uk-margin-bottom subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>'+res[key].name+'</a>');
-                                    // });
-                                    window.location.href = "";
+                                    window.location.href = "{{ route('profile') }}";
                                 }
                                 else{
                                     $('#selectedbox').append('<p class="uk-text-large uk-text-danger uk-text-center">No Data Found</p>');

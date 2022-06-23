@@ -72,6 +72,7 @@ header {
   width: 100%;
   z-index: 999;
   height: 5rem;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 header .header_nav {
@@ -705,12 +706,22 @@ footer a {
   padding-bottom: 30px;
 }
 
+/* .sidecolor{
+  background: #20285b;
+}
+.tcolor{
+  color:#fff;
+} */
+
 .panel_header {
   font-weight: 500;
   font-size: 18px;
   padding-bottom: 12px;
   margin-bottom: 15px;
   border-bottom: 1px solid #f1f1f1;
+  padding-top: 15px;
+  background: #ec2531;
+  color: #fff;
 }
 
 .table_ct .mail_date {
@@ -1113,6 +1124,7 @@ footer a {
 
 .col_maii_left {
   width: 250px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .col_maii_left li {
@@ -1216,6 +1228,7 @@ footer a {
 
 .col_maii_middle .col_maiil_left {
   width: 35%;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .col_maii_middle .col_maiil_left .uk-accordion .uk-accordion-content {
@@ -1226,6 +1239,7 @@ footer a {
   width: 65%;
   padding-top: 10px;
   padding-right: 15px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .main_sml_box {

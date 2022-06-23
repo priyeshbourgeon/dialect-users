@@ -74,6 +74,8 @@ Route::get('/staff/{role}', [StaffController::class,'index'])->name('staff.index
 Route::post('/staff/store', [StaffController::class,'store'])->name('staff.store');
 Route::get('/staff/edit/{id}', [StaffController::class,'edit'])->name('staff.edit');
 Route::put('/staff/update/{id}', [StaffController::class,'update'])->name('staff.update');
+Route::get('/staff/change-password/{id}', [StaffController::class,'changePassword'])->name('staff.changepassword');
+Route::post('/staff/update-password', [StaffController::class,'updatePassword'])->name('staff.update-password');
 
 
 Route::post('/user/getParent', 'User\HomeController@getParent')->name('getParent');
@@ -106,8 +108,8 @@ Route::post('/profile/update', [ProfileController::class, 'profileSave'])->name(
 Route::get('/profile/theme', [ProfileController::class, 'chooseTheme'])->name('profile.theme');
 Route::post('/profile/update-theme', [ProfileController::class, 'updateTheme'])->name('profile.update-theme');
 Route::get('/profile/document', [ProfileController::class, 'chooseDocument'])->name('profile.document');
-
 Route::get('/profile/business-category', [ProfileController::class, 'profileCategories'])->name('profile.categories');
+Route::post('/profile/add-category', [ProfileController::class, 'addCategory'])->name('profile.add-category');
 
 Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('profile.change-dp');
 

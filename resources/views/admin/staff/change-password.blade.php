@@ -46,31 +46,27 @@
                                     </div> 
                                     <hr>          
                                     <div class="profile_information">
-                                         <h3 class="name">Edit Profile</h3>
-                                         <form  action="{{ route('staff.update',$user->id) }}" method="post" enctype="multipart/form-data">
+                                         <h3 class="name">Change Password</h3>
+                                         @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                         <form  action="{{ route('staff.update-password') }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            @method('PUT')
                                          <div class="uk-margin  uploads"  uk-margin>
                                             <input type="hidden" name="user_id" value="{{ $user->id }}" />
                                             <input type="hidden" name="role" value="{{ $user->designation }}" />
                                             <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                             
-                                                <input name="name" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Name" value="{{ $user->name ?? '' }}">
+                                                <input name="password" style="width: 100%;" class="uk-input uk-form-width-medium" type="password" placeholder="New Password" value="">
                                             </div>
                                             <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">                         
-                                                <input name="designation" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Designation" value="{{ $user->role ?? '' }}">
+                                                <input name="password_confirmation" style="width: 100%;" class="uk-input uk-form-width-medium" type="password" placeholder="Re-enter password" value="">
                                             </div>
-                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">             
-                                                <input name="email" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Email" value="{{ $user->email ?? '' }}">
-                                            </div>
-                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">             
-                                                <input name="mobile" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Mobile" value="{{ $user->mobile ?? '' }}">
-                                            </div>
-                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">             
-                                                <input name="landline" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Landline" value="{{ $user->landline ?? '' }}">
-                                            </div>  
-                                            <div class="uk-margin-small-bottom"  uk-form-custom="target: true" style="width: 100%;">             
-                                                <input name="extension" style="width: 100%;" class="uk-input uk-form-width-medium" type="text" placeholder="Extension" value="{{ $user->extension ?? '' }}">
-                                            </div>  
                                             <div class="uk-text-center">  
                                                 <button type="submit" class="btn_com">Submit</button>
                                             </div>

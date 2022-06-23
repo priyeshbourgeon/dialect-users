@@ -104,4 +104,18 @@ class ProfileController extends Controller
         return view('profile.company-document',compact('company','document','documents'));
     }
 
+    public function addCategory (Request $request){
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $subcat_id = $request->subcat_id;
+        $companyServicesExist = CompanyActivity::where('service_id',$subcat_id)->where('company_id',$company->id)->first();
+        if(!$companyServicesExist){
+            $service = new CompanyActivity();
+            $service->service_id = $subcat_id;
+            $service->company_id = $company->id;
+            $service->save();
+        }
+        $companyActivities = CompanyActivity::where('company_id',$company->id)->get();
+        return response()->json($companyActivities);
+    }
+
 }

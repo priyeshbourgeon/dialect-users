@@ -22,7 +22,7 @@ class SalesController extends Controller
         $company = Company::findOrFail($user->company_id);
         $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
         $company_id = Auth::user()->company_id;
-        $mails = Mail::with('myreply')->where('from_company_id','!=',$company->id)
+        $mails = Mail::doesntHave('myreply')->where('from_company_id','!=',$company->id)
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
                       ->whereIn('service',$companyActivities)

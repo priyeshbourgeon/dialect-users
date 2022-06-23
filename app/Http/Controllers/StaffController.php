@@ -12,6 +12,7 @@ use App\Mail\WelcomeMail;
 use App\Mail\ApproveMail;
 use Illuminate\Support\Str;
 
+
 class StaffController extends Controller
 {
     /**
@@ -136,5 +137,22 @@ class StaffController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changePassword($id){
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $user = CompanyUser::find($id);
+        return view('admin.staff.change-password',compact('company','user'));
+    } 
+
+    public function updatePassword(Request $request){
+        $request->validate([  
+            'password' =>'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+        ]);
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $user = CompanyUser::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect('/home')->with('success','Updated!');
     }
 }
