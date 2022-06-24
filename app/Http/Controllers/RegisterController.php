@@ -178,7 +178,8 @@ class RegisterController extends Controller
         }
         $id = $request->session()->get('comp_id');
         $company  = Company::find($id);
-        return view('step-zero',compact('company'));
+        $regions = Region::where('country_id',$company->country_id)->get();
+        return view('step-zero',compact('company','regions'));
     }
 
     public function saveCompanyInfo(Request $request){

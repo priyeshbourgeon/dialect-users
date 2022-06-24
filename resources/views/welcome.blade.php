@@ -28,7 +28,8 @@
                                 <select class="uk-input  @error('country_id') uk-form-danger uk-animation-shake @enderror" name="country_id"  id="country">
                                     <option value=" ">Select Country *</option>
                                     @foreach($countries as $key => $country)
-                                    <option {{ old('country_id') == $country->id ? 'selected' : '' }} value="{{ $country->id }}">{{$country->name}}</option>
+                                    <!-- <option {{ old('country_id') == $country->id ? 'selected' : '' }} value="{{ $country->id }}">{{$country->name}}</option> -->
+                                    <option {{ $country->id == 179 ? 'selected' : '' }} value="{{ $country->id }}">{{$country->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('country_id')
@@ -49,7 +50,7 @@
                             <div class="uk-inline">
                                 <div class="uk-flex country_code_div">
                                     <div id="phone_load" class="" style="flex-grow: 1">
-                                        <input id="code" class="uk-input code_input" type="text"value="" placeholder="Code" readonly>
+                                        <input id="code" class="uk-input code_input" type="text"value="+974" placeholder="Code" readonly>
                                     </div>
                                     <div style="position: relative; flex-grow: 8 ">
                                         <span class="uk-form-icon" > <img src="images/icon-phone.svg" alt=""></span>

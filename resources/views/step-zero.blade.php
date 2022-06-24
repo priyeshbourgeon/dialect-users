@@ -84,7 +84,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="uk-width-1-2@m uk-margin-small-top">
+                                <!-- <div class="uk-width-1-2@m uk-margin-small-top">
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Region *</label>
                                         <div class="uk-form-controls">
@@ -94,7 +94,7 @@
                                             <small class="error" style="color:red">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="uk-width-1-2@m uk-margin-small-top">
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Country *</label>
@@ -106,7 +106,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="uk-width-1-3@m uk-margin-small-top">
+                                <div class="uk-width-1-2@m uk-margin-small-top">
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">PO Box *</label>
                                         <div class="uk-form-controls">
@@ -115,6 +115,17 @@
                                         @error('pobox')
                                             <small class="error" style="color:red">{{ $message }}</small>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1@m uk-margin-small-top">
+                                    <div class=" form_group">
+                                        <label class="uk-form-label" for="form-stacked-text">Operating Countries *</label>
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                        @foreach($regions as $key => $region)
+                                            <label><input class="uk-checkbox" type="checkbox" 
+                                            value="{{ $region->id }}" checked> {{ $region->name }}</label>
+                                        @endforeach    
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="uk-width-1-3@m uk-margin-small-top">
