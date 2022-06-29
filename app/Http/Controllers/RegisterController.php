@@ -14,6 +14,7 @@ use App\Models\RegistrationToken;
 use App\Models\Document;
 use App\Models\CompanyDocument;
 use App\Models\CompanyActivity;
+use App\Models\CompanyLocation;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Payment;
@@ -194,6 +195,7 @@ class RegisterController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'domain' => 'nullable|unique:companies,domain,'.$company_id,
             'fax' => 'nullable|numeric|unique:companies,fax,'.$company_id,
+            'regions' =>'required_without_all',
         ]);
 
         $imageUrl  = '';
@@ -216,6 +218,14 @@ class RegisterController extends Controller
         $company->logo = $imageUrl;
         $company->status = 0;
         $company->save();
+
+        foreach($request->regions as $region){
+            $locations = new CompanyLocation();
+            $locations->company_id = $company->id;
+            $locations->region_id = $region;
+            $locations->save();
+        }
+        
 
         return redirect()->route('registration.documentUpload')->with('success','Saved!');
     }

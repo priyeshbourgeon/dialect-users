@@ -7,6 +7,7 @@ use Auth;
 use App\Models\Company;
 use App\Models\CompanyUser;
 use App\Models\CompanyActivity;
+use App\Models\CompanyLocation;
 use App\Models\Country;
 use App\Models\Region;
 use App\Models\Area;
@@ -21,16 +22,19 @@ class SalesController extends Controller
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
         $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
+        $companyLocations = CompanyLocation::where('company_id',$company->id)->pluck('region_id')->toArray();
         $company_id = Auth::user()->company_id;
+        \DB::enableQueryLog();
         $mails = Mail::doesntHave('myreply')->where('from_company_id','!=',$company->id)
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
-                      ->whereIn('service',$companyActivities)
+                      //->whereIn('service',$companyActivities)
+                      //->whereIn('region_id',$companyLocations)
                       ->whereNull('ref_id')
 			          ->where('mails.created_at','>',$company->created_at)
                       ->whereDate('mails.request_time','>=',date('Y-m-d'))
                       ->orderBy('mails.created_at','desc')->paginate(10);
-                 //ddd($mails);     
+                      //dd(\DB::getQueryLog());     
         return view('sales.inbox',compact('company','user','mails'));            
     }
 

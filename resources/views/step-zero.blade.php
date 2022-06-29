@@ -122,7 +122,7 @@
                                         <label class="uk-form-label" for="form-stacked-text">Operating Countries *</label>
                                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                         @foreach($regions as $key => $region)
-                                            <label><input class="uk-checkbox" type="checkbox" 
+                                            <label><input class="uk-checkbox" type="checkbox" name="regions[]"
                                             value="{{ $region->id }}" checked> {{ $region->name }}</label>
                                         @endforeach    
                                         </div>
