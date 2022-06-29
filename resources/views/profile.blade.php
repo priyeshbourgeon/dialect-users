@@ -115,9 +115,11 @@
                                             @else
                                             <a class="">{{ $val->name ?? ''}}</a>
                                             @endif
-                                            <a href="#" class="uk-align-right"
+                                            @if(strtolower(auth()->user()->designation) == 'admin')
+                                            <a href="{{ route('profile.delProfileCategories',$val->id) }}" class="uk-align-right"
                                                 uk-tooltip="title: Delete {{ $val->name ?? ''}}"
                                                 onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                                            @endif    
                                         </td>
                                     </tr>
                                     @endforeach
@@ -129,7 +131,5 @@
             </div>
         </div>
     </div>
-
-
 </section>
 @endsection

@@ -28,7 +28,7 @@ class SalesController extends Controller
         $mails = Mail::doesntHave('myreply')->where('from_company_id','!=',$company->id)
                       ->where('is_draft','!=',1)
                       ->where('country_id',$company->country_id)
-                      //->whereIn('service',$companyActivities)
+                      ->whereIn('service',$companyActivities)
                       //->whereIn('region_id',$companyLocations)
                       ->whereNull('ref_id')
 			          ->where('mails.created_at','>',$company->created_at)

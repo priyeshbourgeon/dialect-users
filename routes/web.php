@@ -108,8 +108,10 @@ Route::post('/profile/update', [ProfileController::class, 'profileSave'])->name(
 Route::get('/profile/theme', [ProfileController::class, 'chooseTheme'])->name('profile.theme');
 Route::post('/profile/update-theme', [ProfileController::class, 'updateTheme'])->name('profile.update-theme');
 Route::get('/profile/document', [ProfileController::class, 'chooseDocument'])->name('profile.document');
+Route::post('/profile/document/save', [ProfileController::class, 'saveDocument'])->name('profile.saveDocument');
 Route::get('/profile/business-category', [ProfileController::class, 'profileCategories'])->name('profile.categories');
 Route::post('/profile/add-category', [ProfileController::class, 'addCategory'])->name('profile.add-category');
+Route::get('/profile/business-category/delete/{id}', [ProfileController::class, 'delProfileCategories'])->name('profile.delProfileCategories');
 
 Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('profile.change-dp');
 

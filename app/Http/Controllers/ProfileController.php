@@ -104,6 +104,33 @@ class ProfileController extends Controller
         return view('profile.company-document',compact('company','document','documents'));
     }
 
+    public function saveDocument(Request $request){
+        $request->validate([  
+            'doc_type' =>'required',
+            'doc_number' => 'required',
+            'doc_file' => 'required|mimes:pdf,jpeg,png,jpg|max:5000',
+         ]);
+       
+         $imageUrl  = '';
+         if($request->hasFile('doc_file')){
+             $imageName = time().'.'.$request->doc_file->extension();  
+             $request->doc_file->move(public_path('uploads/company_document'), $imageName);
+             $path = asset('uploads/company_document/');
+             $imageUrl = $path.'/'.$imageName;
+         }
+
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $document = CompanyDocument::with('document')->where('company_id',$company->id)->first();
+        $document->company_id = $company->id;
+        $document->doc_type = $request->doc_type;
+        $document->doc_file = $imageUrl;
+        $document->expiry_date = $request->expiry_date;
+        $document->doc_number = $request->doc_number;
+        $document->status = 1;
+        $document->save();
+        return redirect()->route('profile')->with('success','Document has been updated!');
+    }
+
     public function addCategory (Request $request){
         $company = Company::where('id',auth()->user()->company_id)->first();
         $subcat_id = $request->subcat_id;
@@ -116,6 +143,12 @@ class ProfileController extends Controller
         }
         $companyActivities = CompanyActivity::where('company_id',$company->id)->get();
         return response()->json($companyActivities);
+    }
+
+    public function delProfileCategories ($id){
+        $company = Company::where('id',auth()->user()->company_id)->first();
+        $companyActivities = CompanyActivity::where('service_id',$id)->where('company_id',$company->id)->delete();
+        return redirect()->route('profile')->with('success','Category has been updated!');
     }
 
 }
