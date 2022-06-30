@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="uk-width-1-1@m uk-margin-small-top">
                                     <div class=" form_group">
-                                        <label class="uk-form-label" for="form-stacked-text">Operating Countries *</label>
+                                        <label class="uk-form-label" for="form-stacked-text">Operating Regions *</label>
                                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                         @foreach($regions as $key => $region)
                                             <label><input class="uk-checkbox" type="checkbox" name="regions[]"
