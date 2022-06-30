@@ -179,7 +179,7 @@
                                     </div>
                                 </div>
                                 <div class="uk-width-1-3@m uk-margin-small-top">
-                                    @php $image = $company->logo != '' ? $company->logo : asset('assets/img/noimage.jpg') @endphp
+                                    @php $image = $company->logo != '' ? $company->logo : asset('assets/images/noimage.png') @endphp
                                     <img id="uploadPreview" class="uk-height-small" src="{{ $image }}" uk-img="loading: eager" />
                                 </div>
                                 <div class="uk-width-1-1@m uk-margin-small-top uk-text-right">

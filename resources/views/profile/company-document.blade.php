@@ -72,7 +72,7 @@
                                     <hr>   
                                     <div class="profile_information">
                                        <form  action="{{ route('profile.saveDocument') }}" method="post" enctype="multipart/form-data">
-                                              @csrf
+                                         @csrf
                                          <h3 class="name">Document
                                          @if(strtolower(auth()->user()->designation) == 'admin')   
                                          <a href="{{ url()->previous() }}" class="btn_com uk-align-right">Back</a>
