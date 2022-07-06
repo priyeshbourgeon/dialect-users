@@ -14,6 +14,7 @@ use App\Models\Mail;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\CategorySubCategory;
+use App\Jobs\PreRegisteredEnquiryEmailJob;
 
 class ProcurementController extends Controller
 {
@@ -97,6 +98,12 @@ class ProcurementController extends Controller
         $mail->is_draft                = $mode;
         $mail->attachment              = $imageUrl;
         $mail->save();
+
+        $users = Company::where("isPreRegistered", 1)->get();
+  
+        foreach ($users as $key => $user) {
+            dispatch(new PreRegisteredEnquiryEmailJob($user->email,$mail));
+        }
 
         return redirect()->route('procurement.outbox')->with('success','Mail Send!');
     }
