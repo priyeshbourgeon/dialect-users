@@ -269,7 +269,7 @@
                   });
 
                   $(document).ready(function(){
-                    $(".toggle_sidebar").toggleClass("nav_small");
+                    //$(".toggle_sidebar").toggleClass("nav_small");
                 $(".tog_btn").click(function(){
                     $(".toggle_sidebar").toggleClass("nav_small");
                 });

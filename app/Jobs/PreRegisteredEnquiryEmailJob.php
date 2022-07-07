@@ -12,7 +12,7 @@ use App\Mail\PreRegisteredEnquiryMail;
 use Mail;
 use App\Models\Company;
 
-class PreRegisteredEnquiryEmailJob implements ShouldQueue
+class PreRegisteredEnquiryEmailJob  implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
