@@ -24,7 +24,7 @@ Route::post('registration-save-company-info',[RegisterController::class,'saveCom
 Route::get('registration-document-upload', [RegisterController::class,'documentUpload'])->name('registration.documentUpload');
 Route::post('registration-save-document',[RegisterController::class,'saveDocument'])->name('registration.saveDocument');
 Route::get('registration-select-services', [RegisterController::class,'selectService'])->name('registration.selectService');
-Route::post('registration-save-service',[RegisterController::class,'saveService'])->name('registration.saveService');
+Route::get('registration-save-service',[RegisterController::class,'saveService'])->name('registration.saveService');
 Route::get('registration-company-activity', [RegisterController::class,'companyActivity'])->name('registration.companyActivity');
 Route::post('registration/get-region', [RegisterController::class,'getRegionsByCountryId'])->name('registration.getRegion');
 Route::post('registration/get-country', [RegisterController::class,'getCountryById'])->name('registration.getCountry');
