@@ -37,7 +37,6 @@
     </style>
 </head>
 <body>
-  
     <!-- header -->
     <header>
         <div class="uk_container ">          
@@ -48,7 +47,7 @@
                     </a>
                 </div>
                 <div class="col header_right">
-                    <a href="{{ url('login') }}" class="btn_com">Login</a>
+                    <a href="{{ route('withoutLogin') }}" class="btn_com">Send Enquiry</a>
                 </div>
             </div>
         </div>
@@ -57,14 +56,11 @@
     <!-- Main Content -->
       @yield('content')
     <!-- End Main Content -->
-    
-
     <footer>
         <div class="uk_container">
             <a href="">Copyright © dialectb2b.com. All rights reserved</a>
         </div>
     </footer>
-
     <!-- js -->     
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/js/uikit.min.js') }}"></script>
@@ -111,7 +107,6 @@
             }
         });
         
-
         function formControl(){
             $('.submit').attr('disabled','disabled');
             UIkit.modal.dialog('<p class="uk-text-center"><i uk-spinner="ratio: 5"></i> <br>Processing! Please Wait...</p>');
@@ -130,6 +125,7 @@
         $("#uploadImage").change(function(){
             readURL(this);
         });
+        
     </script>
 </body>
 </html>

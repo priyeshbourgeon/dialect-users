@@ -6,6 +6,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProcurementController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\GuestUserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -112,9 +114,7 @@ Route::post('/profile/document/save', [ProfileController::class, 'saveDocument']
 Route::get('/profile/business-category', [ProfileController::class, 'profileCategories'])->name('profile.categories');
 Route::post('/profile/add-category', [ProfileController::class, 'addCategory'])->name('profile.add-category');
 Route::get('/profile/business-category/delete/{id}', [ProfileController::class, 'delProfileCategories'])->name('profile.delProfileCategories');
-
 Route::get('/profile/edit/dp', [ProfileController::class, 'changeDp'])->name('profile.change-dp');
-
 Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
 Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 
@@ -149,3 +149,9 @@ Route::get('/sales/compose-mail/{id}', [SalesController::class, 'composeReply'])
 Route::get('/sales/draft/edit/{id}', [SalesController::class, 'editDraft'])->name('sales.editDraft');
 Route::post('/sales/send-mail', [SalesController::class, 'sendReply'])->name('sales.sendreply');
 Route::post('/sales/send-reply', [SalesController::class, 'sendDraftReply'])->name('sales.senddraftreply');
+
+
+
+
+Route::get('/without-login',[GuestUserController::class,'index'])->name('withoutLogin');
+Route::post('/without-login/company-details',[GuestUserController::class,'fetchCompany'])->name('fetchCompanyDetails');
