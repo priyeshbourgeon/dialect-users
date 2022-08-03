@@ -1,47 +1,45 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+<!-- banner -->
+<!-- banner -->
+<section class="banner">
+    <div class="inner_banner">
+        <div class="uk_container "> 
+            <div class="wrap_home_hero_login_block">
+                <div class="home_hero_login_block ">
+                    <div class="uk-align-center">
+                        <div>
+                            <h2 class="uk-align-center "> {{ __('Reset Password') }}</h2>
+                            <p>Cras ultricies mauris velit, vitae ornare ex tristique id. Morbi congue commodo lacinia. </p>
                         </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('password.email') }}" class="uk-form-stacked">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        @if (session('status'))
+                            <span>{{ session('status') }}</span>
+                        @endif           
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" ><img src="{{ asset('assets/images/user.svg') }}" alt=""></span>
+                                    <input class="uk-input  @error('email') uk-form-danger uk-animation-shake @enderror" id="email" type="email" name="email" placeholder="Email Address">
+                                    @error('email')
+                                        <div class="error_msg">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
+                            <div class="uk-margin uk-margin-remove-bottom">
+                                <div class="uk-inline">
+                                    <button class="btn_com submit" type="submit"> {{ __('Send Password Reset Link') }}</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="go_signup uk-margin">
+                                <a href="{{ url('/') }}">Back to home</a> 
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!-- banner -->
 @endsection

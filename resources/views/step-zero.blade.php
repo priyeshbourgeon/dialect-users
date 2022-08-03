@@ -84,7 +84,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="uk-width-1-2@m uk-margin-small-top">
+                                <!-- <div class="uk-width-1-2@m uk-margin-small-top">
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Region *</label>
                                         <div class="uk-form-controls">
@@ -94,7 +94,7 @@
                                             <small class="error" style="color:red">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="uk-width-1-2@m uk-margin-small-top">
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Country *</label>
@@ -106,7 +106,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="uk-width-1-3@m uk-margin-small-top">
+                                <div class="uk-width-1-2@m uk-margin-small-top">
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">PO Box *</label>
                                         <div class="uk-form-controls">
@@ -115,6 +115,17 @@
                                         @error('pobox')
                                             <small class="error" style="color:red">{{ $message }}</small>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1@m uk-margin-small-top">
+                                    <div class=" form_group">
+                                        <label class="uk-form-label" for="form-stacked-text">Operating Regions *</label>
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                        @foreach($regions as $key => $region)
+                                            <label><input class="uk-checkbox" type="checkbox" name="regions[]"
+                                            value="{{ $region->id }}" checked> {{ $region->name }}</label>
+                                        @endforeach    
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="uk-width-1-3@m uk-margin-small-top">
@@ -168,7 +179,7 @@
                                     </div>
                                 </div>
                                 <div class="uk-width-1-3@m uk-margin-small-top">
-                                    @php $image = $company->logo != '' ? $company->logo : asset('assets/img/noimage.jpg') @endphp
+                                    @php $image = $company->logo != '' ? $company->logo : asset('assets/images/noimage.png') @endphp
                                     <img id="uploadPreview" class="uk-height-small" src="{{ $image }}" uk-img="loading: eager" />
                                 </div>
                                 <div class="uk-width-1-1@m uk-margin-small-top uk-text-right">

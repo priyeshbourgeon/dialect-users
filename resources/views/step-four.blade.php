@@ -1,4 +1,4 @@
-@extends('website.layouts.app')
+@extends('layouts.app')
 @section('content')
 <!-- banner -->
 <section class="inner_page uk-clearfix">

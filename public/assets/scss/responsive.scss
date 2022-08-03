@@ -19,6 +19,9 @@ $large: 1200px;
 
  @media screen and (min-width: $medium) {
 
+    .mail_wrap {
+        min-height: calc(100% - 231px);
+    }
     .mail_grip_wrap {       
          display: flex; gap: 15px; justify-content: space-between; 
         flex-direction: row;
@@ -39,6 +42,29 @@ $large: 1200px;
 
   //some CSS
   @media screen and (max-width: $small) {
+    header{
+        .header_nav {
+            padding-top: 8px;
+        }
+    }
+    .main_sml_box 
+    {
+       
+        .sort_text{
+            .inb_date {
+                position: inherit;
+                float: left;
+                margin-right: 11px;
+                width: 100%;
+            }
+            .sm_text {
+                margin-right: 0;
+            }
+            
+        }
+    }
+
+
 
     .col_maii_middle {
           flex-flow: column;  
@@ -100,8 +126,15 @@ $large: 1200px;
   }
   
   @media screen and (max-width: $medium) {
-
-   
+    .col_maii_middle {
+        .col_maii_right {
+            padding-right: 0;
+        }
+    }
+    .mail_wrap {
+        min-height: calc(100%  );
+    }
+    .mail_grip_wrap { height: 100%;}
 
     .ad_profile {
         .inner {
@@ -198,6 +231,15 @@ $large: 1200px;
     //do Smth
   }
   @media screen and (max-width: $large) {
+
+
+    .col_maii_middle {
+        flex-flow:column;
+        .col_maiil_left,.col_maii_right {
+            width: 100%;
+        }
+    }
+
     .main_nav {
         .topnav {
             a {

@@ -16,7 +16,7 @@
                         <div class="uk-margin">
                             <div class="uk-inline">
                                 <span class="uk-form-icon" > <img src="{{ asset('assets/images/user.svg') }}" alt=""></span>
-                                <input class="uk-input @error('name') uk-form-danger uk-animation-shake @enderror" type="text" name="name" placeholder="User Name *" value="{{ old('name') }}">
+                                <input class="uk-input @error('name') uk-form-danger uk-animation-shake @enderror" type="text" name="name" placeholder="Company Name *" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="error_msg">{{ $message }}</div>
                                 @enderror  
@@ -28,7 +28,8 @@
                                 <select class="uk-input  @error('country_id') uk-form-danger uk-animation-shake @enderror" name="country_id"  id="country">
                                     <option value=" ">Select Country *</option>
                                     @foreach($countries as $key => $country)
-                                    <option {{ old('country_id') == $country->id ? 'selected' : '' }} value="{{ $country->id }}">{{$country->name}}</option>
+                                    <!-- <option {{ old('country_id') == $country->id ? 'selected' : '' }} value="{{ $country->id }}">{{$country->name}}</option> -->
+                                    <option {{ $country->id == 179 ? 'selected' : '' }} value="{{ $country->id }}">{{$country->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('country_id')
@@ -49,7 +50,7 @@
                             <div class="uk-inline">
                                 <div class="uk-flex country_code_div">
                                     <div id="phone_load" class="" style="flex-grow: 1">
-                                        <input id="code" class="uk-input code_input" type="text"value="" placeholder="Code" readonly>
+                                        <input id="code" class="uk-input code_input" type="text"value="+974" placeholder="Code" readonly>
                                     </div>
                                     <div style="position: relative; flex-grow: 8 ">
                                         <span class="uk-form-icon" > <img src="images/icon-phone.svg" alt=""></span>
@@ -62,7 +63,7 @@
                                 @enderror   
                             </div>
                         </div>
-                        <div class="uk-margin">
+                        <!-- <div class="uk-margin">
                             <div class="uk-inline eye_wrap">
                                 <span class="uk-form-icon" ><img src="{{ asset('assets/images/globe.png') }}" alt=""></span>
                                 <select class="uk-input  @error('region_id') uk-form-danger uk-animation-shake @enderror" name="region_id"   id="region">
@@ -77,7 +78,7 @@
                                     <div class="error_msg">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="uk-margin">
                             <div class="uk-inline">
                                 <span class="uk-form-icon" > <img src="{{ asset('assets/images/icon-map.svg') }}" alt=""></span>
@@ -149,7 +150,7 @@ $('#country').on("change",function(){
            success:function(res){        
               if(res){
                   $("#region").empty();
-                  $("#region").append('<option value="">Select Region</option>');
+                  $("#region").append('<option value="">Select Location</option>');
                   $.each(res,function(key,value){
                      $("#region").append('<option value="'+key+'">'+value+'</option>');
                   });

@@ -281,7 +281,6 @@ class RegisterController extends Controller
         $id = $request->session()->get('comp_id');
         $company  = Company::find($id);
         $companyActivities = SubCategory::whereIn('id',session('selected'))->get();
-          
         return view('company-activities',compact('company','companyActivities'));
     }
 

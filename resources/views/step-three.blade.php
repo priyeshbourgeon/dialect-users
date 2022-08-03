@@ -2,7 +2,6 @@
 @section('content')
 <!-- banner -->
 <style>
-    
 .float{
 	position:fixed;
 	width:60px;
@@ -15,10 +14,38 @@
 	text-align:center;
 	box-shadow: 2px 2px 3px #999;
 }
+
+.category_list > li{
+    background: #eeeeee;
+    padding: 5px;
+    list-style: none;
+    margin:2px;
+    cursor: pointer;
+}
+.category_list > li > a{
+   color:#000;
+}
+
+.subcategory_list > li{
+    background: #eeeeee;
+    padding: 5px;
+    list-style: none;
+    margin:2px;
+    cursor: pointer;
+}
+.subcategory_list > li > a{
+   color:#000;
+}
+
 </style>
 <section class="inner_page uk-clearfix">
     <div class="uk_container ">
         <div class="uk-card uk-card-default uk-card-body">
+            <div id="preloader" class="uk-overlay-primary uk-position-cover">
+                <div class="uk-position-center">
+                    <span uk-spinner="ratio: 2"></span>
+                </div>
+            </div>
             <div class="tab_wraper">
                 <ul data-uk-tab="{connect:'#my-id'}" uk-tab="media:1-2@s">
                     <li class="uk-disabled"><a href=""> <i class="fa fa-user"></i> Basic Information</a></li>
@@ -33,54 +60,47 @@
                     <!-- end teb content -->
                     <li class="uk-active"> 
                     <small>* All fields are mandatory!</small>
-                    <div uk-grid>
-                        <div class="uk-width-expand@m">
-                            <div class="uk-card uk-card-default uk-card-body">
-                                <h3>Category</h3>
+                    <div>
+                        <div class="uk-width-extend@m">
+                            <div uk-grid>
+                                <h3 class="uk-width-2-3@m">Category</h3>
+                                <a id="cart-button" href="{{ route('registration.companyActivity') }}" 
+                                class="btn_com uk-button-small uk-width-1-3@m">
+                                    Selected Business Categories  
+                                    <span class="uk-badge" id="cart-count">{{ count($companyActivities) ?? 0 }}</span>
+                                </a>
+                            </div>
+                            <div class="uk-width-1-1@m uk-margin-small-top">
                                 <div class="form_group">
-                                    <ul class="sector_list uk-align-center">
-                                        <li><div id="all" class="s_block btn active">All</div></li>
-                                        @foreach(range('A', 'Z') as $char)
-                                        <li><div class="s_block btn alpha-category" style="margin:5px;" data-alpha="{{ $char }}">{{ $char }}</div></li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <div class="form_group">
-                                    <label class="uk-form-label" for="form-stacked-text">Search</label>
-                                    <div class="uk-form-controls" style="    margin-right: 5px;">
+                                    <div class="uk-form-controls" style="margin-right: 5px;">
                                         <input class="uk-input"  type="text" id="search-category" placeholder="Search Category">
                                     </div>
                                 </div> 
-                                <hr class="uk-divider-icon">
-                                <div class="uk-width-1-1@m uk-margin-small-top">
-                                    <div class="category_list">
-                                    @foreach($categories as $key => $category)
-                                        <a class="uk-form-label category  uk-margin-right" for="form-stacked-text" data-id="{{ $category->id }}"><i class="fa fa-arrow-circle-right"></i>{{ $category->name }}</a>
-                                    @endforeach
-                                   </div>   
-                                </div>
                             </div>
-                        </div>
-                        <div class="uk-width-1-3@m">
-                            <div class="uk-card uk-card-default uk-card-body" id="subcategory-div">
-                                <h3>Sub Category</h3>
-                                <div class=" form_group">
-                                    <label class="uk-form-label" for="form-stacked-text">Sub category</label>
-                                    <div class="uk-form-controls">
-                                        <input class="uk-input"  type="text" id="search-subcategory" placeholder="Search Sub Category" data-search>
-                                    </div>
-                                </div>
-                                <hr class="uk-divider-icon">
-                                <ul id="parentbox" class="sector_list js-filter">
-
+                            <div class="uk-width-1-1@m uk-margin-small-top">
+                                <ul class="sector_list uk-align-center">
+                                    <li><div id="all" class="s_block btn active" onClick="window.location.reload();">All</div></li>
+                                    @foreach(range('A', 'Z') as $char)
+                                        <li><div class="s_block btn alpha-category " style="margin:1px;" data-alpha="{{ $char }}">{{ $char }}</div></li>
+                                    @endforeach
                                 </ul>
                             </div>
-                            <div class="uk-margin">
-                            <a id="cart-button" type="button" href="{{ route('registration.companyActivity') }}" 
-                            class="btn_com uk-button-large uk-margin" style="margin-top:10px;float: right;">
-                                Selected Business Categories  
-                                <span class="uk-badge" id="cart-count">{{ count($companyActivities) ?? 0 }}</span></a>
-                            </div>    
+                            <hr class="uk-divider-icon">
+                            <div uk-grid>
+                                <div class="uk-width-2-3@m uk-margin-small-top">
+                                    <ul class="category_list">
+                                        @foreach($categories as $key => $category)
+                                            <li><a class="uk-form-label category  uk-margin-right cat_block" for="form-stacked-text" data-id="{{ $category->id }}" data-name="{{ $category->name }}">{{ $category->name }}</a></li>
+                                        @endforeach
+                                    </ul>   
+                                </div>
+                                <div class="uk-width-1-3@m uk-margin-small-top">
+                                    <h4 id="cat_name_head"></h4>
+                                    <ul id="parentbox" class="subcategory_list">
+
+                                    </ul>
+                                </div>
+                            </div>  
                         </div>
                     </div>
                      
@@ -95,6 +115,7 @@
 </section>
 @push('scripts')
 <script>
+    $('#preloader').fadeOut('slow');
     $( document ).ready(function() {
         var token = $('#token').val();
          $("#search-category").keyup(function(){
@@ -102,21 +123,22 @@
             if(keyword){
                 $.ajax({
                     type:"POST",
-                    url: "{{ route('registration.searchcategory') }}",
+                    url: "{{ route('registration.searchsubcategory') }}",
                     data:{
                         '_token':token,
                         'keyword':keyword
                     },
                     beforeSend: function() {
                         $(".category_list").empty();
-                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 1"></div></li>');
                     },
                     success:function(res){       
                         if(res){
                             $(".category_list").empty();
+                            $('#cat_name_head').text('');
                             $('#parentbox').empty();
                             $.each(res,function(key,value){
-                                $(".category_list").append('<a class="uk-form-label category  uk-margin-right" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                $(".category_list").append('<li class="uk-form-label subcategory  uk-margin-right cat_block" data-id="'+res[key].id+'">'+res[key].name+'</li>');
                             });
                         }
                     }
@@ -135,14 +157,14 @@
                     },
                     beforeSend: function() {
                         $(".category_list").empty();
-                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $(".category_list").html('<li class="uk-text-large uk-text-danger uk-text-center "><div uk-spinner="ratio: 3"></div></li>');
                     },
                     success:function(res){       
                         if(res){
                             $(".category_list").empty();
                             $('#parentbox').empty();
                             $.each(res,function(key,value){
-                                $(".category_list").append('<a class="uk-form-label category  uk-margin" for="form-stacked-text" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                $(".category_list").append('<li class="uk-form-label category  uk-margin cat_block" for="form-stacked-text" data-id="'+res[key].id+'">'+res[key].name+'</li>');
                             });
                         }
                     }
@@ -152,6 +174,7 @@
 
         $(document.body).on('click', '.category' ,function(){
             var cat_id = $(this).data('id');
+            var cat_name = $(this).data('name');
             if(cat_id){
                 $.ajax({
                     type:"POST",
@@ -165,11 +188,12 @@
                     },
                     success:function(res){ 
                         $('#parentbox').empty();
+                        $('#cat_name_head').text(cat_name);
                         if(res){
                             $.each(res,function(key,value){
                                 var name = res[key].name.charAt(0);
                                 let letter = name.toUpperCase();
-                                $("#parentbox").append('<a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" class="uk-form-label subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right"></i>'+res[key].name+'</a>');
+                                $("#parentbox").append('<li class="uk-form-label subcategory  uk-margin-right cat_block" data-id="'+res[key].id+'">'+res[key].name+'</li>');
                             });
                         }
                         else{
@@ -181,6 +205,7 @@
         });
 
         $(document.body).on('click', '.subcategory' ,function(){
+            $('#preloader').fadeIn('slow');
             var subcat_id = $(this).data('id');
             if(subcat_id){
                 $.ajax({
@@ -191,16 +216,21 @@
                         'subcat_id':subcat_id
                     },
                     beforeSend: function(){
-                        $('#selectedbox').append('<li class="uk-text-large uk-text-danger uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $('#countloader').append('<li class="uk-text-large uk-text-success uk-text-center"><div uk-spinner="ratio: 3"></div></li>');
+                        $('#loading-text').append('<div><span uk-spinner="ratio: 1"></span>Processing... please wait</div>');
                     },
                     success:function(res){ 
-                        $('#selectedbox').empty();
+                        $('#preloader').fadeOut('slow');
+                        $('#countloader').empty();
+                        $('#loading-text').empty('');
                         if(res){
-                           $.each(res,function(key,value){
-                               var name = res[key].name.charAt(0);
-                               let letter = name.toUpperCase();
-                               $("#selectedbox").append(' <a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" type="button" class="uk-button uk-button-default uk-margin-bottom subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>'+res[key].name+'</a>');
-                           });
+                            var countItem = res.length;
+							$('#cart-count').text(countItem);
+                        //    $.each(res,function(key,value){
+                        //        var name = res[key].name.charAt(0);
+                        //        let letter = name.toUpperCase();
+                        //        $("#selectedbox").append(' <a data-filter-item data-filter-name="'+res[key].name.toLowerCase()+'" type="button" class="uk-button uk-button-default uk-margin-bottom subcategory  uk-margin-right" data-id="'+res[key].id+'"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>'+res[key].name+'</a>');
+                        //    });
                         }
                         else{
                             $('#selectedbox').append('<p class="uk-text-large uk-text-danger uk-text-center">No Data Found</p>');
@@ -208,20 +238,7 @@
                     }
                 });
             }
-        });
-          
-
-        $('[data-search]').on('keyup', function() {
-            var searchVal = $(this).val();     
-            var filterItems = $('[data-filter-item]');
-            if ( searchVal != '' ) {
-                filterItems.addClass('hidden');
-                $('[data-filter-item][data-filter-name*="' + searchVal.toLowerCase() + '"]').removeClass('hidden');
-            } else {
-                filterItems.removeClass('hidden');
-            }
-        });
-                
+        });        
     });
 </script>
 @endpush
