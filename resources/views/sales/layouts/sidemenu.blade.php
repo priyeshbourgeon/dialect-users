@@ -16,6 +16,7 @@
                         class="nav_text"> Enquiry Timeout </span> </a></li>
             <li><a href="{{ route('sales.events') }}"><i class="fa fa-calendar"></i> <span class="nav_text"> Upcoming
                         Events </span> </a></li>
+            
         </ul>
     </div>
 </div>

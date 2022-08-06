@@ -124,8 +124,8 @@ Route::post('/update-password', [ProfileController::class, 'updatePassword'])->n
    
 Route::get('/procurement/home', [App\Http\Controllers\HomeController::class, 'procurement'])->name('procurement.home');
 Route::get('/procurement/inbox', [ProcurementController::class, 'inbox'])->name('procurement.inbox');
-Route::get('/procurement/outbox', [ProcurementController::class, 'outbox'])->name('procurement.outbox');
-Route::get('/procurement/draft', [ProcurementController::class, 'draft'])->name('procurement.draft');
+Route::get('/procurement/outbox', [ProcurementController::class, 'proOutBox'])->name('procurement.outbox');
+Route::get('/procurement/draft', [ProcurementController::class, 'proDraft'])->name('procurement.draft');
 Route::get('/procurement/compose-select-category', [ProcurementController::class, 'composeOne'])->name('procurement.compose-one');
 Route::get('/procurement/compose', [ProcurementController::class, 'composeTwo'])->name('procurement.compose-two');
 Route::post('/procurement/send-mail', [ProcurementController::class, 'sendMail'])->name('procurement.send');
@@ -144,7 +144,7 @@ Route::get('/sales/inbox', [SalesController::class, 'inbox'])->name('sales.inbox
 Route::get('/sales/outbox', [SalesController::class, 'outbox'])->name('sales.outbox');
 Route::get('/sales/draft', [SalesController::class, 'draft'])->name('sales.draft');
 Route::get('/sales/events', [SalesController::class, 'events'])->name('sales.events');
-Route::get('/sales/enquiry-timeout', [SalesController::class, 'enquiryTimeout'])->name('sales.enquiry-timeout');
+Route::get('/sales/enquiry-timeout', [SalesController::class, 'salesEnquiryTimeout'])->name('sales.enquiry-timeout');
 Route::get('/sales/compose-mail/{id}', [SalesController::class, 'composeReply'])->name('sales.composereply');
 Route::get('/sales/draft/edit/{id}', [SalesController::class, 'editDraft'])->name('sales.editDraft');
 Route::post('/sales/send-mail', [SalesController::class, 'sendReply'])->name('sales.sendreply');

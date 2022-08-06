@@ -67,33 +67,8 @@
                         </ul>
                     </div>
                     <div class="col_maii_right">
-                        <div class="mail_expand uk-padding-right">
-                            <h3 class="subject">
-
-                            </h3>
-                            <div class="main_head">
-
-                                <div class="mailer_box">
-                                    <h3 class="mailer_name"> </h3>
-                                    <div class="date"></div>
-                                    <div class="mail_id"></div>
-                                </div>
-                                <div class="mailer_box_params" style="margin-left: 85px;">
-                                    <div class="mailer_category"> </div>
-                                    <div class="mailer_country"> </div>
-                                    <div class="mailer_region"> </div>
-                                </div>
-                            </div>
-                            <div class="mail_text uk-margin-top mail_content">
-
-                            </div>
-                            <div class="mail_attachment">
-
-                            </div>
-                            <!-- nest Section  -->
-                            <div class="uk-margin-top editbutton">
-
-                            </div>
+                        <div id="mail-placeholder" class="mail_expand uk-padding-right">
+                           
 
                         </div>
                     </div>
@@ -133,48 +108,35 @@ $("body").on("click", ".readmail", function() {
                 $('.mailer_region').empty().addClass('skeleton skeleton-text');
             },
             success: function(res) {
-                if (res) {
+                if(res){
                     obj = jQuery.parseJSON(res);
-                    $('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
-                    $('.mailer_name').text(obj.sender_name).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.date').text(obj.created_at).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.mail_id').text(obj.request_time).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.mail_content').html(obj.description).removeClass(
-                        'skeleton skeleton-text skeleton-text__body');
-                    $('.dp').html(
-                        '<div class="mail_dp"><img src="images/profile_dp.jpg" alt=""></div>');
-                    $('.editbutton').html('<a href="/procurement/draft/edit/' + obj.id +
-                        '" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i>Edit Draft</a>'
-                        ).removeClass('skeleton skeleton-text skeleton-footer');;
-                    if (obj.attachment) {
-                        var attchhtml = '<div><a class="uk-button uk-button-default" href="' + obj
-                            .attachment +
-                            '" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>';
-                        attchhtml += '<a class="uk-button uk-button-default" href="' + obj
-                            .attachment +
-                            '" target="_blank"  uk-tooltip="title: View Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>View Attachment</a></div>';
-                        $('.mail_attachment').html(attchhtml).removeClass(
-                            'skeleton skeleton-text skeleton-footer');
-                    } else {
-                        $('.mail_attachment').empty();
-                    }
-                    $('.mailer_category').text('Category : ' + obj.category.name).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.mailer_country').text('Country : ' + obj.country.name).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
                     var regionname = !obj.region ? 'All Region' : obj.region.name;
-                    $('.mailer_region').text('Region : ' + regionname).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                } else {
-                    $('.subject').empty();
-                    $('.mailer_name').empty();
-                    $('.date').empty();
-                    $('.mail_id').empty();
-                    $('.mail_attachment').empty();
-                    $('.mail_content').empty();
+                    var company_name = !obj.company ? '' : obj.company.name;
+                    var category_name = !obj.category ? '' : obj.category.name;
+                    var country_name = !obj.country ? '' : obj.country.name;
+                    var html = '<div>';
+                         html += '<div class="mail_expand uk-padding-right">';
+                          html += '<h3 class="subject">'+obj.subject+'</h3>';
+                          html += '<div class="main_head">';
+                           html += '<div class="mailer_box">';
+                            html += '<h3 class="mailer_name">'+company_name+'</h3>';
+                            html += '<div class="date">'+obj.created_at+'</div>';
+                            html += '<div class="mail_id">'+obj.timeframe+'</div>';
+                           html += '</div>';
+                           html += '<div class="mailer_box_params" style="margin-left: 85px;">';
+                            html += '<div class="mailer_category">Category : ' + category_name+'</div>';
+                            html += '<div class="mailer_country">Country : ' + country_name+'</div>';
+                            html += '<div class="mailer_region">'+regionname+'</div>';
+                           html += '</div>';
+                         html += '</div>';
+                         html += '<div class="mail_text uk-margin-top mail_content">'+obj.body+'</div>';
+                         html += '<div class="mail_attachment"></div>';
+                         html += '<div class="uk-margin-top editbutton"><hr>';
+                          html += '<a href="" class="uk-button uk-button-default "> Edit</a>';
+                          html += '<a href="" class="uk-button uk-button-default "> Discard</a>';
+                        html += '</div></div>'; 
+                        //console.log(html);
+                    $('#mail-placeholder').html(html);             
                 }
             }
         });
