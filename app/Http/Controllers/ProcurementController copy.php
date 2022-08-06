@@ -21,42 +21,28 @@ class ProcurementController extends Controller
 {
     public function inbox(){
         $user = Auth::user();
-        $mails = Enquiry::whereHas('replies')->with('replies')
-                 ->where('from_id',$user->id)
-                 ->latest()
-                 ->paginate(10);
-        return view('procurement.inbox',compact('user','mails'));               
+        $company = Company::findOrFail($user->company_id);
+        // $mails = Enquiry::whereHas('reply')->with('reply')
+        //     ->where('from_id',$company->id)->latest()->paginate(10);
+        $mails = Enquiry::with('reply')
+            ->where('from_id',$company->id)->latest()->paginate(10);
+        return view('procurement.inbox',compact('company','user','mails'));               
     }
 
-    public function outbox(){
+    public function proOutBox(){
         $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
         $mails = Enquiry::where('from_id',$user->id)
-                        ->where('sender_type','Procurement')
-                        ->where('is_draft',0)
-                        ->latest()
-                        ->paginate(10);
-        return view('procurement.outbox',compact('user','mails'));
-    }
-
-    public function draft(Request $request){
-        $user = Auth::user();
-        $mails = Enquiry::where('from_id',$user->id)
-                     ->where('sender_type','Procurement')
-                     ->where('is_draft',1)
-                     ->latest()
-                     ->paginate(10);
-        return view('procurement.draft',compact('user','mails'));
-    } 
-
-    public function events(){
-        return view('procurement.events');
+                       ->where('sender_type','procurement')
+                       ->latest()->paginate(10);
+        return view('procurement.outbox',compact('company','user','mails'));
     }
 
     public function getMailContent(Request $request){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
         //$mail = Mail::with('category','country','region','myreply')->withTrashed()->find($request->id)->toJson();
-        $mail = Enquiry::with('category','country','region','myreply','company')->find($request->id)->toJson();
+        $mail = Enquiry::with('category','country','region','myreply')->find($request->id)->toJson();
         return $mail;
     }
 
@@ -75,54 +61,44 @@ class ProcurementController extends Controller
 
     public function sendMail(EnquiryRequest $request, Enquiry $enquiry)
     {
-        $designation = 'Sales';
-        $authuser = Auth::user();
-        
-                                
-        $ref_no = rand(1,90);    
-        $input = $request->validated();     
-        $Is_Drafted = $request->submit == 'draft' ? 1 : 0;
-        $Is_External = !$request->Is_External ? 0 : 1; 
-        $verified_by =  $authuser->id; 
-        $is_Limited = !$request->is_limited ? 0 : 1;
-        $parent_ref = !$request->parent_ref ? '' : $request->parent_ref;
-        $input['company_id'] = $authuser->company_id;
-        $input['from_id'] = $authuser->id;
-        $input['from_email'] = $authuser->email;
-        $input['reference_no'] = $ref_no;
-        $input['parent_reference_no'] = $parent_ref;
-        $input['sender_type'] = $authuser->designation;
-        $input['verified_by'] = $verified_by;
-        $input['is_limited'] = $is_Limited;
-        $input['limited_status'] = 0;
-        $input['is_read'] = 0;
-        $input['is_replied'] = 0;
-        $input['mail_type'] = 1;
-        $input['is_draft'] = $Is_Drafted;
-        $input['is_external'] = $Is_External;
-
-        if($Is_Drafted == 1){
-            $enquiry->create($input);
-            return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
-        }
-
+        $designation = "Sales";
         $limitted_users = Company::join('company_users', 'company_users.company_id', '=', 'companies.id')
                                     ->select( 'company_users.company_id', 'company_users.designation', 'company_users.email', 'companies.id', 'companies.country_id', 'companies.region_id')
                                     ->where('company_users.designation', '=', $designation)
                                     ->get();
+                                
+        $ref_no = rand(1,90);          
         foreach ($limitted_users as $key => $user) 
-        {               
+        {
+            $Is_Drafted = !$request->Is_Drafted ? 0 : 1;
+            $Is_External = !$request->Is_External ? 0 : 1;
+            $input = $request->validated();
+            $input['company_id'] = Auth::user()->company_id;
+            $input['Is_Drafted'] = $Is_Drafted;
+            $input['Is_External'] = $Is_External;
+            $input['from_id'] = Auth::user()->id;
             $input['to_id'] = $user->id;
-            $input['to_email'] = $user->email;
+            $input['reference_no'] = $ref_no;
+            $input['sender_type'] = "Procurement";
+            $input['isVerified'] = 1;
+            $input['Is_Limitted'] = $request->user_type;
             $enquiry->create($input);
+       
         }   
-        return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
+       return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
            
     }
 
-    
+    public function events(){
+        return view('procurement.events');
+    }
 
-    
+    public function proDraft(Request $request){
+        $user = Auth::user();
+        $company = Company::findOrFail($user->company_id);
+        $mails = Mail::where('from_company_id',$company->id)->where('sender_type','procurement')->where('is_draft',1)->latest()->paginate(10);
+        return view('procurement.draft',compact('company','user','mails'));
+    } 
 
     public function proDraftShow($id){
         $user = Auth::user();;

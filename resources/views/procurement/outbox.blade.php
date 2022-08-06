@@ -26,10 +26,10 @@
                                             <a data-id="{{ $mail->id }}" class="readmail">
                                                 <span
                                                     class="inb_date">{{ \Carbon\Carbon::parse($mail->created_at)->diffForhumans() }}</span>
-                                                <h4 class="sm_text">{{ $mail->category->name ?? 'fetching cetgory...' }}
+                                                <h4 class="sm_text">{{ $mail->subject }}
                                                 </h4>
                                                 <h4 class="sm_text sub">{{ $mail->reference_no }}</h4>
-                                                <div class="text-pr">{{ $mail->subject }}</div>
+                                                <div class="text-pr">{{ $mail->category->name ?? 'fetching cetgory...' }}</div>
                                                 <div class="posted_date">Posted Date:
                                                     {{ \Carbon\Carbon::parse($mail->created_at)->format('d F Y') }}
                                                 </div>
@@ -67,7 +67,7 @@
                         </ul>
                     </div>
                     <div class="col_maii_right">
-                        <div class="mail_expand uk-padding-right">
+                        <div id="mail-placeholder" class="mail_expand uk-padding-right">
                             <h3 class="subject">
 
                             </h3>
@@ -133,50 +133,33 @@ $("body").on("click", ".readmail", function() {
                 $('.mailer_region').empty().addClass('skeleton skeleton-text');
             },
             success: function(res) {
-                if (res) {
+                if(res){
                     obj = jQuery.parseJSON(res);
-                    $('.editbutton').removeClass('skeleton skeleton-text skeleton-footer');
-                    $('.subject').text(obj.subject).removeClass('skeleton skeleton-text');
-                    $('.mailer_name').text(obj.sender_name).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.date').text(obj.created_at).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.mail_id').text(obj.request_time).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.mail_content').html(obj.description).removeClass(
-                        'skeleton skeleton-text skeleton-text__body');
-                    $('.editbutton').html('<a href="/procurement/outbox/edit-timeframe/' + obj.id +
-                        '" class="uk-button uk-button-default "><i class="fa fa-pencil" aria-hidden="true"></i> Update Time Frame</a>'
-                        );
-                    if (obj.attachment) {
-                        var attchhtml = '<div><a class="uk-button uk-button-default" href="' + obj
-                            .attachment +
-                            '" download  uk-tooltip="title: Download Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>Download Attachment</a>';
-                        attchhtml += '<a class="uk-button uk-button-default" href="' + obj
-                            .attachment +
-                            '" target="_blank"  uk-tooltip="title: View Attachment" ><i class="fa fa-paperclip mr-2" aria-hidden="true"></i>View Attachment</a></div>';
-                        $('.mail_attachment').html(attchhtml).removeClass(
-                            'skeleton skeleton-text skeleton-footer');
-                    } else {
-                        $('.mail_attachment').empty();
-                    }
-                    $('.mailer_category').text('Category : ' + obj.category.name).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                    $('.mailer_country').text('Country : ' + obj.country.name).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
                     var regionname = !obj.region ? 'All Region' : obj.region.name;
-                    $('.mailer_region').text('Region : ' + regionname).removeClass(
-                        'skeleton skeleton-text skeleton-footer');
-                } else {
-                    $('.subject').empty();
-                    $('.mailer_name').empty();
-                    $('.date').empty();
-                    $('.mail_id').empty();
-                    $('.mail_attachment').empty();
-                    $('.mail_content').empty();
-                    $('.editbutton').empty();
+                    var html = '<div>';
+                         html += '<div class="mail_expand uk-padding-right">';
+                          html += '<h3 class="subject">'+obj.subject+'</h3>';
+                          html += '<div class="main_head">';
+                           html += '<div class="mailer_box">';
+                            html += '<h3 class="mailer_name">'+obj.company.name+'</h3>';
+                            html += '<div class="date">'+obj.created_at+'</div>';
+                            html += '<div class="mail_id">'+obj.timeframe+'</div>';
+                           html += '</div>';
+                           html += '<div class="mailer_box_params" style="margin-left: 85px;">';
+                            html += '<div class="mailer_category">Category : ' + obj.category.name+'</div>';
+                            html += '<div class="mailer_country">Country : ' + obj.country.name+'</div>';
+                            html += '<div class="mailer_region">'+regionname+'</div>';
+                           html += '</div>';
+                         html += '</div>';
+                         html += '<div class="mail_text uk-margin-top mail_content">'+obj.body+'</div>';
+                         html += '<div class="mail_attachment"></div>';
+                         html += '<div class="uk-margin-top editbutton"><hr>';
+                          html += '<a href="" class="uk-button uk-button-default ">Edit Timeframe</a>';
+                        html += '</div></div>'; 
+                        console.log(html);
+                    $('#mail-placeholder').html(html);             
                 }
-            }
+            }   
         });
     } else {
 

@@ -19,58 +19,55 @@ use App\Models\Enquiry;
 
 class SalesController extends Controller
 {
-
-    public function inbox()
-    {
-        $user = Auth::user();
-        $enquiry = Enquiry::with('category')
-                            ->where('to_id', $user->id)
-                            ->paginate(10);
-        return view('sales.inbox',compact('enquiry','user'));
-    }
+    // public function inbox(){
+    //     $user = Auth::user();
+    //     $company = Company::findOrFail($user->company_id);
+    //     $companyActivities = CompanyActivity::where('company_id',$company->id)->pluck('service_id')->toArray();
+    //     $companyLocations = CompanyLocation::where('company_id',$company->id)->pluck('region_id')->toArray();
+    //     $company_id = Auth::user()->company_id;
+    //     \DB::enableQueryLog();
+    //     $mails = Mail::doesntHave('myreply')->where('from_company_id','!=',$company->id)
+    //                   ->where('is_draft','!=',1)
+    //                   ->where('country_id',$company->country_id)
+    //                   ->whereIn('service',$companyActivities)
+    //                   //->whereIn('region_id',$companyLocations)
+    //                   ->whereNull('ref_id')
+	// 		          ->where('mails.created_at','>',$company->created_at)
+    //                   ->whereDate('mails.request_time','>=',date('Y-m-d'))
+    //                   ->orderBy('mails.created_at','desc')->paginate(10);
+    //                   //dd(\DB::getQueryLog());     
+    //     return view('sales.inbox',compact('company','user','mails'));            
+    // }
 
     public function outbox(){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
         $mails = Enquiry::where('from_id',$company->id)
-                        ->where('sender_type','Sales')
-                        ->where('is_draft','!=',1)
-                        ->latest()
-                        ->paginate(10);
+                       //->where('sender_type','sales')
+                       //->where('Is_draft','!=',1)
+                       ->latest()->paginate(10);
         return view('sales.outbox',compact('company','user','mails'));
     }
 
     public function draft(){
         $user = Auth::user();
         $company = Company::findOrFail($user->company_id);
-        $mails = Enquiry::where('from_id',$company->id)
-                       ->where('sender_type','Sales')
+        $mails = Enquiry::where('from_company_id',$company->id)
+                       ->where('sender_type','sales')
                        ->where('is_draft',1)
-                       ->latest()
-                       ->paginate(10);
+                       ->latest()->paginate(10);
         return view('sales.draft',compact('company','user','mails'));
-    }
-
-    public function enquiryTimeout(Request $request){
-        $user = Auth::user();
-        $company = Company::findOrFail($user->company_id);
-        $mails = Enquiry::where('to_id','!=',$user->id)
-                      ->where('is_draft','!=',1)
-			          ->where('enquiries.created_at','>',$company->created_at)
-                      ->whereDate('enquiries.timeframe','<',date('Y-m-d'))
-                      ->latest()
-                      ->paginate(10);
-        return view('sales.timeout',compact('user','mails'));
-    } 
-
-    public function events(){
-        return view('sales.events');
     }
 
     public function editDraft($id){
         $mail = Enquiry::find($id);
         return view('sales.edit-draft',compact('mail'));
     }
+
+    public function events(){
+        return view('sales.events');
+    }
+    
 
     public function salesEnquiryTimeout(Request $request){
         $user = Auth::user();
@@ -185,7 +182,12 @@ class SalesController extends Controller
         return redirect()->route('sales.home')->with('success','Your Interest is noted!');
     }
 
-    
+    public function inbox()
+    {
+        $to_id = Auth::user()->id;
+        $enquiry = Enquiry::with('category')->where('to_id', '=', $to_id)->get();
+        return view('sales.inbox',compact('enquiry',));
+    }
 
     public function setInterested($id){
         $enquiry = Enquiry::find($id);

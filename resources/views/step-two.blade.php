@@ -28,7 +28,7 @@
                                         <select  name="doc_type" id="doc_type" class="drop_category uk-input  drop_select hide  @error('doc_type') uk-form-danger uk-animation-shake @enderror" style="width: 100%;">
                                             <option value=" ">Select Document Type</option>
                                             @foreach($documents as $key => $document)
-                                            <option {{ old('doc_type') == $document->id ? 'selected' : '' }} value="{{ $document->id }}">{{$document->name}}</option>
+                                            <option value="{{ $document->id }}">{{$document->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
