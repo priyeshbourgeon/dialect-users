@@ -73,7 +73,7 @@
                         </ul>
                     </div>
                     <div class="col_maii_right">
-                        <div class="mail_expand uk-padding-right">
+                        <div id="mail-placeholder" class="mail_expand uk-padding-right">
                             <h3 class="subject"> </h3>
                             <div class="main_head">
                                 <div class="mailer_box">
@@ -152,6 +152,12 @@ $("body").on("click", ".readmail", function() {
                          html += '<div class="mail_text uk-margin-top mail_content">'+obj.body+'</div>';
                          html += '<div class="mail_attachment"></div>';
                          html += '<div class="uk-margin-top editbutton"><hr>';
+                         if(obj.is_limited == 1){
+                            if(obj.limited_status == 0){
+                                html += '<a href="" class="uk-button uk-button-default ">Approve</a>';
+                                html += '<a href="" class="uk-button uk-button-default ">Reject</a>';
+                            }
+                         } 
                         html += '</div></div>'; 
                         //console.log(html);
                     $('#mail-placeholder').html(html);             

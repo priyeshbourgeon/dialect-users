@@ -23,7 +23,7 @@ class ProcurementController extends Controller
         $user = Auth::user();
         $mails = Enquiry::whereHas('replies')->with('replies')
                  ->where('from_id',$user->id)
-                 ->latest()
+                 ->groupBy('reference_no')
                  ->paginate(10);
         return view('procurement.inbox',compact('user','mails'));               
     }
@@ -34,6 +34,7 @@ class ProcurementController extends Controller
                         ->where('sender_type','Procurement')
                         ->where('is_draft',0)
                         ->latest()
+                        ->groupBy('reference_no')
                         ->paginate(10);
         return view('procurement.outbox',compact('user','mails'));
     }
