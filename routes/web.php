@@ -136,6 +136,7 @@ Route::post('/procurement/mail/read',[ProcurementController::class,'getMailConte
 Route::get('/procurement/outbox/edit-timeframe/{id}', [ProcurementController::class, 'editTimeFrame'])->name('procurement.outbox.edit-timeframe');
 Route::post('/procurement/outbox/update-timeframe', [ProcurementController::class, 'updateTimeFrame'])->name('procurement.outbox.update-timeframe');
 Route::get('/procurement/inbox/show/{id}', [ProcurementController::class, 'proInboxBoxShow'])->name('procurement.inbox.show');
+Route::get('/procurement/setApproved/{id}', [ProcurementController::class, 'setApproved'])->name('procurement.setApproved');
 
 
 // Sales
@@ -148,7 +149,7 @@ Route::get('/sales/enquiry-timeout', [SalesController::class, 'enquiryTimeout'])
 Route::get('/sales/compose-mail/{id}', [SalesController::class, 'composeReply'])->name('sales.composereply');
 Route::get('/sales/draft/edit/{id}', [SalesController::class, 'editDraft'])->name('sales.editDraft');
 Route::post('/sales/send-mail', [SalesController::class, 'sendReply'])->name('sales.sendreply');
-Route::post('/sales/send-reply', [SalesController::class, 'sendDraftReply'])->name('sales.senddraftreply');
+Route::post('/sales/send-reply/{id}', [SalesController::class, 'sendDraftReply'])->name('sales.senddraftreply');
 Route::post('/sales/limitted-enquiry', [SalesController::class, 'limittedEnquiry'])->name('sales.limitted-enquiry');
 Route::get('/sales/notifications', [SalesController::class, 'notifications'])->name('sales.notifications');
 Route::get('/sales/setInterested/{id}', [SalesController::class, 'setInterested'])->name('sales.setInterested');

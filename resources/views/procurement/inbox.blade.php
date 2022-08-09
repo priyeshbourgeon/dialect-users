@@ -22,7 +22,7 @@
                                             <span class="inb_date">Reply : {{ $mail->replies->count() ?? 0 }}</span>
                                             <h4 class="sm_text">{{ $mail->subject }}
                                             </h4>
-                                            <h4 class="sm_text sub">{{ $mail->reference_no }}</h4>
+                                            <h4 class="posted_date">Reference No. :{{ $mail->reference_no }}</h4>
                                             <div class="text-pr">{{ $mail->category->name ?? 'fetching cetgory...' }}</div>
                                             <div class="posted_date">Posted Date:
                                                 {{ \Carbon\Carbon::parse($mail->created_at)->format('d F Y') }}</div>
@@ -154,7 +154,7 @@ $("body").on("click", ".readmail", function() {
                          html += '<div class="uk-margin-top editbutton"><hr>';
                          if(obj.is_limited == 1){
                             if(obj.limited_status == 0){
-                                html += '<a href="" class="uk-button uk-button-default ">Approve</a>';
+                                html += '<a href="/procurement/setApproved/'+obj.id+'" class="uk-button uk-button-default ">Approve</a>';
                                 html += '<a href="" class="uk-button uk-button-default ">Reject</a>';
                             }
                          } 

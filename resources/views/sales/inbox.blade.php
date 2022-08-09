@@ -111,6 +111,7 @@ $("body").on("click", ".readmail", function() {
             success: function(res) {
                 if(res){
                     obj = jQuery.parseJSON(res);
+                    console.log(obj);
                     var regionname = !obj.region ? 'All Region' : obj.region.name;
                     var html = '<div>';
                          html += '<div class="mail_expand uk-padding-right">';
@@ -132,16 +133,26 @@ $("body").on("click", ".readmail", function() {
                          html += '<div class="uk-margin-top editbutton"><hr>';
                          if(obj.is_limited == 1){
                             if(obj.limited_status == 0){
-                                html += '<p>This is a limited participant enquiry. Do you want to participate ?<p>';
-                                html += '<a href="" class="uk-button uk-button-default "> I`m interested</a>';
-                                html += '<a href="" class="uk-button uk-button-default "> I`m not interested</a>';
+                                if(obj.is_replied == 0){
+                                    if(obj.approve_status == 1){
+                                        html += '<a href="/sales/compose-mail/'+obj.id+'" class="uk-button uk-button-default " id="interest">Reply</a>';
+                                    }
+
+                                    else{
+                                        html += '<p>This is a limited participant enquiry. Do you want to participate ?<p>';
+                                        html += '<a href="/sales/setInterested/'+obj.id+'" class="uk-button uk-button-default " id="interest"> I`m interested</a>';
+                                        // html += '<a href="" class="uk-button uk-button-default "> I`m not interested</a>';
+                                    }
+                                }
                             }
-                            else{
+                            else{    
                                 html += '<p>Thank you for showing your interest.<p>';
                             }
                          } 
                          else{
-                            html += '<a href="" class="uk-button uk-button-default "> Reply</a>';
+                            if(obj.is_replied == 0){
+                               html += '<a href="/sales/compose-mail/'+obj.id+'" class="uk-button uk-button-default "> Reply</a>';
+                            }
                          }
                         html += '</div></div>'; 
                         //console.log(html);
@@ -154,5 +165,6 @@ $("body").on("click", ".readmail", function() {
     }
 });
 </script>
+
 @endpush
 @endsection
