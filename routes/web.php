@@ -22,7 +22,7 @@ use App\Http\Controllers\GuestUserController;
 
 Route::get('/', [App\Http\Controllers\WebsiteController::class, 'index']);
 Route::get('/company/register', [App\Http\Controllers\WebsiteController::class, 'register']);
-Route::post('registrations', [RegisterController::class,'registration'])->name('registrations');
+Route::post('company/registrations', [RegisterController::class,'doRegister'])->name('company.registrations');
 Route::get('registration-otp', [RegisterController::class,'registrationOtp'])->name('registration.otp');
 Route::post('register-verify-otp', [RegisterController::class,'verifyOtp'])->name('registration.verifyOtp');
 Route::get('registration-success', [RegisterController::class,'success'])->name('registration.success');
@@ -91,17 +91,6 @@ Route::post('/get-subservice', [App\Http\Controllers\HomeController::class, 'get
 Route::post('/save-subservice',  [App\Http\Controllers\HomeController::class,'saveMailCatService'])->name('saveMailCatService');
 
 
-
-Route::get('/procurement-mail-inbox', 'User\Procurement\EnquiryController@index')->name('procurement.index');
-Route::get('/procurement-email-view/{id}', 'User\Procurement\EnquiryController@mailView')->name('procurement.emailView');
-Route::get('/procurement-mail-compose','User\Procurement\EnquiryController@composeOne')->name('procurement.create');
-Route::get('/procurement-mail-edit/{id}','User\Procurement\EnquiryController@edit')->name('procurement.edit');
-Route::put('/procurement-mail-update/{id}','User\Procurement\EnquiryController@update')->name('procurement.update');
-Route::get('/procurement-mail-send', 'User\Procurement\EnquiryController@mailSend')->name('procurement.mailSend');
-Route::get('/procurement-mail-drafts', 'User\Procurement\EnquiryController@mailDraft')->name('procurement.mailDraft');
-Route::get('/procurement-mail-trash', 'User\Procurement\EnquiryController@mailTrash')->name('procurement.mailTrash');
-Route::get('/procurement-mail-pending', 'User\Procurement\EnquiryController@mailPending')->name('procurement.mailPending');
-Route::post('procurement-mail-save', 'User\Procurement\EnquiryController@store')->name('procurement.mailSave');
 
 
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
