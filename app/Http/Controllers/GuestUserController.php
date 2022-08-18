@@ -20,11 +20,12 @@ class GuestUserController extends Controller
                             // ->where('companies.country_id',$request->country_id)
                             ->where('company_documents.doc_number',$request->customer_id)
                             ->first();
-                            dd($company);
         if(!$company){
-            return redirect('/');    
+            return view('wologin.company-not-found');
         }   
         
-        return view('wologin.company-data',compact('company'));
+        return view('wologin.company-info',compact('company'));
     } 
+
+    
 }
