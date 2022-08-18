@@ -23,7 +23,7 @@ class ProcurementController extends Controller
         $user = Auth::user();
         $mails = Enquiry::whereHas('replies')->with('replies')
                  ->where('from_id',$user->id)
-                 ->latest()
+                 ->groupBy('reference_no')
                  ->paginate(10);
         return view('procurement.inbox',compact('user','mails'));               
     }
@@ -34,6 +34,7 @@ class ProcurementController extends Controller
                         ->where('sender_type','Procurement')
                         ->where('is_draft',0)
                         ->latest()
+                        ->groupBy('reference_no')
                         ->paginate(10);
         return view('procurement.outbox',compact('user','mails'));
     }
@@ -77,8 +78,7 @@ class ProcurementController extends Controller
     {
         $designation = 'Sales';
         $authuser = Auth::user();
-        
-                                
+                          
         $ref_no = rand(1,90);    
         $input = $request->validated();     
         $Is_Drafted = $request->submit == 'draft' ? 1 : 0;
@@ -119,6 +119,48 @@ class ProcurementController extends Controller
         return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
            
     }
+
+    public function setApproved($id){
+      
+        $user = Auth::user();
+        $enquiry = Enquiry::find($id);
+        $company_id = Auth::user()->company_id;
+        $company = Company::find($company_id);
+        
+        $ref_no = rand(1000,9000);    
+
+        $mail                          = new Enquiry();
+        $mail->company_id              = $enquiry->company_id;
+        $mail->service_id              = $enquiry->service_id;
+        $mail->country_id              = $enquiry->country_id;
+        $mail->region_id               = $enquiry->region_id;
+        $mail->subject                 = "Your Interest has been approved";
+        $mail->body                    = "<div><p>Your Interest has been approved.Now you can submit you quote!</p></div>'";
+        $mail->from_id                 = $user->id;
+        $mail->to_id                   = $enquiry->from_id;
+        $mail->from_email              = $user->email;
+        $mail->to_email                = $enquiry->from_email;
+        $mail->timeframe               = $enquiry->timeframe;
+        $mail->sender_type             = $user->designation;
+        $mail->reference_no            = $ref_no;
+        $mail->parent_reference_no     = $enquiry->parent_reference_no;
+        $mail->verified_by             = 1;
+        $mail->is_draft                = 0;
+        $mail->is_limited              = 1;
+        $mail->limited_status          = 0;
+        $mail->is_external             = 0;
+        $mail->is_read = 0;
+        $mail->is_replied = 0;
+        $mail->mail_type = 1;
+        $mail->approve_status = 1;
+        $mail->save();
+
+        $enquiry->status = 1;
+        $enquiry->is_replied = 1;
+        $enquiry->limited_status = 1;
+        $enquiry->save();
+        return redirect()->route('procurement.home')->with('success','Request has been approved!');
+    } 
 
     
 

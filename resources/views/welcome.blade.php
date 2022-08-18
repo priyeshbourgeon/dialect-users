@@ -11,7 +11,7 @@
                         <h2 class="uk-align-center ">New User ? Register here</h2>
                         <!-- <p>Cras ultricies mauris velit, vitae ornare ex tristique id. Morbi congue commodo lacinia. </p> -->
                     </div>
-                    <form  onsubmit="formControl()" action="{{ route('registrations') }}"  method="post" class="uk-form-stacked">
+                    <form  onsubmit="formControl()" action="{{ route('company.registrations') }}"  method="post" class="uk-form-stacked">
                         @csrf
                         <div class="uk-margin">
                             <div class="uk-inline">

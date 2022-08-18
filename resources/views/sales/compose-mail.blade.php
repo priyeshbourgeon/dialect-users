@@ -5,16 +5,16 @@
     <div>
         <div class="mail_grip_wrap">
             @include('sales.layouts.sidemenu')
-
             <div class="col_right_ca">
-
                 <div class="col_maii_middle">
-
                     <div class="col_maiil_left" style="width:100%">
                         <div class="col uk-margin-small uk-card uk-card-default uk-card-small uk-card-body">
-
-
-                            <div class="panel_header">Reply to mail : {{ $mail->reference_no ?? ''}} </div>
+                            <div class="panel_header">Reply</div>
+                            <div class="">
+                                <p>Reference No : {{ $mail->reference_no ?? ''}} </p>
+                                <p>Subject : {{ $mail->subject ?? ''}} </p>
+                                {!! $mail->body ?? ''!!}
+                            </div>
                             <form action="{{ route('sales.sendreply') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="mail_id" value="{{ $mail->id }}" />
@@ -29,21 +29,15 @@
                                         <small class="error">{{ $message }}</small>
                                         @enderror
                                     </div>
-
                                     <div class=" form_group">
                                         <label class="uk-form-label" for="form-stacked-text">Body</label>
                                         <div class="uk-form-controls">
-                                            <textarea id="summernote" name="reply_body"></textarea>
+                                            <textarea id="summernote" name="body"></textarea>
                                         </div>
                                         @error('body')
                                         <small class="error">{{ $message }}</small>
                                         @enderror
                                     </div>
-
-
-
-
-
                                     <div class="uk-width-expand@1-1">
                                         <div class=" form_group">
                                             <label class="uk-form-label" for="form-stacked-text">Attachment</label>
@@ -55,15 +49,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="uk-text-right">
                                     <button name="submit" value="draft" class="btn_com uk-modal-close"
                                         style="width: 200px;">Save As Draft</button>
                                     <button name="submit" value="save" class="btn_com uk-modal-close"
                                         style="width: 150px;">Send</button>
-
                                 </div>
-
                         </div>
                     </div>
                 </div>

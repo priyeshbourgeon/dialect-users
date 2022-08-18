@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" draggable="false">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,34 +29,35 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/font-awesome-4.6.3/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/scss/site_style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/scss/responsive.css') }}">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/css/toastr.css" rel="stylesheet" />
     <!-- summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
-    
-     
+
+
 
 </head>
+
 <body style="background:{{ (Auth::user()->color) ? Auth::user()->color : '#ffffff' }}">
-   
-        <!-- header -->
-        <header>
-            <div class="uk_container"> 
-                 
-                    <div class="header_nav">
-                        <div class="col brand">
-                            <a href="{{ route('sales.home') }}">    
-                                <img src="{{ asset('assets/images/logo.png') }}" title="" alt=""></a>
-                        </div>
-                        <div class="col header_right header_dp_area">
-                           <!-- <div>
+
+    <!-- header -->
+    <header>
+        <div class="uk_container">
+
+            <div class="header_nav">
+                <div class="col brand">
+                    <a href="{{ route('sales.home') }}">
+                        <img src="{{ asset('assets/images/logo.png') }}" title="" alt=""></a>
+                </div>
+                <div class="col header_right header_dp_area">
+                    <!-- <div>
                                <a href="" class="btn_com">Complaints</a></div> -->
-                            <div>
+                    <div>
 
-                                <div class="uk-inline dp_wrap">
+                        <div class="uk-inline dp_wrap">
 
-                                     <ul class="more_info">
-                                       <!--  <li>
+                            <ul class="more_info">
+                                <!--  <li>
                                             <div class="icon_box">
                                               <i class="fa fa-bell-o"></i>
                                               <span>5</span>
@@ -127,139 +129,154 @@
                                             </div>
                                         
                                         </li> -->
-                                     </ul>
-                                    <div class="dp_name">Hi,  {{ Auth::user()->name }} </div>
-                                    <div class="dp_profile">  </div>
-                                     
-                                    <div uk-dropdown>
-                                        <ul class="uk-nav uk-dropdown-nav">
-                                            <li class="uk-align-center">
-                                                {{ Auth::user()->name }}<br>
-                                                <span class="uk-badge">{{ Auth::user()->designation ?? '' }}</span>
-                                            </li>
-                                            <li class="uk-align-center uk-margin-small">
-                                                <a href="{{ route('profile') }}" uk-margin-small> 
-                                                <i class="fa fa-user" aria-hidden="true"></i>
-                                                  Manage Profile</a>
-                                                </a>
-                                            </li>
-                                            <li class="uk-align-center uk-margin-small">
-                                                <a href="{{ route('change-password') }}" uk-margin-small> 
-                                                <i class="fa fa-key" aria-hidden="true"></i>
-                                                  Change Password</a>
-                                                </a>
-                                            </li>
-                                            <li class="uk-align-center uk-margin-small">
-                                                <a href="{{ route('profile.theme') }}" uk-margin-small> 
-                                                <i class="fa fa-paint-brush" aria-hidden="true"></i>
-                                                  Change Color Theme</a>
-                                                </a>
-                                            </li>
-                                            <li class="uk-align-center uk-margin-small">
-                                                <a href="#" uk-margin-small> 
-                                                <i class="fa fa-commenting-o" aria-hidden="true"></i>
-                                                  Feedback</a>
-                                                </a>
-                                            </li>
-                                            <li  class="uk-align-center">
-                                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();"> 
-												<i class="fa fa-power-off" aria-hidden="true"></i>
-                                                   {{ __('Logout') }}</a></li>
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            </ul>
+                            <div class="dp_name">Hi, {{ Auth::user()->name }} </div>
+                            <div class="dp_profile"> </div>
 
-                            
+                            <div uk-dropdown>
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-align-center">
+                                        {{ Auth::user()->name }}<br>
+                                        <span class="uk-badge">{{ Auth::user()->designation ?? '' }}</span>
+                                    </li>
+                                    <li class="uk-align-center uk-margin-small">
+                                        <a href="{{ route('profile') }}" uk-margin-small>
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            Manage Profile</a>
+                                        </a>
+                                    </li>
+                                    <li class="uk-align-center uk-margin-small">
+                                        <a href="{{ route('change-password') }}" uk-margin-small>
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                            Change Password</a>
+                                        </a>
+                                    </li>
+                                    <li class="uk-align-center uk-margin-small">
+                                        <a href="{{ route('profile.theme') }}" uk-margin-small>
+                                            <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                                            Change Color Theme</a>
+                                        </a>
+                                    </li>
+                                    <li class="uk-align-center uk-margin-small">
+                                        <a href="#" uk-margin-small>
+                                            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                            Feedback</a>
+                                        </a>
+                                    </li>
+                                    <li class="uk-align-center">
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-power-off" aria-hidden="true"></i>
+                                            {{ __('Logout') }}</a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
+
+                </div>
             </div>
 
-        </header>
-        <!--end header -->
-        
-        @yield('content')
-					
-							<footer>
-            <div class="uk_container">
-                        <a href="">Copyright © dialectb2b.com. All rights reserved </a>
+        </div>
 
-            </div>
-        </footer>
+    </header>
+    <!--end header -->
+
+    @yield('content')
+
+    <footer>
+        <div class="uk_container">
+            <a href="">Copyright © dialectb2b.com. All rights reserved </a>
+
+        </div>
+    </footer>
 
 
 
-   
 
-       
-   <!-- --> 
-   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-             @csrf
+
+
+    <!-- -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
     </form>
 
-    <input id="fetch_parent_url" type="hidden"  value="{{ route('getParent')}}">
-    <input id="fetch_subcat_url" type="hidden"  value="{{ route('getSubCategory')}}">
-    <input id="fetch_region_url" type="hidden"  value="{{ route('getRegion')}}">
-    <input id="fetch_area_url" type="hidden"  value="{{ route('getArea')}}">
-	<!-- / -->
-    
-    @if(session()->has('success'))    
-        <script>
-            UIkit.notification({message: '{{ session()->get('success') }}'})
-        </script>    
-        @endif   
-        @if(session()->has('failed'))    
-        <script>
-             UIkit.notification({message: '{{ session()->get('failed') }}'})
-        </script>    
-    @endif  
+    <input id="fetch_parent_url" type="hidden" value="{{ route('getParent')}}">
+    <input id="fetch_subcat_url" type="hidden" value="{{ route('getSubCategory')}}">
+    <input id="fetch_region_url" type="hidden" value="{{ route('getRegion')}}">
+    <input id="fetch_area_url" type="hidden" value="{{ route('getArea')}}">
+    <!-- / -->
 
- <!-- js -->     
-<!-- <script src="{{ asset('assets/user/js/jquery-3.6.0.min.js') }}"></script> -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
-<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('assets/js/uikit.min.js') }}"></script>
-<script src="{{ asset('assets/js/uikit-icons.min.js') }}"></script>
-<script src="{{ asset('assets/plugin/select2/js/select2.min.js') }}"></script>     
+    @if(session()->has('success'))
+    <script>
+    UIkit.notification({
+        message: '{{ session()->get('
+        success ') }}'
+    })
+    </script>
+    @endif
+    @if(session()->has('failed'))
+    <script>
+    UIkit.notification({
+        message: '{{ session()->get('
+        failed ') }}'
+    })
+    </script>
+    @endif
 
-<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-@stack('scripts')
-<script>
+    <!-- js -->
+    <!-- <script src="{{ asset('assets/user/js/jquery-3.6.0.min.js') }}"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/uikit.min.js') }}"></script>
+    <script src="{{ asset('assets/js/uikit-icons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugin/select2/js/select2.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    @stack('scripts')
+    <script>
     $(document).ready(function() {
         $('#summernote').summernote({
-            height:500,
+            height: 500,
         });
     });
-    
-  </script>
-  <script>
-            $(document).ready(function() {
-                     $('.drop_category').select2();
-                      theme: "classic"
-                  });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.drop_category').select2();
+        theme: "classic"
+    });
 
-                  $(document).ready(function(){
-                    //$(".toggle_sidebar").toggleClass("nav_small");
-                $(".tog_btn").click(function(){
-                    $(".toggle_sidebar").toggleClass("nav_small");
-                });
-                });
-     
-     </script> 
-      <script>
-        function mainNav() {
-          var x = document.getElementById("myTopnav");
-          if (x.className === "topnav") {
+    $(document).ready(function() {
+        //$(".toggle_sidebar").toggleClass("nav_small");
+        $(".tog_btn").click(function() {
+            $(".toggle_sidebar").toggleClass("nav_small");
+        });
+    });
+    </script>
+    <script>
+    function mainNav() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
             x.className += " responsive";
-          } else {
+        } else {
             x.className = "topnav";
-          }
         }
-        </script> 
-       
+    }
+    </script>
+ <script>
+    $(document).ready(function() {
+        toastr.options.timeOut = 10000;
+        @if(Session::has('error'))
+            toastr.error('{{ Session::get('error') }}');
+        @elseif(Session::has('success'))
+            toastr.success('{{ Session::get('success') }}');
+        @endif
+    });
+    </script>
 </body>
+
 </html>
