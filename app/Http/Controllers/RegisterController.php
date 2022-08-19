@@ -16,7 +16,10 @@ use App\Models\CompanyDocument;
 use App\Models\CompanyActivity;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\Payment;
+use Auth;
 use Session;
+use PDF;
 
 class RegisterController extends Controller
 {
@@ -36,7 +39,7 @@ class RegisterController extends Controller
             'name' => 'required',
             'pobox' => 'required',
             'country_id' => 'required',
-            'region_id' => 'required',
+            //'region_id' => 'required',
             'email' =>  'required|unique:company_users,email',
             'phone' => 'required|unique:company_users,mobile|numeric',
         ]);
@@ -174,7 +177,8 @@ class RegisterController extends Controller
         }
         $id = $request->session()->get('comp_id');
         $company  = Company::find($id);
-        return view('step-zero',compact('company'));
+        $regions = Region::where('country_id',$company->country_id)->get();
+        return view('step-zero',compact('company','regions'));
     }
 
     public function saveCompanyInfo(Request $request){
@@ -298,6 +302,112 @@ class RegisterController extends Controller
         }
         $companyServices = CompanyActivity::where('company_id',$id)->get();
         return redirect()->route('registration.paymentUpload');
+    }
+
+    public function makePayment(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $id = $request->session()->get('comp_id');
+        $company  = Company::find($id);
+        // $payments = Company::whereHas('payments')->where('companies.id',$id)->first();
+        //'payments'
+        return view('step-four',compact('company'));
+    } 
+
+    public function downloadApplication(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $id = $request->session()->get('comp_id');
+        $company  = Company::find($id);
+        $companyUsers = CompanyUser::where('company_id',$id)->orderBy('name','desc')->get();
+        $companyDocuments = CompanyDocument::with('document')->where('company_id',$id)->first();
+        $selected = CompanyActivity::where('company_id',$id)->pluck('service_id')->toArray();
+        $companyActivities = SubCategory::whereIn('id',$selected)->get();
+        $data = array(
+             'company' => $company,
+             'document' =>  $companyDocuments,
+             'activities' => $companyActivities,
+             'users' => $companyUsers,
+        );
+        view()->share('data',$data);
+        //return view('application-form')->with('data',$data);
+        $pdf = PDF::loadView('application-form', $data);
+        return $pdf->download('DialectB2b_Application_Form.pdf');
+    }
+
+    public function paymentUploadSave(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $request->validate([  
+            'doc_file' => 'required|mimes:pdf,jpeg,png,jpg|max:5000',
+        ]);
+        $imageName  = '';
+        if($request->hasFile('doc_file')){
+            $imageName = time().'.'.$request->doc_file->extension();  
+            $request->doc_file->move(public_path('payment'), $imageName);
+        }
+        $path    =asset('payment/');
+        $id = $request->session()->get('comp_id');
+        $document                   = new Payment();
+        $document->company_id       = $id;
+        $document->type             = 2;
+        $document->doc_file         = $path.'/'.$imageName;
+        $document->remark           = 'document';
+        $document->status             = '1';
+        $document->save();
+        return redirect()->route('registration.registrationSuccess');
+    }
+
+    public function paymentTransferSave(Request $request){
+        if(!$request->session()->has('comp_id')){
+            return redirect('/');
+        }
+        $request->validate([  
+            'reference_no' => 'required',
+        ]);
+        $id = $request->session()->get('comp_id');
+        $document                   = new Payment();
+        $document->company_id       = $id;
+        $document->type             = 1;
+        $document->ref_no           = $request->reference_no;
+        $document->remark           = 'document';
+        $document->status             = '1';
+        $document->save();
+        return redirect()->route('registration.registrationSuccess');
+    }
+
+    public function registrationSuccess(Request $request){
+        $id = $request->session()->get('comp_id');
+        // $token = RegistrationToken::where('company_id',$id)->first();
+        // $token->delete();
+        Session::flush();
+        return view('registration-complete');
+    }
+
+    public function onboarding($token){    
+        $user = CompanyUser::where('token', $token)->firstOrFail();
+        if(!$user){
+            return redirect('/');
+        }
+        return view('onboarding',compact('user'));
+    }
+
+    public function setPassword(Request $request){
+        $request->validate([  
+            'password' =>'required|string|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+        ]);
+        $user = CompanyUser::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->status = 1;
+        if($user->save()){
+            if (Auth::attempt(['email' => $user->email, 'password' => $request->password], '')) {
+                return redirect()->intended('/home');
+            }
+        } 
+        return redirect()->intended('/home');
     }
 
     public function getCountryById(Request $request){

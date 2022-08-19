@@ -4,7 +4,7 @@
 <section class="mail_wrap">
    <div>
       <div class="mail_grip_wrap">
-         @include('procurement.layouts.sidemenu')
+         <!-- @include('procurement.layouts.sidemenu') -->
          <div class="col_right_ca">
             <h1 class="comm_title">Generate Quote</h1>
             <div class="col_maii_middle">

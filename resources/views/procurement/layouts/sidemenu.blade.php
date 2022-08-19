@@ -6,7 +6,9 @@
             </div>
         </div>
         <div class="compose_mail">
-            <a href="{{ route('procurement.compose-one') }}"> <i class="fa fa-plus"></i> <span> Generate Quote
+            <a href="" 
+            onclick='window.open("{{ route('procurement.compose-one') }}", "Compose","directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,width=1200,height=1000");'
+            > <i class="fa fa-plus"></i> <span> Generate Quote
                 </span></a>
         </div>
         <hr>

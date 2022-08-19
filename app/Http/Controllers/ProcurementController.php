@@ -77,8 +77,7 @@ class ProcurementController extends Controller
     {
         $designation = 'Sales';
         $authuser = Auth::user();
-        
-                                
+                              
         $ref_no = rand(1,90);    
         $input = $request->validated();     
         $Is_Drafted = $request->submit == 'draft' ? 1 : 0;
@@ -103,20 +102,20 @@ class ProcurementController extends Controller
 
         if($Is_Drafted == 1){
             $enquiry->create($input);
-            return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
+            return redirect()->route('procurement.outbox')->with('successSend','Notification Send SuccessFully!');
         }
 
-        $limitted_users = Company::join('company_users', 'company_users.company_id', '=', 'companies.id')
-                                    ->select( 'company_users.company_id', 'company_users.designation', 'company_users.email', 'companies.id', 'companies.country_id', 'companies.region_id')
+        $sales_users = Company::join('company_users', 'company_users.company_id', '=', 'companies.id')
+                                    ->select( 'company_users.company_id', 'company_users.designation', 'company_users.email','company_users.id', 'companies.country_id', 'companies.region_id')
                                     ->where('company_users.designation', '=', $designation)
                                     ->get();
-        foreach ($limitted_users as $key => $user) 
+        foreach ($sales_users as $key => $user) 
         {               
             $input['to_id'] = $user->id;
             $input['to_email'] = $user->email;
             $enquiry->create($input);
         }   
-        return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
+        return redirect()->route('procurement.outbox')->with('successSend','Notification Send SuccessFully!');
            
     }
 
