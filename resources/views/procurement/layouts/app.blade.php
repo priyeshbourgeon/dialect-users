@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/fav-icons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('assets/images/fav-icons/site.webmanifest') }}">
     <link rel="mask-icon" href="{{ asset('assets/images/fav-icons/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/css/toastr.css" rel="stylesheet" />
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <!-- fav icons -->
@@ -202,7 +203,6 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
 
@@ -210,9 +210,7 @@
 
     </header>
     <!--end header -->
-
     @yield('content')
-
     <footer>
         <div class="uk_container">
             <a href="">Copyright © dialectb2b.com. All rights reserved </a>
@@ -220,14 +218,26 @@
         </div>
     </footer>
 
-
-
-
     <!-- -->
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
+    <input id="fetch_parent_url" type="hidden" value="{{ route('getParent')}}">
+    <input id="fetch_subcat_url" type="hidden" value="{{ route('getSubCategory')}}">
+    <input id="fetch_region_url" type="hidden" value="{{ route('getRegion')}}">
+    <input id="fetch_area_url" type="hidden" value="{{ route('getArea')}}">
+    <!-- js -->
+    <!-- <script src="{{ asset('assets/user/js/jquery-3.6.0.min.js') }}"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/uikit.min.js') }}"></script>
+    <script src="{{ asset('assets/js/uikit-icons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugin/select2/js/select2.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+<<<<<<< HEAD
     <input id="fetch_parent_url" type="hidden" value="{{ route('getParent')}}">
     <input id="fetch_subcat_url" type="hidden" value="{{ route('getSubCategory')}}">
     <input id="fetch_region_url" type="hidden" value="{{ route('getRegion')}}">
@@ -261,6 +271,7 @@
 
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
     @stack('scripts')
     <script>
     $(document).ready(function() {
@@ -283,6 +294,7 @@
     });
     </script>
     <script>
+
     function mainNav() {
         var x = document.getElementById("myTopnav");
         if (x.className === "topnav") {
@@ -292,12 +304,49 @@
         }
     }
     </script>
+
     @if(session()->has('successSend')) 
     <script>
-       console.log("inn");
        window.close();
     </script>
     @endif
+
+
+
+    <script>
+    @if(Session::has('success'))
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.success("{{ session('success') }}");
+    @endif
+
+    @if(Session::has('error'))
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+    @if(Session::has('info'))
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.info("{{ session('info') }}");
+    @endif
+
+    @if(Session::has('warning'))
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.warning("{{ session('warning') }}");
+    @endif
+    </script>
+
 
 </body>
 

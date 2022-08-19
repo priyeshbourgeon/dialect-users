@@ -42,7 +42,7 @@ class Enquiry extends Model
     }
 
     public function replies(){
-        return $this->hasMany(Enquiry::class,'parent_reference_no','reference_no')->where('is_draft',0);
+        return $this->hasMany(Enquiry::class,'parent_reference_no','reference_no')->where('is_draft',0)->where('from_id','!=',auth()->user()->id);
     }
 }
   

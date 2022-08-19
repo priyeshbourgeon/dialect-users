@@ -33,8 +33,9 @@ class RegisterController extends Controller
        
     }
 
-    public function registration(Request $request)
+    public function doRegister(Request $request)
     {
+        
         $request->validate([  
             'name' => 'required',
             'pobox' => 'required',
@@ -43,6 +44,7 @@ class RegisterController extends Controller
             'email' =>  'required|unique:company_users,email',
             'phone' => 'required|unique:company_users,mobile|numeric',
         ]);
+        
         $otp = rand(100000, 999999);
         session()->put('registation', [
             'name' => $request->name,
