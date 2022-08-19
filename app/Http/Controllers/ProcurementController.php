@@ -23,7 +23,7 @@ class ProcurementController extends Controller
         $user = Auth::user();
         $mails = Enquiry::whereHas('replies')->with('replies')
                  ->where('from_id',$user->id)
-                 ->latest()
+                 ->groupBy('reference_no')
                  ->paginate(10);
         return view('procurement.inbox',compact('user','mails'));               
     }
@@ -34,6 +34,7 @@ class ProcurementController extends Controller
                         ->where('sender_type','Procurement')
                         ->where('is_draft',0)
                         ->latest()
+                        ->groupBy('reference_no')
                         ->paginate(10);
         return view('procurement.outbox',compact('user','mails'));
     }
@@ -77,7 +78,7 @@ class ProcurementController extends Controller
     {
         $designation = 'Sales';
         $authuser = Auth::user();
-                              
+                          
         $ref_no = rand(1,90);    
         $input = $request->validated();     
         $Is_Drafted = $request->submit == 'draft' ? 1 : 0;
@@ -102,22 +103,64 @@ class ProcurementController extends Controller
 
         if($Is_Drafted == 1){
             $enquiry->create($input);
-            return redirect()->route('procurement.outbox')->with('successSend','Notification Send SuccessFully!');
+            return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
         }
 
-        $sales_users = Company::join('company_users', 'company_users.company_id', '=', 'companies.id')
-                                    ->select( 'company_users.company_id', 'company_users.designation', 'company_users.email','company_users.id', 'companies.country_id', 'companies.region_id')
+        $limitted_users = Company::join('company_users', 'company_users.company_id', '=', 'companies.id')
+                                    ->select( 'company_users.company_id', 'company_users.designation', 'company_users.email', 'companies.id', 'companies.country_id', 'companies.region_id')
                                     ->where('company_users.designation', '=', $designation)
                                     ->get();
-        foreach ($sales_users as $key => $user) 
+        foreach ($limitted_users as $key => $user) 
         {               
             $input['to_id'] = $user->id;
             $input['to_email'] = $user->email;
             $enquiry->create($input);
         }   
-        return redirect()->route('procurement.outbox')->with('successSend','Notification Send SuccessFully!');
+        return redirect()->route('procurement.outbox')->with('success','Notification Send SuccessFully!');
            
     }
+
+    public function setApproved($id){
+      
+        $user = Auth::user();
+        $enquiry = Enquiry::find($id);
+        $company_id = Auth::user()->company_id;
+        $company = Company::find($company_id);
+        
+        $ref_no = rand(1000,9000);    
+
+        $mail                          = new Enquiry();
+        $mail->company_id              = $enquiry->company_id;
+        $mail->service_id              = $enquiry->service_id;
+        $mail->country_id              = $enquiry->country_id;
+        $mail->region_id               = $enquiry->region_id;
+        $mail->subject                 = "Your Interest has been approved";
+        $mail->body                    = "<div><p>Your Interest has been approved.Now you can submit you quote!</p></div>'";
+        $mail->from_id                 = $user->id;
+        $mail->to_id                   = $enquiry->from_id;
+        $mail->from_email              = $user->email;
+        $mail->to_email                = $enquiry->from_email;
+        $mail->timeframe               = $enquiry->timeframe;
+        $mail->sender_type             = $user->designation;
+        $mail->reference_no            = $ref_no;
+        $mail->parent_reference_no     = $enquiry->parent_reference_no;
+        $mail->verified_by             = 1;
+        $mail->is_draft                = 0;
+        $mail->is_limited              = 1;
+        $mail->limited_status          = 0;
+        $mail->is_external             = 0;
+        $mail->is_read = 0;
+        $mail->is_replied = 0;
+        $mail->mail_type = 1;
+        $mail->approve_status = 1;
+        $mail->save();
+
+        $enquiry->status = 1;
+        $enquiry->is_replied = 1;
+        $enquiry->limited_status = 1;
+        $enquiry->save();
+        return redirect()->route('procurement.home')->with('success','Request has been approved!');
+    } 
 
     
 
@@ -187,57 +230,7 @@ class ProcurementController extends Controller
         return redirect()->route('procurement.outbox');
     }
 
-    // public function sendMail1(Request $request ){
-    //     if($request->submit != 'draft'){
-    //         $request->validate([  
-    //             'country_id'=> 'required',
-    //             'region_id' => 'required',
-    //             'body' => 'required',
-    //             'subject'=> 'required',
-    //             'timeframe'=> 'required',
-    //             'user_type'=> 'required',
-    //         ]);
-    //     }
-        
-    //     $imageUrl  = '';
-    //      if($request->hasFile('attachment')){
-    //          $imageName = time().'.'.$request->attachment->extension();  
-    //          $request->attachment->move(public_path('attachment'), $imageName);
-    //          $path = asset('attachment/');
-    //          $imageUrl = $path.'/'.$imageName;
-    //      }
- 
-    //     $company_id = Auth::user()->company_id;
-
-
-    //     $refno = 'DB2B/'.$company_id.'/'.date('dmyhis').'/'.rand('1000','9999');
-    //     $company = Company::find($company_id);
-    //     $mode = ($request->submit == 'draft') ? '1' : '0';
-    //     $mail                          = new Mail();
-    //     $mail->reference_no            = $refno;
-    //     $mail->service                 = $request->services;
-    //     $mail->country_id              = $request->country_id;
-    //     $mail->region_id               = $request->region_id;
-    //     $mail->cc                      = $request->cc;
-    //     $mail->subject                 = $request->subject;
-    //     $mail->description             = $request->body;
-    //     $mail->from_company_id         = $company_id;
-    //     $mail->sender_name             = $company->name; 
-    //     $mail->sender_type             = 'procurement';
-    //     $mail->sender_user             = Auth::user()->id;
-    //     $mail->verified_at             = date('Y-m-d h:i:s');
-    //     $mail->request_time            = $request->timeframe;
-    //     $mail->type                    = 1;
-    //     $mail->is_draft                = $mode;
-    //     $mail->attachment              = $imageUrl;
-    //     $mail->save();
-        
-    //     $users = Company::where("isPreRegistered", 1)->get();
   
-    //     foreach ($users as $key => $user) {
-    //         dispatch(new PreRegisteredEnquiryEmailJob($user->email,$mail));
-    //     }
-
-    //     return redirect()->route('procurement.outbox')->with('success','Mail Send!');
-    // }
+  
+   
 }
